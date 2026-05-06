@@ -1,0 +1,3834 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Die Flammbierten</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a; 
+            --body-text: #e2e8f0;
+            --text-color: #f8fafc; 
+            --primary: #721c24; 
+            --primary-hover: #54141a;
+            --secondary: #10b981;
+            --secondary-hover: #059669;
+            --card-bg: #1e293b; 
+            --modal-bg: rgba(15, 23, 42, 0.95);
+            --danger: #ef4444;
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --icon-btn-bg: rgba(255, 255, 255, 0.1);
+            --icon-btn-hover: rgba(255, 255, 255, 0.2);
+            --input-bg: rgba(255, 255, 255, 0.05);
+            --manager-bg: rgba(255, 255, 255, 0.05);
+            --manager-hover: rgba(255, 255, 255, 0.1);
+            --text-muted: #cbd5e1;
+            --card-title: #f8fafc;
+            --card-desc: #e2e8f0;
+            --icon-text: white;
+            --close-btn: #94a3b8;
+            --card-back-color: #721c24; /* Default burgundy */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Prevent whole-page bounce */
+            overscroll-behavior-y: none; /* Verhindert Pull-to-Refresh auf Handys */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(circle at center, transparent 20%, rgba(0,0,0,0.8) 100%),
+                repeating-linear-gradient(45deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 2px, transparent 2px, transparent 4px),
+                repeating-linear-gradient(-45deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 2px, transparent 2px, transparent 4px);
+            color: var(--body-text);
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header / Controls */
+        header {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .icon-btn {
+            background: transparent !important;
+            border: 2px solid #fff;
+            color: #fff;
+            font-size: 1.5rem;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+            text-shadow: 
+                0 0 1px #fff,
+                0 0 3px #fff,
+                0 0 8px var(--primary),
+                0 2px 4px rgba(0,0,0,0.5);
+            box-shadow: 
+                0 0 2px #fff,
+                inset 0 0 2px #fff,
+                0 0 8px var(--primary),
+                inset 0 0 8px var(--primary),
+                0 0 15px var(--primary),
+                inset 0 0 15px var(--primary);
+        }
+
+        .icon-btn:hover {
+            background: transparent !important;
+            transform: scale(1.05);
+            text-shadow: 
+                0 0 1px #fff,
+                0 0 5px #fff,
+                0 0 12px var(--primary),
+                0 2px 6px rgba(0,0,0,0.6);
+            box-shadow: 
+                0 0 2px #fff,
+                inset 0 0 2px #fff,
+                0 0 8px var(--primary),
+                inset 0 0 8px var(--primary),
+                0 0 15px var(--primary),
+                inset 0 0 15px var(--primary),
+                0 0 25px var(--primary);
+        }
+
+        /* Home Screen */
+        #homeScreen {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            z-index: 50;
+            height: 100%;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .plus-swatch {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            background: rgba(255,255,255,0.1);
+            border: 2px dashed rgba(255,255,255,0.3) !important;
+        }
+        .plus-swatch:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: white !important;
+        }
+
+        .home-title {
+            font-size: clamp(1.5rem, 9vw, 3rem);
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+            margin-bottom: 2rem;
+            text-align: center;
+            line-height: 1.1;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .home-btn {
+            width: 100%;
+            max-width: 300px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-size: clamp(0.85rem, 4vw, 1.5rem);
+            font-weight: 800;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            white-space: nowrap;
+            /* Static Neon Styling */
+            background: transparent !important;
+            color: #fff;
+            border: 3px solid #fff;
+            text-shadow: 
+                0 0 1px #fff,
+                0 0 4px #fff,
+                0 0 12px var(--primary),
+                0 0 25px var(--primary),
+                0 2px 5px rgba(0,0,0,0.7);
+            box-shadow: 
+                0 0 5px #fff,
+                inset 0 0 5px #fff,
+                0 0 15px var(--primary),
+                inset 0 0 15px var(--primary),
+                0 0 30px var(--primary),
+                inset 0 0 30px var(--primary);
+        }
+
+        .home-btn:hover {
+            transform: translateY(-5px);
+            background: transparent !important;
+            /* Brighter Neon on Hover */
+            text-shadow: 
+                0 0 1px #fff,
+                0 0 6px #fff,
+                0 0 15px var(--primary),
+                0 0 35px var(--primary),
+                0 2px 8px rgba(0,0,0,0.8);
+            box-shadow: 
+                0 0 5px #fff,
+                inset 0 0 5px #fff,
+                0 0 20px var(--primary),
+                inset 0 0 20px var(--primary),
+                0 0 40px var(--primary),
+                inset 0 0 40px var(--primary),
+                0 0 60px var(--primary);
+        }
+
+        .home-btn.fragen-btn {
+            font-size: clamp(0.7rem, 3.5vw, 1.1rem);
+            letter-spacing: 1px;
+        }
+
+        /* Main Area */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            perspective: 1000px;
+            overflow-y: auto;
+        }
+
+        /* Card System */
+        .card-container {
+            width: 100%;
+            max-width: 320px;
+            height: 450px;
+            position: relative;
+            margin-bottom: 2rem;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .card-container.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-front {
+            background-color: var(--card-back-color);
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.1) 10px, rgba(0,0,0,0.1) 20px),
+                repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(0,0,0,0.1) 10px, rgba(0,0,0,0.1) 20px);
+            border: 10px solid #f8fafc;
+        }
+
+        .card-front h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.6);
+            color: white;
+        }
+
+        .bus-card.hidden {
+            background-color: var(--card-back-color) !important;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(0,0,0,0.1) 5px, rgba(0,0,0,0.1) 10px),
+                repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(0,0,0,0.1) 5px, rgba(0,0,0,0.1) 10px) !important;
+        }
+
+        /* Previews in Modal */
+        .design-preview, .theme-preview {
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .design-preview.selected, .theme-preview.selected {
+            border-color: #fbbf24; /* Golden border */
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+            transform: scale(1.05);
+        }
+        .design-preview::after {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: inherit;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            background: #ffffff !important;
+            border: 1px solid rgba(0,0,0,0.1);
+            color: #0f172a;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary); /* Weinrot */
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        .card-desc {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: #1e293b;
+            white-space: pre-wrap;
+            font-weight: 600;
+            overflow-y: auto;
+            max-height: 350px;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .card-desc::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Edge */
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: clamp(0.7rem, 3.5vw, 1.1rem);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            
+            /* Neon Base */
+            background: transparent !important;
+            border: 2px solid #fff;
+            text-shadow: 
+                0 0 1px #fff,
+                0 0 3px #fff,
+                0 0 8px var(--primary),
+                0 0 15px var(--primary),
+                0 2px 4px rgba(0,0,0,0.6);
+            box-shadow: 
+                0 0 2px #fff,
+                inset 0 0 2px #fff,
+                0 0 10px var(--primary),
+                inset 0 0 10px var(--primary),
+                0 0 20px var(--primary),
+                inset 0 0 20px var(--primary);
+        }
+
+        .btn:hover, .btn:active {
+            background: transparent !important;
+            transform: translateY(-2px);
+            text-shadow: 
+                0 0 1px #fff,
+                0 0 4px #fff,
+                0 0 10px var(--primary),
+                0 0 20px var(--primary),
+                0 2px 6px rgba(0,0,0,0.8);
+            box-shadow: 
+                0 0 2px #fff,
+                inset 0 0 2px #fff,
+                0 0 10px var(--primary),
+                inset 0 0 10px var(--primary),
+                0 0 20px var(--primary),
+                inset 0 0 20px var(--primary),
+                0 0 30px var(--primary);
+        }
+
+        .btn-primary {
+            /* Inherits Neon Styles */
+        }
+
+        .btn-success {
+            background: var(--secondary);
+            display: none;
+        }
+
+        .btn-success:active {
+            background: var(--secondary-hover);
+            transform: translateY(2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Modals */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.85); /* Darker background since blur is removed */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal {
+            background: var(--modal-bg);
+            color: var(--text-color);
+            border: 1px solid var(--glass-border);
+            width: 95%;
+            max-width: 500px;
+            max-height: 85%;
+            border-radius: 20px;
+            padding: 1.5rem;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            overflow-y: auto;
+            overscroll-behavior: contain; /* Prevents pull-to-refresh when scrolling inside modals */
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--close-btn);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Forms */
+        .input-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Manager List */
+        .search-bar {
+            margin-bottom: 1rem;
+        }
+
+        .card-list {
+            overflow-y: auto;
+            flex: 1;
+            padding-right: 0.5rem;
+        }
+
+        .card-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        .card-list::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+        }
+
+        .manager-card {
+            background: var(--manager-bg);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .manager-card:hover {
+            background: var(--manager-hover);
+        }
+
+        .manager-card h4 {
+            font-size: 1rem;
+            margin-bottom: 0.2rem;
+            word-break: break-word;
+        }
+        
+        .manager-card.inactive {
+            opacity: 0.5;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--danger);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--secondary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Shuffle & Controls */
+        @keyframes shuffleCards {
+            0% { transform: scale(1) translateX(0) rotate(0deg); }
+            15% { transform: scale(0.95) translateX(-20px) rotate(-5deg); }
+            30% { transform: scale(0.95) translateX(20px) rotate(5deg); }
+            45% { transform: scale(0.95) translateX(-20px) rotate(-5deg); }
+            60% { transform: scale(0.95) translateX(20px) rotate(5deg); }
+            75% { transform: scale(0.95) translateX(-10px) rotate(-2deg); }
+            100% { transform: scale(1) translateX(0) rotate(0deg); }
+        }
+        .shuffling {
+            animation: shuffleCards 0.6s ease-in-out !important;
+        }
+
+        .controls-container {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .count-input {
+            width: 45px;
+            padding: 0.3rem;
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 6px;
+            color: var(--text-color);
+            text-align: center;
+            font-size: 0.9rem;
+            margin-right: 0.8rem;
+            outline: none;
+        }
+        .count-input:focus {
+            border-color: var(--primary);
+        }
+        
+        /* Hide number input spinners */
+        .count-input::-webkit-outer-spin-button,
+        .count-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .count-input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        /* Player List */
+        .player-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--input-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.75rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        /* Busfahrer specific */
+        #busfahrerWrapper {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 1rem;
+            overflow-y: auto;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+
+        .bus-card-slot {
+            width: 70px;
+            height: 100px;
+            border: 2px dashed rgba(255,255,255,0.2);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .bus-card {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 8px;
+            color: #000;
+            font-weight: 800;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            position: relative;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .bus-card.hidden {
+            background: var(--primary);
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(0,0,0,0.25) 8px, rgba(0,0,0,0.25) 16px),
+                repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(0,0,0,0.25) 8px, rgba(0,0,0,0.25) 16px);
+            border: 6px solid #f8fafc;
+            box-shadow: inset 0 0 0 2px rgba(255,255,255,0.1);
+        }
+
+        .bus-card.red { color: #e11d48; }
+        .bus-card.black { color: #111827; }
+
+        .pyramid-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            margin: 1.5rem 0;
+        }
+
+        .pyramid-row {
+            display: flex;
+            gap: 12px;
+        }
+
+        .hand-display {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 1rem;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .bus-status {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .bus-prediction-btn {
+            background: transparent !important;
+            border: 2px solid #fff;
+            color: #fff;
+            padding: 0.8rem;
+            border-radius: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            text-shadow: 
+                0 0 1px #fff,
+                0 0 4px #fff,
+                0 0 10px var(--primary),
+                0 0 20px var(--primary),
+                0 2px 5px rgba(0,0,0,0.6);
+            box-shadow: 
+                0 0 2px #fff,
+                inset 0 0 2px #fff,
+                0 0 10px var(--primary),
+                inset 0 0 10px var(--primary),
+                0 0 20px var(--primary),
+                inset 0 0 20px var(--primary);
+        }
+
+        .bus-prediction-btn:hover, .bus-prediction-btn:active {
+            background: transparent !important;
+            transform: translateY(-2px);
+            text-shadow: 
+                0 0 1px #fff,
+                0 0 5px #fff,
+                0 0 12px var(--primary),
+                0 0 25px var(--primary),
+                0 2px 6px rgba(0,0,0,0.7);
+            box-shadow: 
+                0 0 2px #fff,
+                inset 0 0 2px #fff,
+                0 0 10px var(--primary),
+                inset 0 0 10px var(--primary),
+                0 0 20px var(--primary),
+                inset 0 0 20px var(--primary),
+                0 0 30px var(--primary);
+        }
+
+        .bus-header-btn {
+            background: var(--icon-btn-bg);
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .bus-header-btn:hover {
+            background: var(--icon-btn-hover);
+        }
+
+        /* Card flip animation for Spiel 2/3 */
+        .card-flip-wrapper { perspective: 800px; }
+        .card-flip-inner {
+            width: 100%; height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.55s ease;
+        }
+        .card-flip-inner.flipped { transform: rotateY(180deg); }
+        .card-flip-front, .card-flip-back {
+            position: absolute; inset: 0;
+            backface-visibility: hidden;
+            border-radius: 10px; overflow: hidden;
+        }
+        .card-flip-back { transform: rotateY(180deg); }
+        .finale-card-large {
+            width: 85px; height: 120px;
+            border-radius: 10px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: space-between;
+            padding: 6px; font-size: 1rem; font-weight: 800;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .finale-card-large .icon { font-size: 2.2rem; }
+        .finale-hidden-card {
+            width: 85px; height: 120px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 2px solid var(--glass-border);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.04);
+        }
+
+        .bus-active-player {
+            text-align: center;
+            color: white;
+            font-weight: 800;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            width: 100%;
+        }
+
+        /* Color Selection Styles */
+        .color-swatch {
+            aspect-ratio: 1/1;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s ease;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .color-swatch.selected {
+            border-color: #fbbf24; /* Golden highlight */
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+            z-index: 2;
+        }
+        .color-swatch:hover {
+            transform: scale(1.05);
+        }
+
+        .spectrum-box {
+            display: none; /* Removed as requested */
+        }
+
+        .modal-section-title {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 0.3rem;
+        }
+
+        /* Atmosphere Decorations for Home Screen */
+        .atmosphere-decorations {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 1; 
+            overflow: hidden;
+        }
+
+        .deco {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            opacity: 0;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6));
+        }
+
+        .deco svg {
+            width: 100%;
+            height: 100%;
+            opacity: 1; /* Fully visible as requested */
+        }
+
+        /* Top Left: Bowling Ball */
+        .deco.top-left { 
+            top: -40px; left: -40px; 
+            animation: flyInTopLeft 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
+            animation-delay: 0.1s; 
+        }
+        @keyframes flyInTopLeft {
+            0% { transform: translate(-100px, -100px) rotate(-45deg); opacity: 0; }
+            100% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+        }
+
+        /* Top Right: Billiard */
+        .deco.top-right { 
+            top: -40px; right: -40px; 
+            animation: flyInTopRight 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
+            animation-delay: 0.2s; 
+        }
+        @keyframes flyInTopRight {
+            0% { transform: translate(100px, -100px) rotate(45deg); opacity: 0; }
+            100% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+        }
+
+        /* Bottom Left: Dart */
+        .deco.bottom-left { 
+            bottom: -40px; left: -40px; 
+            animation: flyInBottomLeft 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
+            animation-delay: 0.3s; 
+        }
+        @keyframes flyInBottomLeft {
+            0% { transform: translate(-100px, 100px) rotate(-45deg); opacity: 0; }
+            100% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+        }
+
+        /* Bottom Right: Poker Cards */
+        .deco.bottom-right { 
+            bottom: -40px; right: -40px; 
+            animation: flyInBottomRight 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; 
+            animation-delay: 0.4s; 
+        }
+        @keyframes flyInBottomRight {
+            0% { transform: translate(100px, 100px) rotate(45deg); opacity: 0; }
+            100% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+        }
+
+        /* Elevate home buttons over decor */
+        #homeScreen .home-btn, #homeScreen .home-title {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Neon Bar Title */
+        /* Neon OPEN Sign */
+        .neon-sign-container {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+            margin-top: 1rem;
+            border: 4px solid #fff;
+            padding: 1rem 2.5rem;
+            border-radius: 15px;
+            background: transparent !important;
+            /* Blue border glow */
+            box-shadow: 
+                0 0 5px #fff,
+                inset 0 0 5px #fff,
+                0 0 20px #3b82f6,
+                inset 0 0 20px #3b82f6,
+                0 0 40px #3b82f6,
+                inset 0 0 40px #3b82f6;
+            border-color: #fff;
+            transform: rotate(-3deg);
+            position: relative;
+            z-index: 10;
+        }
+
+        .neon-open {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin: 0;
+            /* Dynamic Red text glow */
+            text-shadow: 
+                0 0 2px #fff,
+                0 0 6px #fff,
+                0 0 15px var(--primary),
+                0 0 30px var(--primary),
+                0 0 50px var(--primary),
+                0 4px 10px rgba(0,0,0,0.7);
+        }
+
+        .neon-beer {
+            width: 45px;
+            height: 70px;
+        }
+
+        .glass-glow {
+            filter: drop-shadow(0 0 3px #fff) drop-shadow(0 0 8px #3b82f6);
+        }
+
+        .beer-liquid {
+            animation: fillBeer 4s infinite linear;
+            transform-origin: bottom;
+        }
+
+        .beer-foam {
+            animation: showFoam 4s infinite linear;
+        }
+
+        @keyframes fillBeer {
+            0% { clip-path: inset(100% 0 0 0); }
+            10% { clip-path: inset(100% 0 0 0); }
+            40% { clip-path: inset(10% 0 0 0); }
+            50% { clip-path: inset(0 0 0 0); }
+            60% { clip-path: inset(0 0 0 0); }
+            90% { clip-path: inset(100% 0 0 0); }
+            100% { clip-path: inset(100% 0 0 0); }
+        }
+
+        @keyframes showFoam {
+            0%, 40% { opacity: 0; }
+            45%, 60% { opacity: 1; }
+            65%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="homeScreen">
+        <div class="atmosphere-decorations">
+            <div class="deco top-left">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <radialGradient id="bowlingGrad" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#94a3b8" />
+                            <stop offset="100%" stop-color="#0f172a" />
+                        </radialGradient>
+                    </defs>
+                    <circle cx="50" cy="50" r="48" fill="url(#bowlingGrad)" />
+                    <circle cx="35" cy="40" r="6" fill="#020617" />
+                    <circle cx="55" cy="30" r="6" fill="#020617" />
+                    <circle cx="45" cy="60" r="8" fill="#020617" />
+                </svg>
+            </div>
+            <div class="deco top-right">
+                <svg viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="cueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#fef3c7" />
+                            <stop offset="100%" stop-color="#b45309" />
+                        </linearGradient>
+                        <radialGradient id="ball8Grad" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#4b5563" />
+                            <stop offset="100%" stop-color="#030712" />
+                        </radialGradient>
+                        <radialGradient id="ball9Grad" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stop-color="#fef08a" />
+                            <stop offset="100%" stop-color="#ca8a04" />
+                        </radialGradient>
+                    </defs>
+                    <line x1="10" y1="10" x2="140" y2="140" stroke="url(#cueGrad)" stroke-width="8" stroke-linecap="round" />
+                    <line x1="10" y1="10" x2="30" y2="30" stroke="#f8fafc" stroke-width="8" stroke-linecap="round" />
+                    <circle cx="80" cy="110" r="16" fill="url(#ball8Grad)" />
+                    <circle cx="76" cy="106" r="4" fill="#ffffff" />
+                    <text x="76" y="108" font-size="6" font-family="sans-serif" font-weight="bold" fill="#000" text-anchor="middle">8</text>
+                    <circle cx="115" cy="75" r="16" fill="#f8fafc" />
+                    <rect x="100" y="68" width="30" height="14" fill="url(#ball9Grad)" transform="rotate(45 115 75)" />
+                    <circle cx="110" cy="70" r="4" fill="#ffffff" />
+                    <text x="110" y="72" font-size="6" font-family="sans-serif" font-weight="bold" fill="#000" text-anchor="middle">9</text>
+                </svg>
+            </div>
+            <div class="deco bottom-left">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+                    <defs>
+                        <linearGradient id="dartMetal" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#cbd5e1" />
+                            <stop offset="100%" stop-color="#475569" />
+                        </linearGradient>
+                        <linearGradient id="dartFlight" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ef4444" />
+                            <stop offset="100%" stop-color="#7f1d1d" />
+                        </linearGradient>
+                    </defs>
+                    <!-- Dartboard (behind dart) -->
+                    <g opacity="0.85">
+                        <!-- Thick outer rim -->
+                        <circle cx="70" cy="25" r="32" fill="#020617" stroke="#1e293b" stroke-width="2"/>
+                        <!-- Number placeholder dots around the rim -->
+                        <circle cx="70" cy="25" r="28" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="0.1 8.7" stroke-linecap="round"/>
+                        
+                        <!-- Main play area base -->
+                        <circle cx="70" cy="25" r="24" fill="#0f172a" />
+                        
+                        <!-- Spider lines -->
+                        <g stroke="#334155" stroke-width="0.8">
+                            <line x1="46" y1="25" x2="94" y2="25" />
+                            <line x1="70" y1="1" x2="70" y2="49" />
+                            <line x1="53" y1="8" x2="87" y2="42" />
+                            <line x1="53" y1="42" x2="87" y2="8" />
+                            <line x1="47.8" y1="15.8" x2="92.2" y2="34.2" />
+                            <line x1="47.8" y1="34.2" x2="92.2" y2="15.8" />
+                            <line x1="60.8" y1="2.8" x2="79.2" y2="47.2" />
+                            <line x1="79.2" y1="2.8" x2="60.8" y2="47.2" />
+                        </g>
+
+                        <!-- Doubles ring -->
+                        <circle cx="70" cy="25" r="24" fill="none" stroke="#ef4444" stroke-width="2" opacity="0.6"/>
+                        <!-- Triples ring -->
+                        <circle cx="70" cy="25" r="14" fill="none" stroke="#10b981" stroke-width="2" opacity="0.6"/>
+                        
+                        <!-- Bullseye -->
+                        <circle cx="70" cy="25" r="5" fill="#10b981" opacity="0.8"/>
+                        <circle cx="70" cy="25" r="2.5" fill="#ef4444" opacity="0.9"/>
+                    </g>
+                    <!-- Dart Arrow -->
+                    <g transform="rotate(45 50 50) translate(0, -10)">
+                        <polygon points="50,10 48,30 52,30" fill="url(#dartMetal)" />
+                        <rect x="46" y="30" width="8" height="30" fill="url(#dartMetal)" rx="2" />
+                        <rect x="48" y="60" width="4" height="20" fill="#1e293b" />
+                        <polygon points="50,65 35,80 48,90 50,85" fill="url(#dartFlight)" />
+                        <polygon points="50,65 65,80 52,90 50,85" fill="url(#dartFlight)" />
+                    </g>
+                </svg>
+            </div>
+            <div class="deco bottom-right">
+                <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(15, 10) rotate(-15) scale(0.7)">
+                        <rect x="0" y="0" width="60" height="90" rx="5" fill="#f8fafc" stroke="#94a3b8" stroke-width="2" />
+                        <text x="10" y="20" font-size="16" font-family="sans-serif" fill="#ef4444">♥</text>
+                        <text x="30" y="55" font-size="24" font-family="sans-serif" font-weight="bold" fill="#ef4444" text-anchor="middle">A</text>
+                    </g>
+                    <g transform="translate(45, 15) rotate(5) scale(0.7)">
+                        <rect x="0" y="0" width="60" height="90" rx="5" fill="#f8fafc" stroke="#94a3b8" stroke-width="2" />
+                        <text x="10" y="20" font-size="16" font-family="sans-serif" fill="#0f172a">♠</text>
+                        <text x="30" y="55" font-size="24" font-family="sans-serif" font-weight="bold" fill="#0f172a" text-anchor="middle">K</text>
+                    </g>
+                    <g transform="translate(75, 25) rotate(25) scale(0.7)">
+                        <rect x="0" y="0" width="60" height="90" rx="5" fill="#f8fafc" stroke="#94a3b8" stroke-width="2" />
+                        <text x="10" y="20" font-size="16" font-family="sans-serif" fill="#ef4444">♦</text>
+                        <text x="30" y="55" font-size="24" font-family="sans-serif" font-weight="bold" fill="#ef4444" text-anchor="middle">Q</text>
+                    </g>
+                </svg>
+            </div>
+        </div>
+        <div class="neon-sign-container">
+            <h1 class="neon-open">OPEN</h1>
+            <div class="neon-beer">
+                <svg viewBox="0 0 50 80" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10,10 L15,70 C15,75 20,75 25,75 C30,75 35,75 35,70 L40,10" fill="none" stroke="#fff" stroke-width="3" class="glass-glow" />
+                    <path d="M11,12 L16,69 C16,73 19,73 25,73 C31,73 34,73 34,69 L39,12 Z" fill="#facc15" class="beer-liquid" />
+                    <path d="M9,10 C15,5 20,15 25,10 C30,5 35,15 41,10 C41,15 30,18 9,15 Z" fill="#fff" class="beer-foam" />
+                    <path d="M40,30 C48,30 48,50 38,55" fill="none" stroke="#fff" stroke-width="3" class="glass-glow" />
+                </svg>
+            </div>
+        </div>
+        <button class="home-btn" id="btn-trinkspiel" onclick="currentGameMode = 'trinkspiel'; openPlayerSetup()">Trinkspiel</button>
+        <button class="home-btn fragen-btn" id="btn-fragen" onclick="startGame('fragen')">Wer würde eher ...</button>
+        <button class="home-btn" id="btn-busfahrer" onclick="startBusfahrerSetup()">Busfahrer</button>
+        <button class="home-btn" style="font-size: 1rem; padding: 1rem;" onclick="openDesignModal()">Design & Export</button>
+    </div>
+
+    <!-- Design Modal -->
+    <div class="modal-overlay" id="designModal" onclick="closeModal(event, 'designModal')">
+        <div class="modal" onclick="event.stopPropagation()" style="max-width: 400px; width: 95%;">
+            <div class="modal-header">
+                <h3 class="modal-title">Design anpassen</h3>
+                <button class="close-btn" onclick="closeModalDirect('designModal')">✖</button>
+            </div>
+            
+            <!-- Kartenfarbe -->
+            <div class="modal-section-title">Kartenfarbe</div>
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 1.5rem;">
+                <div class="color-swatch card-swatch" data-color="#721c24" onclick="setCardColor('#721c24')" style="background: #721c24;"></div>
+                <div class="color-swatch card-swatch" data-color="#1e3a8a" onclick="setCardColor('#1e3a8a')" style="background: #1e3a8a;"></div>
+                <div class="color-swatch card-swatch" data-color="#065f46" onclick="setCardColor('#065f46')" style="background: #065f46;"></div>
+                <div class="color-swatch card-swatch" data-color="#4c1d95" onclick="setCardColor('#4c1d95')" style="background: #4c1d95;"></div>
+                <div class="color-swatch plus-swatch" id="plus-card" onclick="openExtraColors('card')">+</div>
+            </div>
+
+            <!-- Hintergrundfarbe -->
+            <div class="modal-section-title">Hintergrundfarbe</div>
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 1.5rem;">
+                <div class="color-swatch bg-swatch" data-color="#032012" onclick="setBgColor('#032012')" style="background: #032012;"></div>
+                <div class="color-swatch bg-swatch" data-color="#0f172a" onclick="setBgColor('#0f172a')" style="background: #0f172a;"></div>
+                <div class="color-swatch bg-swatch" data-color="#1e1b4b" onclick="setBgColor('#1e1b4b')" style="background: #1e1b4b;"></div>
+                <div class="color-swatch bg-swatch" data-color="#000000" onclick="setBgColor('#000000')" style="background: #000000;"></div>
+                <div class="color-swatch plus-swatch" id="plus-bg" onclick="openExtraColors('bg')">+</div>
+            </div>
+
+            <!-- Buttonfarbe -->
+            <div class="modal-section-title">Buttonfarbe</div>
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;">
+                <div class="color-swatch btn-swatch" data-color="#721c24" onclick="setBtnColor('#721c24')" style="background: #721c24;"></div>
+                <div class="color-swatch btn-swatch" data-color="#2563eb" onclick="setBtnColor('#2563eb')" style="background: #2563eb;"></div>
+                <div class="color-swatch btn-swatch" data-color="#059669" onclick="setBtnColor('#059669')" style="background: #059669;"></div>
+                <div class="color-swatch btn-swatch" data-color="#7c3aed" onclick="setBtnColor('#7c3aed')" style="background: #7c3aed;"></div>
+                <div class="color-swatch plus-swatch" id="plus-btn" onclick="openExtraColors('btn')" style="background: rgba(255, 255, 255, 0.1);">+</div>
+            </div>
+
+            <div class="modal-section-title" style="margin-top: 2rem;">App Finalisieren</div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+                Speichere alle aktuell geladenen Kartensets und das aktuelle Design fest in der Datei. Die heruntergeladene Datei ist dann komplett standalone und enthält alle deine Daten als Standard.
+            </p>
+            <button class="btn btn-primary" style="width: 100%; padding: 1rem;" onclick="generateFinalVersion()">Finale Datei (.html) erstellen</button>
+        </div>
+    </div>
+
+    <!-- Extra Colors Modal -->
+    <div class="modal-overlay" id="extraColorsModal" onclick="closeModal(event, 'extraColorsModal')">
+        <div class="modal" onclick="event.stopPropagation()" style="max-width: 450px; width: 95%;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="extraColorsTitle">Weitere Farben</h3>
+                <button class="close-btn" onclick="closeModalDirect('extraColorsModal')">✖</button>
+            </div>
+            <div id="extraColorsGrid" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; max-height: 350px; overflow-y: auto; padding: 5px;">
+                <!-- Dynamically filled -->
+            </div>
+        </div>
+    </div>
+
+    <div id="gameWrapper" style="display: none; flex: 1; flex-direction: column; height: 100%;">
+        <header>
+            <button class="icon-btn" onclick="returnToHome()" aria-label="Zurück zum Menü">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </button>
+            <div>
+                <button class="icon-btn" id="playerEditBtn" onclick="openPlayerSetupFromGame()" aria-label="Spieler verwalten" style="display: none; margin-right: 0.5rem;" title="Spieler verwalten">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                </button>
+                <button class="icon-btn" id="trinkspielSettingsBtn" onclick="openTrinkspielSettings()" aria-label="Spiel-Einstellungen" style="display: none; margin-right: 0.5rem;" title="Spiel-Einstellungen">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+                </button>
+                <button class="icon-btn" onclick="openSetsModal()" aria-label="Sets verwalten" style="display: inline-flex; margin-right: 0.5rem;" title="Kartensets">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                </button>
+                <button class="icon-btn" onclick="openAddModal()" aria-label="Karte hinzufügen" style="display: inline-flex; margin-right: 0.5rem;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+                <button class="icon-btn" onclick="openManageModal()" aria-label="Karten verwalten" style="display: inline-flex;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <div id="fragenCounter" style="display: none; color: white; font-weight: 800; font-size: 1.2rem; margin-bottom: 1.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5); background: rgba(0,0,0,0.4); padding: 0.5rem 1rem; border-radius: 20px;"></div>
+            <div id="currentPlayerDisplay" style="display: none; color: white; font-weight: 800; font-size: 1.8rem; margin-bottom: 1rem; text-shadow: 0 4px 8px rgba(0,0,0,0.8); letter-spacing: 1px; text-transform: uppercase;"></div>
+            <div class="card-container" id="mainCard" onclick="handleCardTap()">
+                <div class="card-face card-front">
+                    <h2 id="cardFrontText">Trinkspiel</h2>
+                </div>
+                <div class="card-face card-back">
+                    <div class="card-title" id="cardTitle">Titel</div>
+                    <div class="card-desc" id="cardDesc">Beschreibung</div>
+                </div>
+            </div>
+            <div class="controls-container">
+                <button class="btn btn-primary" onclick="shuffleDeckAnimation()" style="width: 100%; font-size: 1.2rem; background-color: var(--primary);">
+                    Karten mischen
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <div id="busfahrerWrapper">
+        <header style="padding: 1rem; width: 100%; display: flex; flex-direction: column; gap: 1rem; position: relative; z-index: 20; background: rgba(0,0,0,0.2);">
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <button class="icon-btn" onclick="returnToHome()" aria-label="Zurück">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="icon-btn" onclick="openPlayerSetupFromGame()" aria-label="Spieler">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </button>
+                    <button class="icon-btn" id="pyramidSettingsBtn" onclick="openPyramidSettings()" title="Pyramide Stufen" style="display: none;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    </button>
+                    <button class="icon-btn" id="handSizeBtn" onclick="openMidGameStartCardSettings()" title="Handkarten Anzahl" style="display: none;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                    </button>
+                    <button class="icon-btn" onclick="openBusRoundSelect()" aria-label="Runden">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    </button>
+                </div>
+            </div>
+            <h2 id="busRoundTitle" style="color: white; text-transform: uppercase; letter-spacing: 2px; font-size: 1rem; font-weight: 800; text-align: center;">Busfahrer</h2>
+        </header>
+
+        <div id="busContent" style="width: 100%; display: flex; flex-direction: column; align-items: center; flex: 1; padding: 1rem; position: relative; z-index: 10;">
+            <!-- Content changes per round -->
+        </div>
+    </div>
+
+    <!-- Player Setup Modal -->
+    <div class="modal-overlay" id="playerSetupModal" onclick="closeModal(event, 'playerSetupModal')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Spieler hinzufügen</h3>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; background: var(--danger); color: white; display: none;" id="deleteAllPlayersBtn" onclick="promptDeleteAllPlayers()">Alle entfernen</button>
+                    <button class="close-btn" onclick="closeModalDirect('playerSetupModal')">✖</button>
+                </div>
+            </div>
+            <div class="input-group" style="display: flex; gap: 0.5rem;">
+                <input type="text" id="playerNameInput" placeholder="Name..." autocomplete="off" onkeydown="if(event.key === 'Enter') addPlayer()">
+                <button class="btn btn-primary" style="flex: 0 0 auto; padding: 0.75rem;" onclick="addPlayer()">Hinzufügen</button>
+            </div>
+            <div class="card-list" id="playerList" style="max-height: 200px; margin-bottom: 1.5rem;">
+                <!-- Dynamically populated -->
+            </div>
+            <button class="btn btn-primary" id="playerSetupActionBtn" style="width: 100%; background: var(--secondary);" onclick="startTrinkspielWithPlayers()">Spiel starten</button>
+        </div>
+    </div>
+
+    <!-- Add Card Modal -->
+    <div class="modal-overlay" id="addModal" onclick="closeModal(event, 'addModal')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Neue Karte</h3>
+                <button class="close-btn" onclick="closeModalDirect('addModal')">✖</button>
+            </div>
+            <div class="input-group">
+                <label style="display: flex; justify-content: space-between;">
+                    <span>Titel (max 2 Zeilen)</span>
+                    <span id="addTitleCount" style="font-size: 0.8rem; color: var(--text-muted);">0/38</span>
+                </label>
+                <input type="text" id="newTitle" placeholder="z.B. Wasserfall" autocomplete="off" maxlength="38" oninput="updateCharCount('newTitle', 'addTitleCount', 38)">
+            </div>
+            <div class="input-group">
+                <label style="display: flex; justify-content: space-between;">
+                    <span>Beschreibung</span>
+                    <span id="addDescCount" style="font-size: 0.8rem; color: var(--text-muted);">0/192</span>
+                </label>
+                <textarea id="newDesc" rows="4" placeholder="Beschreibe die Aufgabe..." maxlength="192" oninput="updateCharCount('newDesc', 'addDescCount', 192)"></textarea>
+            </div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="addCard()">Hinzufügen</button>
+        </div>
+    </div>
+
+    <!-- Manage Cards Modal -->
+    <div class="modal-overlay" id="manageModal" onclick="closeModal(event, 'manageModal')">
+        <div class="modal" onclick="event.stopPropagation()" style="height: 80vh;">
+            <div class="modal-header">
+                <h3 class="modal-title">Karten verwalten</h3>
+                <button class="close-btn" onclick="closeModalDirect('manageModal')">✖</button>
+            </div>
+            <div class="search-bar" style="margin-bottom: 0.5rem;">
+                <input type="text" id="searchInput" placeholder="Karte suchen..." oninput="filterCards()" autocomplete="off">
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding: 0 0.5rem;">
+                <span id="activeCardsCount" style="color: var(--text-muted); font-size: 0.9rem; font-weight: 500;">0 von 0 Karten aktiv</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="masterToggle" onchange="toggleAllCards(this.checked)">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="card-list" id="cardList">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Pyramid Settings Modal -->
+    <div class="modal-overlay" id="pyramidSettingsModal" onclick="closeModal(event, 'pyramidSettingsModal')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Pyramide Stufen</h3>
+                <button class="close-btn" onclick="closeModalDirect('pyramidSettingsModal')">✖</button>
+            </div>
+            <div style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">
+                Wähle die Anzahl der Stufen für die Pyramide. Eine Änderung setzt das Spiel zurück.
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                <button class="btn" style="padding: 1rem; background: var(--secondary);" onclick="setPyramidRows(3)">3 Stufen</button>
+                <button class="btn" style="padding: 1rem; background: var(--secondary);" onclick="setPyramidRows(4)">4 Stufen</button>
+                <button class="btn" style="padding: 1rem; background: var(--secondary);" onclick="setPyramidRows(5)">5 Stufen</button>
+                <button class="btn" style="padding: 1rem; background: var(--secondary);" onclick="setPyramidRows(6)">6 Stufen</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="cardActionModal" onclick="closeModal(event, 'cardActionModal')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Optionen</h3>
+                <button class="close-btn" onclick="closeModalDirect('cardActionModal')">✖</button>
+            </div>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted);"><strong id="actionCardTitle" style="color: var(--text-color);"></strong></p>
+            <div class="btn-group" style="flex-direction: column; gap: 0.5rem;">
+                <button class="btn btn-primary" onclick="openEditModal()">Bearbeiten</button>
+                <button class="btn" onclick="openMoveModal()" style="background: var(--secondary);">In Set verschieben</button>
+                <button class="btn" onclick="confirmDeleteCard()" style="background: var(--danger);">Löschen</button>
+                <button class="btn" onclick="closeModalDirect('cardActionModal')" style="background: var(--icon-btn-hover); color: var(--text-color);">Abbrechen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manage Sets Modal -->
+    <div class="modal-overlay" id="manageSetsModal" onclick="closeModal(event, 'manageSetsModal')">
+        <div class="modal" onclick="event.stopPropagation()" style="height: 80vh;">
+            <div class="modal-header">
+                <h3 class="modal-title">Kartensets</h3>
+                <button class="close-btn" onclick="closeModalDirect('manageSetsModal')">✖</button>
+            </div>
+            <div class="btn-group" style="margin-bottom: 1rem;">
+                <button class="btn btn-primary" onclick="createNewSet()">+ Neues Set</button>
+                <button class="btn" style="background: var(--icon-btn-hover); color: var(--text-color);" onclick="openImportModal()">Importieren</button>
+                <button class="btn" style="flex: 0 0 50px; padding: 0; font-size: 1.5rem; display: flex; justify-content: center; align-items: center;" onclick="document.getElementById('setsInfoModal').classList.add('active')">ℹ</button>
+            </div>
+            <div class="card-list" id="setsList">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Sets Info Modal -->
+    <div class="modal-overlay" id="setsInfoModal" onclick="closeModal(event, 'setsInfoModal')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Info</h3>
+                <button class="close-btn" onclick="closeModalDirect('setsInfoModal')">✖</button>
+            </div>
+            <div style="font-size: 0.95rem; line-height: 1.5; color: var(--text-color); margin-bottom: 1rem; max-height: 60vh; overflow-y: auto;">
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem; margin-top: 0;">Neues Set erstellen</h4>
+                <p style="margin-top: 0; margin-bottom: 1rem;">Erstelle ein komplett eigenes Kartenset. In der Kartenverwaltung kannst du neue Karten anlegen und dieses Set als Ziel auswählen.</p>
+                
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Karten kopieren & verschieben</h4>
+                <p style="margin-top: 0; margin-bottom: 1rem;">Tippe in der Kartenverwaltung auf eine bestehende Karte. Im Bearbeitungsmenü kannst du diese Karte dann mit einem Klick in eines deiner eigenen Sets <b>kopieren</b> oder <b>verschieben</b>.</p>
+                
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Exportieren & Teilen</h4>
+                <p style="margin-top: 0; margin-bottom: 1rem;">Über "Export" kannst du ein erstelltes Set als Text-Code speichern. Diesen Code kannst du einfach kopieren und an deine Freunde (z.B. über WhatsApp) schicken.</p>
+                
+                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Importieren</h4>
+                <p style="margin-top: 0; margin-bottom: 1rem;">Hast du einen Code von Freunden erhalten? Klicke auf "Importieren", füge den Code ein und das neue Kartenset ist sofort für dich verfügbar!</p>
+            </div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="closeModalDirect('setsInfoModal')">Verstanden</button>
+        </div>
+    </div>
+
+    <!-- Import Set Modal -->
+    <div class="modal-overlay" id="importModal" onclick="closeModal(event, 'importModal')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Set importieren</h3>
+                <button class="close-btn" onclick="closeModalDirect('importModal')">✖</button>
+            </div>
+            <div class="input-group">
+                <label>Set-Code einfügen</label>
+                <textarea id="importCode" placeholder="Code hier einfügen..."></textarea>
+            </div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="importSet()">Importieren</button>
+        </div>
+    </div>
+
+    <!-- Move To Set Modal -->
+    <div class="modal-overlay" id="moveToSetModal" onclick="closeModal(event, 'moveToSetModal')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">In Set verschieben</h3>
+                <button class="close-btn" onclick="closeModalDirect('moveToSetModal')">✖</button>
+            </div>
+            <div class="card-list" id="moveToList">
+                <!-- Sets to move to -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Set Details Modal -->
+    <div class="modal-overlay" id="setDetailsModal" onclick="closeModal(event, 'setDetailsModal')">
+        <div class="modal" onclick="event.stopPropagation()" style="height: 80vh;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="setDetailsTitle">Set Details</h3>
+                <button class="close-btn" onclick="closeModalDirect('setDetailsModal')">✖</button>
+            </div>
+            <div class="card-list" id="setDetailsList">
+            </div>
+        </div>
+    </div>
+
+    <!-- Copy to Set Modal -->
+    <div class="modal-overlay" id="copyToSetModal" onclick="closeModal(event, 'copyToSetModal')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">In Set kopieren</h3>
+                <button class="close-btn" onclick="closeModalDirect('copyToSetModal')">✖</button>
+            </div>
+            <div class="card-list" id="copyToList">
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Set Modal -->
+    <div class="modal-overlay" id="createSetModal" onclick="closeModal(event, 'createSetModal')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Neues Set erstellen</h3>
+                <button class="close-btn" onclick="closeModalDirect('createSetModal')">✖</button>
+            </div>
+            <div class="input-group">
+                <label>Name des Sets</label>
+                <input type="text" id="createSetInput" placeholder="z.B. Party Set" autocomplete="off">
+            </div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="saveNewSet()">Erstellen</button>
+        </div>
+    </div>
+
+    <!-- Rename Set Modal -->
+    <div class="modal-overlay" id="renameSetModal" onclick="closeModal(event, 'renameSetModal')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Set umbenennen</h3>
+                <button class="close-btn" onclick="closeModalDirect('renameSetModal')">✖</button>
+            </div>
+            <div class="input-group">
+                <label>Neuer Name</label>
+                <input type="text" id="renameSetInput" autocomplete="off">
+            </div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="saveRenameSet()">Speichern</button>
+        </div>
+    </div>
+
+    <!-- Export Set Modal -->
+    <div class="modal-overlay" id="exportSetModal" onclick="closeModal(event, 'exportSetModal')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Set Exportieren</h3>
+                <button class="close-btn" onclick="closeModalDirect('exportSetModal')">✖</button>
+            </div>
+            <div style="margin-bottom: 1rem; color: var(--text-color); font-size: 0.9rem;">
+                Kopiere diesen Code, um dein Set z.B. auf WhatsApp mit Freunden zu teilen:
+            </div>
+            <div class="input-group">
+                <textarea id="exportSetOutput" rows="4" readonly style="width: 100%; resize: none; font-family: monospace; font-size: 0.8rem; padding: 0.8rem; background: var(--input-bg); color: var(--text-color); border: 1px solid var(--glass-border); border-radius: 8px;"></textarea>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-primary" style="flex: 1; padding: 0.8rem;" onclick="copyExportCode()">Code kopieren</button>
+                <button class="btn" style="flex: 1; padding: 0.8rem; background: var(--secondary);" onclick="closeModalDirect('exportSetModal')">Schließen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Delete Set Modal -->
+    <div class="modal-overlay" id="deleteSetModal" onclick="closeModal(event, 'deleteSetModal')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Set löschen?</h3>
+                <button class="close-btn" onclick="closeModalDirect('deleteSetModal')">✖</button>
+            </div>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+                Bist du sicher? Das Set <strong id="deleteSetName" style="color: var(--text-color);"></strong> und <strong style="color: var(--danger);">alle</strong> darin enthaltenen Karten werden unwiderruflich gelöscht.
+            </p>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn" style="flex: 1; background: var(--danger); color: white;" onclick="confirmDeleteSet()">Löschen</button>
+                <button class="btn" style="flex: 1; background: var(--icon-btn-hover); color: var(--text-color);" onclick="closeModalDirect('deleteSetModal')">Abbrechen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Card Modal -->
+    <div class="modal-overlay" id="editModal" onclick="closeModal(event, 'editModal')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Karte bearbeiten</h3>
+                <button class="close-btn" onclick="closeModalDirect('editModal')">✖</button>
+            </div>
+            <div class="input-group">
+                <label style="display: flex; justify-content: space-between;">
+                    <span>Titel (max 2 Zeilen)</span>
+                    <span id="editTitleCount" style="font-size: 0.8rem; color: var(--text-muted);">0/38</span>
+                </label>
+                <input type="text" id="editTitle" autocomplete="off" maxlength="38" oninput="updateCharCount('editTitle', 'editTitleCount', 38)">
+            </div>
+            <div class="input-group">
+                <label style="display: flex; justify-content: space-between;">
+                    <span>Beschreibung</span>
+                    <span id="editDescCount" style="font-size: 0.8rem; color: var(--text-muted);">0/192</span>
+                </label>
+                <textarea id="editDesc" rows="4" maxlength="192" oninput="updateCharCount('editDesc', 'editDescCount', 192)"></textarea>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <button class="btn btn-primary" style="width: 100%;" onclick="saveEditCard()">Speichern</button>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn" style="flex: 1; background: var(--secondary); font-size: 0.9rem; padding: 0.6rem;" onclick="openMoveModalFromEdit()">Verschieben</button>
+                    <button class="btn" style="flex: 1; background: var(--danger); color: white; font-size: 0.9rem; padding: 0.6rem;" onclick="confirmDeleteCardFromEdit()">Löschen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Back Modal -->
+    <div class="modal-overlay" id="confirmBackModal" onclick="closeModal(event, 'confirmBackModal')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Zurück zum Menü?</h3>
+                <button class="close-btn" onclick="closeModalDirect('confirmBackModal')">✖</button>
+            </div>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+                Bist du sicher, dass du das aktuelle Spiel beenden und zum Hauptmenü zurückkehren möchtest?
+            </p>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn" style="flex: 1; background: var(--danger); color: white;" onclick="confirmReturnToHome()">Ja, zurück</button>
+                <button class="btn" style="flex: 1; background: var(--icon-btn-hover); color: var(--text-color);" onclick="closeModalDirect('confirmBackModal')">Abbrechen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Delete All Players Modal -->
+    <div class="modal-overlay" id="confirmDeleteAllPlayersModal" onclick="closeModal(event, 'confirmDeleteAllPlayersModal')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Alle Spieler löschen?</h3>
+                <button class="close-btn" onclick="closeModalDirect('confirmDeleteAllPlayersModal')">✖</button>
+            </div>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+                Möchtest du wirklich alle hinzugefügten Spieler entfernen?
+            </p>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn" style="flex: 1; background: var(--danger); color: white;" onclick="confirmDeleteAllPlayers()">Ja, alle löschen</button>
+                <button class="btn" style="flex: 1; background: var(--icon-btn-hover); color: var(--text-color);" onclick="closeModalDirect('confirmDeleteAllPlayersModal')">Abbrechen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trinkspiel Settings Modal -->
+    <div class="modal-overlay" id="trinkspielSettingsModal" onclick="closeModal(event, 'trinkspielSettingsModal')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Spiel-Optionen</h3>
+                <button class="close-btn" onclick="closeModalDirect('trinkspielSettingsModal')">✖</button>
+            </div>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Wähle das Verhalten des Kartenstapels:</p>
+            
+            <div class="manager-card" id="reshuffleOnBtn" onclick="setReshuffle(true)" style="width: 100%; text-align: left; margin-bottom: 1rem; padding: 1.2rem; display: flex; align-items: center; border: 1px solid var(--glass-border);">
+                <div style="flex: 1;">
+                    <h4 style="margin-bottom: 0.3rem;">Mit Zurücklegen (Endlos)</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Karten werden nach dem Ziehen wieder in den Stapel gemischt.</p>
+                </div>
+                <div class="status-indicator" id="reshuffleOnIndicator" style="width: 14px; height: 14px; border-radius: 50%; background: var(--secondary); box-shadow: 0 0 10px var(--secondary); display: block;"></div>
+            </div>
+
+            <div class="manager-card" id="reshuffleOffBtn" onclick="setReshuffle(false)" style="width: 100%; text-align: left; padding: 1.2rem; display: flex; align-items: center; border: 1px solid var(--glass-border);">
+                <div style="flex: 1;">
+                    <h4 style="margin-bottom: 0.3rem;">Ohne Zurücklegen</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Karten werden aus dem Stapel entfernt. Ein Zähler wird angezeigt.</p>
+                </div>
+                <div class="status-indicator" id="reshuffleOffIndicator" style="width: 14px; height: 14px; border-radius: 50%; background: var(--secondary); box-shadow: 0 0 10px var(--secondary); display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Complete Modal -->
+    <div class="modal-overlay" id="gameCompleteModal" onclick="closeModal(event, 'gameCompleteModal')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Spiel beendet!</h3>
+                <button class="close-btn" onclick="closeModalDirect('gameCompleteModal')">✖</button>
+            </div>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+                Alle Karten wurden gezogen. Möchtest du den Stapel neu mischen und von vorne beginnen?
+            </p>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn" style="flex: 1; background: var(--secondary); color: white;" onclick="restartGame()">Ja, neu mischen</button>
+                <button class="btn" style="flex: 1; background: var(--primary); color: white;" onclick="closeModalDirect('gameCompleteModal')">Beenden</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="busFeedbackModal" class="modal-overlay" style="z-index: 200;">
+        <div class="modal" style="max-width: 350px;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="busFeedbackTitle">Ergebnis</h3>
+                <button class="close-btn" onclick="closeBusFeedback()">✖</button>
+            </div>
+            <p id="busFeedbackText" style="margin-bottom: 1.5rem; font-size: 1.2rem; text-align: center; font-weight: 600;"></p>
+            <button class="btn btn-primary" style="width: 100%;" onclick="closeBusFeedback()">OK</button>
+        </div>
+    </div>
+
+    <div id="busDiscardModal" class="modal-overlay" style="z-index: 200;">
+        <div class="modal" style="max-width: 350px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Karte ablegen?</h3>
+                <button class="close-btn" onclick="confirmBusDiscard(false)">✖</button>
+            </div>
+            <p id="busDiscardText" style="margin-bottom: 1.5rem; color: var(--text-muted); text-align: center;">
+                <span id="busDiscardPlayerName" style="color: white; font-weight: 800;"></span>, du hast eine passende Karte (<span id="busDiscardCardInfo" style="font-weight: 800;"></span>)! Möchtest du sie ablegen und <span id="busDiscardDrinkCount" style="color: var(--secondary); font-weight: 800;"></span> Schluck(e) verteilen?
+            </p>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-primary" style="flex: 1;" onclick="confirmBusDiscard(true)">Ja</button>
+                <button class="btn" style="flex: 1; background: var(--icon-btn-hover); color: white;" onclick="confirmBusDiscard(false)">Nein</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="busRoundSelectModal" class="modal-overlay" style="z-index: 200;">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Runden-Auswahl</h3>
+                <button class="close-btn" onclick="closeModalDirect('busRoundSelectModal')">✖</button>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <button class="btn btn-primary" onclick="jumpToBusRound(1)">Spiel 1 – Pyramide</button>
+                <button class="btn btn-primary" onclick="jumpToBusRound(2)">Spiel 2 – Busfahren</button>
+                <button class="btn btn-primary" onclick="jumpToBusRound(3)">Spiel 3 – Extra Runde</button>
+                <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 0.5rem 0;">
+                <button class="btn" style="background: var(--primary);" onclick="closeModalDirect('busRoundSelectModal'); startGame('trinkspiel')">Wechsel zu: Trinkspiel</button>
+                <button class="btn" style="background: var(--primary);" onclick="closeModalDirect('busRoundSelectModal'); startGame('fragen')">Wechsel zu: Fragen</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="busStartSettingsModal" class="modal-overlay" style="z-index: 200;">
+        <div class="modal" style="max-width: 350px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Busfahrer Start</h3>
+                <button class="close-btn" onclick="closeModalDirect('busStartSettingsModal')">✖</button>
+            </div>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted); text-align: center;">Wähle die Anzahl der Karten, mit denen jeder Spieler startet:</p>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 2rem;">
+                <button class="icon-btn" onclick="adjustStartCards(-1)" style="width: 50px; height: 50px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <span id="startCardValue" style="font-size: 3rem; font-weight: 800; width: 40px; text-align: center;">2</span>
+                <button class="icon-btn" onclick="adjustStartCards(1)" style="width: 50px; height: 50px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+            </div>
+            <button class="btn btn-primary" id="confirmBusStartBtn" style="width: 100%; padding: 1.2rem; font-size: 1.2rem;" onclick="confirmBusStart()">Spiel starten</button>
+        </div>
+    </div>
+
+    <div id="busLoserListModal" class="modal-overlay" style="z-index: 200;">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Busfahrer-Kandidaten</h3>
+                <button class="close-btn" onclick="closeModalDirect('busLoserListModal')">✖</button>
+            </div>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted); text-align: center;">Die folgenden Spieler haben am meisten Karten übrig und müssen zum Karten raten:</p>
+            <div id="busLoserListContent" style="display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem;"></div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="startBusRound2()">Karten raten starten</button>
+        </div>
+    </div>
+
+    <div id="busExtraRoundModal" class="modal-overlay" style="z-index: 200;">
+        <div class="modal" style="max-width: 350px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Extra Runde?</h3>
+                <button class="close-btn" onclick="closeModalDirect('busExtraRoundModal')">✖</button>
+            </div>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted); text-align: center;">
+                <span id="busExtraRoundPlayerName" style="color: white; font-weight: 800;"></span> hat die meisten Fehlversuche gesammelt! Möchtest du eine Extra Runde (Höher/Tiefer) drehen?
+            </p>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-primary" style="flex: 1;" onclick="confirmBusExtraRound(true)">Ja</button>
+                <button class="btn" style="flex: 1; background: var(--icon-btn-hover); color: white;" onclick="confirmBusExtraRound(false)">Nein</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // BUILD_ID_MARKER
+        const BUILD_ID = "default";
+
+        // TRINKSPIEL_SETS_START
+        const hardcodedTrinkspielSets = [
+            {
+                id: "standard",
+                name: "Standard Set",
+                cards: [
+                    { title: "✊ Schnick Schnack Schnuck Duell", desc: "Spiele 3 Runden Schere–Stein–Papier gegen eine beliebige Person.\nDer Verlierer jeder Runde trinkt 3 Schlücke." },
+                    { title: "🌅 Laternen-Schluck", desc: "Verteile so viele Schlücke, wie du Laternen in deinem Sichtfeld zählen kannst." },
+                    { title: "🌳 Baum-Entscheidung", desc: "Umarme den nächsten Baum oder trinke 5 Schlücke." },
+                    { title: "🍀 Grashalm-Schicksal", desc: "Wähle eine Person aus. Diese zieht zwei Grashalme (einen langen, einen kurzen).\nWer den kürzeren zieht, trinkt 3 Schlücke." },
+                    { title: "🤝 Trink-Buddy", desc: "Wähle einen Trink-Buddy. Für die nächsten 3 Karten trinken beide immer gemeinsam." },
+                    { title: "🥤 Dosenwerfen Challenge", desc: "Stelle 3 Dosen im Abstand von 0,5 m auf. Gehe 5 Schritte zurück.\nDu hast 3 Würfe.\n\nJede getroffene Dose = Anzahl Schlücke × 2 verteilt an andere\nJede verfehlte Dose = du trinkst Anzahl × 2" },
+                    { title: "🥂 PROST Runde", desc: "Alle Spieler trinken 1 Schluck." },
+                    { title: "🤸 Handstand-Entscheidung", desc: "Mache einen Handstand oder trinke 3 Schlücke." },
+                    { title: "💪 Fitness oder Strafe", desc: "Mache 20 Liegestütze und verteile 5 Schlücke\noder trinke selbst 3 Schlücke." },
+                    { title: "📸 Lustige Pose", desc: "Lass eine andere Person ein Foto von dir in einer lustigen Pose machen." },
+                    { title: "🍺 Bier-Trichter", desc: "Trinke ein Bier im Trichterstil (auf Ex oder in einem Zug)." },
+                    { title: "🤹 Einbein-Jongleur", desc: "Jongliere mit 2 Dosen für 20 Sekunden, während du auf einem Bein stehst." },
+                    { title: "🎳 Bowling Chaos", desc: "Stelle 10 Dosen in Dreiecksformation auf (ca. 10 cm Abstand).\nGehe 8 Schritte zurück und versuche alle umzuwerfen.\n\nStrike: Alle anderen trinken 4 Schlücke\nRestdosen bestimmen deine Trinkmenge" },
+                    { title: "🧠 Gedankenlesen", desc: "Wähle eine Person. Eine Kategorie wird genannt und ein Countdown (3–2–1).\nWenn beide das gleiche Wort sagen → safe.\nWenn nicht → beide trinken 1 Schluck." },
+                    { title: "🐍 Medusa", desc: "Alle schauen nach unten im Kreis.\nBeim Timer schauen alle zufällig auf eine Person.\nBei Augenkontakt: beide trinken 1 Schluck." },
+                    { title: "🎯 Pennersaufen", desc: "Wähle eine Person. Diese bewegt den Kopf zufällig in Richtungen.\nDu musst die Richtung erraten.\nJeder Fehlversuch = 1 Schluck." },
+                    { title: "⚖️ Ausgleich", desc: "Wähle eine Person.\nDie Person mit mehr Bier muss trinken, bis beide gleich viel haben." },
+                    { title: "🃏 Russisches Kartenroulette", desc: "Im Kreis wird eine Zielkarte bestimmt (z. B. Herz Dame).\nReihum wird gezogen.\nWer die Karte zieht → muss sein Getränk exen." },
+                    { title: "👁️ Blickduell", desc: "Zwei Personen starren sich an. Countdown von 3.\nWer zuerst blinzelt verliert → 3 Schlücke." },
+                    { title: "🎲 Hütchenspiel", desc: "3 Becher, 1 versteckter Ball.\n3 Runden wählen.\nFalsch = 1 Schluck." }
+                ]
+            },
+            {
+                id: "1mai",
+                name: "1 Mai",
+                cards: [
+                    { title: "👆 Zeigefinger", desc: "Alle zeigen auf die Person, die zuletzt etwas gegessen hat. Die Person trinkt 2 Schlücke." },
+                    { title: "🎵 Summsumm", desc: "Summe einen Song. Wer ihn zuerst erkennt, verteilt 2 Schlücke. Niemand errät ihn? Du trinkst 3." },
+                    { title: "🌸 Kompliment", desc: "Mache jedem in der Runde ein Kompliment. Wer lacht trinkt 2 Schlücke." },
+                    { title: "🐸 Frosch", desc: "Alle müssen in die Hocke. Wer als letzter sitzt oder aufsteht, trinkt 3 Schlücke." },
+                    { title: "🧠 Kategorien", desc: "Nennt abwechselnd Dinge einer Kategorie (z.B. Tierarten). Wer nicht weiter weiß, trinkt 3 Schlücke." },
+                    { title: "🌊 Wellengang", desc: "Ihr trinkt alle gleichzeitig, aber immer der Reihe nach anfangen. Wer aus dem Takt kommt, trinkt nochmal 2." },
+                    { title: "🗺️ Himmelsrichtung", desc: "Alle zeigen gleichzeitig nach Norden. Wer am meisten falsch liegt, trinkt 3 Schlücke." },
+                    { title: "🌊 Fluss", desc: "Alle trinken gleichzeitig so lange, bis eine bestimmte Person aufhört. Die Person entscheidet wann." },
+                    { title: "🎭 Schauspieler", desc: "Spiele eine Szene nach, die dir jemand vorgibt. Publikumsentscheidung: Daumen hoch = du verteilst 3, Daumen runter = trinke 4." },
+                    { title: "🕵️ Lügner", desc: "Sage 3 Dinge über dich – eines ist gelogen. Wer die Lüge nicht erkennt, trinkt 3. Du wirst erwischt? Trinke 4." },
+                    { title: "🥃 Shotgun", desc: "Wähle eine Person. Ihr macht beide einen Shot. Keine Ausreden." },
+                    { title: "🌿 Naturkenner", desc: "Alle benennen eine Pflanze in der Nähe. Wer falsch liegt oder passen muss, trinkt 2 Schlücke." },
+                    { title: "🌅 Kompass", desc: "Alle zeigen in die Richtung, aus der die Sonne heute aufging. Wer am meisten daneben liegt, trinkt 3 Schlücke." },
+                    { title: "🎒 Rucksack-Roulette", desc: "Jemand greift blind in einen Rucksack und zieht einen Handy raus. Wem es gehört, trinkt 3 Schlücke." },
+                    { title: "🌡️ Temperatur-Schätzer", desc: "Alle schätzen die aktuelle Lufttemperatur. Wer am weitesten daneben liegt, trinkt 4 Schlücke." },
+                    { title: "🧲 Magnet", desc: "Wähle eine Person. Ihr müsst für die nächsten 5 Minuten immer weniger als 1 Meter voneinander entfernt sein. Wird die Regel gebrochen: beide trinken 4." },
+                    { title: "🎪 Menschenpyramide", desc: "Baut eine 2-stöckige Menschenpyramide und haltet sie 5 Sekunden. Klappt es nicht: alle trinken 3. Klappt es: verteilt zusammen 6 Schlücke." },
+                    { title: "🥃 Naturshot", desc: "Die älteste Person wählt, wer den Shot macht. Kein Einspruch erlaubt." },
+                    { title: "👉 Fingerzeig", desc: "Alle zeigen gleichzeitig auf jemanden. Wer am meisten Finger auf sich hat, macht den Shot." },
+                    { title: "🥃 Letzter stehend", desc: "Alle heben ihr Getränk. Der erste, der es absetzt, trinkt einen Shot" },
+                    { title: "🃏 Russisches Kartenroulette", desc: "Im Kreis wird eine Zielkarte bestimmt (z. B. Herz Dame).\nReihum wird gezogen.\nWer die Karte zieht → muss sein Getränk exen." },
+                    { title: "🐍 Medusa", desc: "Alle schauen nach unten im Kreis.\nBeim Timer schauen alle zufällig auf eine Person.\nBei Augenkontakt: beide trinken 1 Schluck." },
+                    { title: "📸 Lustige Pose", desc: "Lass eine andere Person ein Foto von dir in einer lustigen Pose machen." },
+                    { title: "✊ Schnick Schnack Schnuck Duell", desc: "Spiele 3 Runden Schere–Stein–Papier gegen eine beliebige Person.\nDer Verlierer jeder Runde trinkt 3 Schlücke." },
+                    { title: "🧠 Gedankenlesen", desc: "Wähle eine Person. Eine Kategorie wird genannt und ein Countdown (3–2–1).\nWenn beide das gleiche Wort sagen → safe.\nWenn nicht → beide trinken 1 Schluck." }
+                ]
+            }
+        ];
+        // TRINKSPIEL_SETS_END
+
+        // FRAGEN_SETS_START
+        const hardcodedFragenSets = [
+            // Platzhalter: Hier fügen wir später die neuen "Wer würde eher"-Sets ein
+        ];
+        // FRAGEN_SETS_END
+
+
+
+        let cards = [];
+        let sets = [];
+        let drawPool = [];
+        let currentCard = null;
+        let currentGameMode = 'trinkspiel'; // 'trinkspiel' or 'fragen'
+        let players = [];
+        let currentPlayerIndex = 0;
+        let totalActiveCards = 0; // for counter
+        let trinkspielReshuffle = true; // Deck setting for Trinkspiel mode
+
+        // --- Busfahrer State ---
+        let busDeck = [];
+        let busPlayersState = []; 
+        let busRound = 1; 
+        let busStartCards = 2;
+        let busPyramidRows = 4;
+        let busPyramid = [];
+        let busPyramidRevealed = [];
+        let busPyramidIndex = 0;
+        let busDiscardPending = null; // { playerIdx, cardIdx, drinks, pyramidCard }
+        let busMatchSkipPlayers = new Set();
+        let busFinaleStep = 1;
+        let busFinaleCards = [];
+        let busFinaleLastCard = null;
+        let busLoserIndices = [];
+        let busFinaleCurrentDriverIdx = 0;
+        let busFinaleSuitsSeen = new Set();
+        let busFeedbackQueue = [];
+        let busFailureCounts = {}; // Track mistakes in Spiel 2
+        let busExtraRoundPlayerIdx = -1;
+
+        function getStorageKeys() {
+            if (currentGameMode === 'fragen') {
+                return {
+                    cards: 'fragen_cards_v1',
+                    sets: 'fragen_sets_v1'
+                };
+            }
+            return {
+                cards: 'trinkspiel_cards_v1',
+                sets: 'trinkspiel_sets_v1'
+            };
+        }
+
+        function startGame(mode) {
+            currentGameMode = mode;
+            document.getElementById('homeScreen').style.display = 'none';
+            
+            // Zustände zurücksetzen
+            currentPlayerIndex = 0;
+            currentCard = null;
+            
+            if (mode === 'fragen') {
+                document.getElementById('gameWrapper').style.display = 'flex';
+                document.getElementById('busfahrerWrapper').style.display = 'none';
+                document.getElementById('fragenCounter').style.display = 'block';
+                document.getElementById('cardFrontText').innerText = 'Wer würde eher ...';
+                document.getElementById('currentPlayerDisplay').style.display = 'none';
+                document.getElementById('playerEditBtn').style.display = 'none';
+                document.getElementById('trinkspielSettingsBtn').style.display = 'none';
+            } else if (mode === 'busfahrer') {
+                document.getElementById('busfahrerWrapper').style.display = 'flex';
+                document.getElementById('gameWrapper').style.display = 'none';
+                // Busfahrer spezifische Resets
+                busPlayersState = [];
+                busLoserIndices = [];
+                busExtraRoundPlayerIdx = -1;
+            } else {
+                document.getElementById('gameWrapper').style.display = 'flex';
+                document.getElementById('busfahrerWrapper').style.display = 'none';
+                document.getElementById('fragenCounter').style.display = trinkspielReshuffle ? 'none' : 'block';
+                document.getElementById('cardFrontText').innerText = 'Trinkspiel';
+                document.getElementById('playerEditBtn').style.display = 'inline-flex';
+                document.getElementById('trinkspielSettingsBtn').style.display = 'inline-flex';
+                updateCurrentPlayerDisplay();
+            }
+            
+            // Reset main card to front
+            document.getElementById('mainCard').classList.remove('flipped');
+            
+            initData();
+        }
+
+        function returnToHome() {
+            if (currentGameMode === 'trinkspiel' || currentGameMode === 'fragen' || currentGameMode === 'busfahrer') {
+                document.getElementById('confirmBackModal').classList.add('active');
+            } else {
+                confirmReturnToHome();
+            }
+        }
+
+        function confirmReturnToHome() {
+            document.getElementById('homeScreen').style.display = 'flex';
+            document.getElementById('gameWrapper').style.display = 'none';
+            document.getElementById('busfahrerWrapper').style.display = 'none';
+            currentGameMode = 'menu';
+            closeModalDirect('confirmBackModal');
+        }
+
+        async function generateFinalVersion() {
+            // Get current sets and cards for both modes
+            const tKeys = { cards: 'trinkspiel_cards_v1', sets: 'trinkspiel_sets_v1' };
+            const fKeys = { cards: 'fragen_cards_v1', sets: 'fragen_sets_v1' };
+
+            const tSets = JSON.parse(localStorage.getItem(tKeys.sets) || '[]');
+            const tCards = JSON.parse(localStorage.getItem(tKeys.cards) || '[]');
+            const fSets = JSON.parse(localStorage.getItem(fKeys.sets) || '[]');
+            const fCards = JSON.parse(localStorage.getItem(fKeys.cards) || '[]');
+
+            // Helper to group cards by set
+            function buildHardcodedSets(sets, cards) {
+                return sets.map(set => {
+                    return {
+                        id: set.id,
+                        name: set.name,
+                        cards: cards.filter(c => c.setId === set.id).map(c => ({
+                            title: c.title,
+                            desc: c.desc,
+                            count: c.count || 1
+                        }))
+                    };
+                });
+            }
+
+            const hardcodedT = buildHardcodedSets(tSets, tCards);
+            const hardcodedF = buildHardcodedSets(fSets, fCards);
+
+            // Fetch current source
+            let html = document.documentElement.outerHTML;
+            
+            // Clean up: Remove 'active' and 'flipped' classes so the exported file starts with a clean UI
+            html = html.replace(/modal-overlay active/g, "modal-overlay");
+            html = html.replace(/card-container flipped/g, "card-container");
+            
+            html = "<!DOCTYPE html>\n<html" + html.substring(html.indexOf('>'));
+
+            // Replace BUILD_ID
+            const newBuildId = "build_" + Date.now();
+            html = html.replace(/const BUILD_ID = "[^"]*";/, `const BUILD_ID = "${newBuildId}";`);
+
+            // Replace the variables using markers
+            const tStart = "// TRINKSPIEL_SETS_START";
+            const tEnd = "// TRINKSPIEL_SETS_END";
+            const fStart = "// FRAGEN_SETS_START";
+            const fEnd = "// FRAGEN_SETS_END";
+
+            function replaceInMarkers(source, startMarker, endMarker, newContent) {
+                const startIndex = source.indexOf(startMarker);
+                const endIndex = source.indexOf(endMarker);
+                if (startIndex === -1 || endIndex === -1) return source;
+                return source.substring(0, startIndex + startMarker.length) + 
+                       "\n        const " + (startMarker.includes("TRINKSPIEL") ? "hardcodedTrinkspielSets" : "hardcodedFragenSets") + " = " + 
+                       JSON.stringify(newContent, null, 12) + ";\n        " + 
+                       source.substring(endIndex);
+            }
+
+            html = replaceInMarkers(html, tStart, tEnd, hardcodedT);
+            html = replaceInMarkers(html, fStart, fEnd, hardcodedF);
+
+            // Inject current design as defaults
+            const designKeys = ['trinkspiel_card_color_v2', 'trinkspiel_bg_color_v2', 'trinkspiel_btn_color_v2'];
+            designKeys.forEach(key => {
+                const val = localStorage.getItem(key);
+                if (val) {
+                    const designRegex = new RegExp(`localStorage\\.getItem\\('${key}'\\) \\|\\| '([^']+)'`, 'g');
+                    html = html.replace(designRegex, `localStorage.getItem('${key}') || '${val}'`);
+                }
+            });
+
+            // Trigger download
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Trinkspiel_Final.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            alert("Finale Datei wurde erstellt! Diese Version wird auf deinem Handy nun alle aktuellen Sets anzeigen.");
+        }
+
+        // Initialize Data based on mode
+        function initData() {
+            const keys = getStorageKeys();
+
+            // Check for Build Update
+            const lastBuildId = localStorage.getItem('trinkspiel_build_id');
+            const isNewBuild = lastBuildId !== BUILD_ID && BUILD_ID !== "default";
+            
+            if (isNewBuild) {
+                // If this is a final build and it's new, we force overwrite the local storage
+                // but we only do it if the user doesn't have custom data? 
+                // Actually, for a "Final Version", the user expects THIS file's data.
+                localStorage.clear(); 
+                localStorage.setItem('trinkspiel_build_id', BUILD_ID);
+                // After clear, we fall through to the hardcoded loading logic
+            }
+
+            // Load Sets
+            const storedSets = localStorage.getItem(keys.sets);
+            if (storedSets && !isNewBuild) {
+                sets = JSON.parse(storedSets);
+            } else {
+                if (currentGameMode === 'fragen') {
+                    sets = hardcodedFragenSets.map(s => ({ id: s.id, name: s.name, active: true }));
+                } else {
+                    sets = hardcodedTrinkspielSets.map(s => ({ id: s.id, name: s.name, active: true }));
+                }
+                saveSets();
+            }
+
+            // Load Cards
+            const storedCards = localStorage.getItem(keys.cards);
+            if (storedCards) {
+                cards = JSON.parse(storedCards);
+                cards.forEach(c => {
+                    if (c.count === undefined) c.count = 1;
+                    if (!c.setId) c.setId = 'default';
+                });
+            } else {
+                cards = [];
+                if (currentGameMode === 'fragen') {
+                    hardcodedFragenSets.forEach(set => {
+                        set.cards.forEach((c, i) => {
+                            cards.push({
+                                id: 'f_' + set.id + '_' + i,
+                                title: c.title || 'Wer würde eher …',
+                                desc: c.desc,
+                                active: true,
+                                count: c.count || 1,
+                                setId: set.id
+                            });
+                        });
+                    });
+                } else {
+                    hardcodedTrinkspielSets.forEach(set => {
+                        set.cards.forEach((c, i) => {
+                            cards.push({
+                                id: 't_' + set.id + '_' + i,
+                                title: c.title,
+                                desc: c.desc,
+                                active: true,
+                                count: c.count || 1,
+                                setId: set.id
+                            });
+                        });
+                    });
+                }
+                saveCards();
+            }
+
+            saveSets();
+            saveCards();
+            buildDrawPool();
+        }
+
+        function saveSets() {
+            localStorage.setItem(getStorageKeys().sets, JSON.stringify(sets));
+        }
+
+        function saveCards() {
+            localStorage.setItem(getStorageKeys().cards, JSON.stringify(cards));
+        }
+
+        function buildDrawPool() {
+            drawPool = [];
+            totalActiveCards = 0;
+            const activeSetIds = sets.filter(s => s.active).map(s => s.id);
+            cards.filter(c => c.active && activeSetIds.includes(c.setId)).forEach(c => {
+                const count = c.count !== undefined ? c.count : 1;
+                for (let i = 0; i < count; i++) {
+                    drawPool.push({...c});
+                    totalActiveCards++;
+                }
+            });
+            shuffleArray(drawPool);
+            updateFragenCounter();
+        }
+
+        function updateFragenCounter() {
+            const counterEl = document.getElementById('fragenCounter');
+            if (currentGameMode === 'fragen') {
+                counterEl.style.display = 'block';
+                const consumed = totalActiveCards - drawPool.length;
+                if (totalActiveCards === 0) {
+                    counterEl.innerText = "0 von 0 Karten";
+                } else {
+                    counterEl.innerText = `${consumed} von ${totalActiveCards} Karten`;
+                }
+            } else if (currentGameMode === 'trinkspiel') {
+                if (trinkspielReshuffle) {
+                    counterEl.style.display = 'none';
+                } else {
+                    counterEl.style.display = 'block';
+                    const consumed = totalActiveCards - drawPool.length;
+                    if (totalActiveCards === 0) {
+                        counterEl.innerText = "0 von 0 Karten";
+                    } else {
+                        counterEl.innerText = `${consumed} von ${totalActiveCards} Karten`;
+                    }
+                }
+            }
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Gameplay Logic
+        function handleCardTap() {
+            const mainCard = document.getElementById('mainCard');
+            if (mainCard.classList.contains('flipped')) {
+                completeCard();
+            } else {
+                drawCard();
+            }
+        }
+
+        function drawCard() {
+            if (drawPool.length === 0) {
+                buildDrawPool();
+                if (drawPool.length === 0) {
+                    alert("Keine aktiven Karten im Deck!");
+                    return;
+                }
+            }
+
+            if (currentGameMode === 'fragen') {
+                currentCard = drawPool.pop(); // Remove it from the pool permanently
+            } else {
+                if (trinkspielReshuffle) {
+                    currentCard = drawPool.shift();
+                    drawPool.push(currentCard);
+                } else {
+                    currentCard = drawPool.pop();
+                }
+            }
+            
+            updateFragenCounter(); // Update the consumed counter immediately
+
+            // Update UI
+            document.getElementById('cardTitle').innerText = currentCard.title;
+            document.getElementById('cardDesc').innerText = currentCard.desc;
+            
+            const mainCard = document.getElementById('mainCard');
+            mainCard.classList.add('flipped');
+        }
+
+        function completeCard() {
+            const mainCard = document.getElementById('mainCard');
+            mainCard.classList.remove('flipped');
+            
+            if (currentGameMode === 'trinkspiel' && players.length > 0) {
+                setTimeout(() => {
+                    currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+                    updateCurrentPlayerDisplay();
+                }, 300); // Update roughly halfway through the flip-back animation
+            }
+
+            // Check if game is complete (no cards left)
+            if (drawPool.length === 0) {
+                if (currentGameMode === 'fragen' || (currentGameMode === 'trinkspiel' && !trinkspielReshuffle)) {
+                    setTimeout(() => {
+                        document.getElementById('gameCompleteModal').classList.add('active');
+                    }, 600);
+                }
+            }
+        }
+
+        function restartGame() {
+            closeModalDirect('gameCompleteModal');
+            buildDrawPool();
+            shuffleDeckAnimation();
+        }
+
+        // UI Helpers
+        function updateCharCount(inputId, counterId, max) {
+            const input = document.getElementById(inputId);
+            const counter = document.getElementById(counterId);
+            if (input && counter) {
+                counter.innerText = `${input.value.length}/${max}`;
+            }
+        }
+
+        // Modal Handlers
+        function openAddModal() {
+            document.getElementById('addModal').classList.add('active');
+            document.getElementById('newTitle').focus();
+            updateCharCount('newTitle', 'addTitleCount', 38);
+            updateCharCount('newDesc', 'addDescCount', 192);
+        }
+
+        function openManageModal() {
+            document.getElementById('manageModal').classList.add('active');
+            document.getElementById('searchInput').value = '';
+            renderManagerList();
+        }
+
+        function closeModal(e, id) {
+            if (e.target.id === id) {
+                closeModalDirect(id);
+            }
+        }
+
+        function closeModalDirect(id) {
+            document.getElementById(id).classList.remove('active');
+            if (id === 'addModal') {
+                document.getElementById('newTitle').value = '';
+                document.getElementById('newDesc').value = '';
+                updateCharCount('newTitle', 'addTitleCount', 38);
+                updateCharCount('newDesc', 'addDescCount', 192);
+            }
+            if (id === 'manageModal' || id === 'manageSetsModal' || id === 'trinkspielSettingsModal') {
+                buildDrawPool(); // Rebuild pool in case active states or reshuffle mode changed
+            }
+            if (id === 'playerSetupModal') {
+                if (players.length > 0 && currentPlayerIndex >= players.length) {
+                    currentPlayerIndex = 0;
+                } else if (players.length === 0) {
+                    currentPlayerIndex = 0;
+                }
+                updateCurrentPlayerDisplay();
+            }
+        }
+
+        // Player Setup Logic
+        function openPlayerSetup() {
+            const btn = document.getElementById('playerSetupActionBtn');
+            if (currentGameMode === 'busfahrer') {
+                btn.innerText = 'Weiter';
+                btn.onclick = startBusfahrerCardSelect;
+            } else {
+                btn.innerText = 'Spiel starten';
+                btn.onclick = startTrinkspielWithPlayers;
+            }
+            document.getElementById('playerSetupModal').classList.add('active');
+            setTimeout(() => document.getElementById('playerNameInput').focus(), 100);
+            renderPlayerList();
+        }
+
+        function openPlayerSetupFromGame() {
+            const btn = document.getElementById('playerSetupActionBtn');
+            btn.innerText = 'Speichern & Schließen';
+            btn.onclick = savePlayerEdit;
+            document.getElementById('playerSetupModal').classList.add('active');
+            setTimeout(() => document.getElementById('playerNameInput').focus(), 100);
+            renderPlayerList();
+        }
+
+        function savePlayerEdit() {
+            if (players.length > 0) {
+                if (currentPlayerIndex >= players.length) {
+                    currentPlayerIndex = 0;
+                }
+            } else {
+                currentPlayerIndex = 0;
+            }
+            updateCurrentPlayerDisplay();
+            closeModalDirect('playerSetupModal');
+        }
+
+        // Trinkspiel Settings
+        function openTrinkspielSettings() {
+            document.getElementById('trinkspielSettingsModal').classList.add('active');
+            updateSettingsUI();
+        }
+
+        function setReshuffle(val) {
+            trinkspielReshuffle = val;
+            localStorage.setItem('trinkspiel_reshuffle_v1', trinkspielReshuffle);
+            updateSettingsUI();
+            updateFragenCounter();
+            // Rebuild pool to reflect mode change
+            buildDrawPool();
+        }
+
+        function updateSettingsUI() {
+            document.getElementById('reshuffleOnIndicator').style.display = trinkspielReshuffle ? 'block' : 'none';
+            document.getElementById('reshuffleOffIndicator').style.display = trinkspielReshuffle ? 'none' : 'block';
+            
+            document.getElementById('reshuffleOnBtn').style.borderColor = trinkspielReshuffle ? 'var(--secondary)' : 'var(--glass-border)';
+            document.getElementById('reshuffleOffBtn').style.borderColor = trinkspielReshuffle ? 'var(--glass-border)' : 'var(--secondary)';
+        }
+
+        // --- Busfahrer Logic ---
+        function startBusfahrerSetup() {
+            currentGameMode = 'busfahrer';
+            openPlayerSetup();
+        }
+
+        function startBusfahrerCardSelect() {
+            // Start auch ohne Spieler ermöglichen
+            savePlayers();
+            closeModalDirect('playerSetupModal');
+            openBusStartSettings();
+        }
+        
+        function openBusStartSettings() {
+            document.getElementById('busStartSettingsModal').classList.add('active');
+            document.getElementById('startCardValue').innerText = busStartCards;
+        }
+
+        function openMidGameStartCardSettings() {
+            document.getElementById('startCardValue').innerText = busStartCards;
+            const btn = document.getElementById('confirmBusStartBtn');
+            btn.onclick = closeMidGameStartCardSettings;
+            document.getElementById('busStartSettingsModal').classList.add('active');
+        }
+
+        function closeMidGameStartCardSettings() {
+            closeModalDirect('busStartSettingsModal');
+            // Reset the original handler for the next time we start from menu
+            document.getElementById('confirmBusStartBtn').onclick = confirmBusStart;
+        }
+
+        function adjustStartCards(delta) {
+            const newCount = Math.max(1, Math.min(5, busStartCards + delta));
+            
+            // If we are already in-game (busRound 1), apply immediately
+            if (currentGameMode === 'busfahrer' && busRound === 1) {
+                if (newCount > busStartCards) {
+                    const diff = newCount - busStartCards;
+                    // Check if enough cards
+                    if (busDeck.length < diff * busPlayersState.length) {
+                        alert("Nicht genügend Karten im Deck!");
+                        return;
+                    }
+                    busPlayersState.forEach(p => {
+                        for(let i=0; i<diff; i++) p.hand.push(busDeck.pop());
+                    });
+                } else if (newCount < busStartCards) {
+                    busPlayersState.forEach(p => {
+                        p.hand = p.hand.slice(0, newCount);
+                    });
+                }
+                busStartCards = newCount;
+                renderBusRound1();
+            } else {
+                busStartCards = newCount;
+            }
+            
+            document.getElementById('startCardValue').innerText = busStartCards;
+        }
+
+        function confirmBusStart() {
+            const pyramidCount = (busPyramidRows * (busPyramidRows + 1)) / 2;
+            const totalNeeded = pyramidCount + (players.length * busStartCards);
+            if (totalNeeded > 52) {
+                alert(`Zu viele Karten! Bei ${players.length} Spielern und ${busStartCards} Karten pro Kopf benötigen wir ${totalNeeded} Karten für die Pyramide (${pyramidCount}) und die Spielerhände, aber ein Standard-Deck hat nur 52 Karten. Bitte verringere die Spieleranzahl, die Startkarten oder die Pyramidenstufen!`);
+                return;
+            }
+            closeModalDirect('busStartSettingsModal');
+            initBusfahrerGame();
+        }
+
+        function initBusfahrerGame() {
+            // Show the busfahrer screen
+            document.getElementById('homeScreen').style.display = 'none';
+            document.getElementById('gameWrapper').style.display = 'none';
+            document.getElementById('busfahrerWrapper').style.display = 'flex';
+            jumpToBusRound(1);
+        }
+
+        function jumpToBusRound(r) {
+            busRound = r;
+            closeModalDirect('busRoundSelectModal');
+            
+            // Deck immer neu initialisieren für die jeweilige Runde
+            busDeck = createStandardDeck();
+            shuffleArray(busDeck);
+            
+            // Sicherstellen, dass busPlayersState existiert (falls Runde 1 übersprungen wurde)
+            if (busPlayersState.length === 0 || busPlayersState.length !== players.length) {
+                busPlayersState = players.map(p => ({ name: p, hand: [] }));
+            }
+
+            if (r === 1) {
+                document.getElementById('pyramidSettingsBtn').style.display = 'inline-flex';
+                document.getElementById('handSizeBtn').style.display = 'inline-flex';
+                // Karten für Runde 1 verteilen
+                busPlayersState.forEach(p => {
+                    p.hand = [];
+                    for(let i=0; i<busStartCards; i++) p.hand.push(busDeck.pop());
+                });
+                busPyramid = [];
+                const pyramidCount = (busPyramidRows * (busPyramidRows + 1)) / 2;
+                for (let i = 0; i < pyramidCount; i++) busPyramid.push(busDeck.pop());
+                busPyramidRevealed = new Array(pyramidCount).fill(false);
+                busPyramidIndex = 0;
+                renderBusRound1();
+            } else if (r === 2) {
+                document.getElementById('pyramidSettingsBtn').style.display = 'none';
+                document.getElementById('handSizeBtn').style.display = 'none';
+                // Falls wir direkt in Spiel 2 springen, brauchen wir Verlierer
+                if (busLoserIndices.length === 0) {
+                    if (busPlayersState.length > 0) {
+                        busLoserIndices = [0]; // Erster Spieler als Standard
+                    } else {
+                        // Notfall: Falls gar keine Spieler da sind
+                        players = ["Spieler 1"];
+                        busPlayersState = [{ name: "Spieler 1", hand: [] }];
+                        busLoserIndices = [0];
+                    }
+                }
+                busFinaleCurrentDriverIdx = 0;
+                busFailureCounts = {};
+                busLoserIndices.forEach(idx => busFailureCounts[idx] = 0);
+                startFinaleForDriver();
+            } else {
+                document.getElementById('pyramidSettingsBtn').style.display = 'none';
+                document.getElementById('handSizeBtn').style.display = 'none';
+                // Spiel 3
+                if (busExtraRoundPlayerIdx === -1) {
+                    if (busPlayersState.length > 0) {
+                        busExtraRoundPlayerIdx = 0;
+                    } else {
+                        players = ["Spieler 1"];
+                        busPlayersState = [{ name: "Spieler 1", hand: [] }];
+                        busExtraRoundPlayerIdx = 0;
+                    }
+                }
+                busFinaleCurrentDriverIdx = 0;
+                busFinaleLastCard = busDeck.pop();
+                busFinaleStep = 1; // Streak bei 1 starten
+                startFinaleForDriver();
+            }
+        }
+
+        function startBusRound2() {
+            closeModalDirect('busLoserListModal');
+            jumpToBusRound(2);
+        }
+
+        function openPyramidSettings() {
+            document.getElementById('pyramidSettingsModal').classList.add('active');
+        }
+
+        function setPyramidRows(rows) {
+            busPyramidRows = rows;
+            closeModalDirect('pyramidSettingsModal');
+            // Reset pyramid immediately
+            jumpToBusRound(1);
+        }
+
+        function determineLosers() {
+            let maxCards = -1;
+            busPlayersState.forEach(p => {
+                if (p.hand.length > maxCards) maxCards = p.hand.length;
+            });
+
+            busLoserIndices = [];
+            busPlayersState.forEach((p, idx) => {
+                if (p.hand.length === maxCards) busLoserIndices.push(idx);
+            });
+
+            const list = document.getElementById('busLoserListContent');
+            list.innerHTML = busLoserIndices.map(i => `
+                <div style="padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 12px; text-align: center; font-weight: 800; border: 1px solid var(--secondary);">
+                    ${busPlayersState[i].name} (${busPlayersState[i].hand.length} Karten)
+                </div>
+            `).join('');
+
+            document.getElementById('busLoserListModal').classList.add('active');
+        }
+
+        function startFinaleForDriver() {
+            if (busRound === 2) {
+                busFinaleStep = 1;
+                busFinaleCards = [];
+                busFinaleSuitsSeen = new Set();
+                busFinaleLastCard = null;
+            }
+            // Für Spiel 3 wurde busFinaleLastCard bereits in jumpToBusRound initialisiert
+            renderBusRound2();
+        }
+
+        function renderBusRound2() {
+            const driverIdx = busRound === 2 ? busLoserIndices[busFinaleCurrentDriverIdx] : busExtraRoundPlayerIdx;
+            const driver = busPlayersState[driverIdx];
+            document.getElementById('busRoundTitle').innerText = busRound === 2 ? 'Spiel 2: Karten raten' : 'Spiel 3: Höher Tiefer';
+            const content = document.getElementById('busContent');
+
+            let cardsHTML;
+            if (busRound === 2) {
+                cardsHTML = '<div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:1rem 0;align-items:flex-end;">';
+                busFinaleCards.forEach((c, i) => {
+                    const textColor = c.color === 'red' ? '#dc2626' : '#111827';
+                    cardsHTML += `<div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+                        <div style="font-size:0.6rem;color:var(--secondary);font-weight:800;">Karte ${i+1}</div>
+                        <div style="width:85px;height:120px;border-radius:10px;background:#ffffff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:6px;border:1px solid rgba(0,0,0,0.15);box-shadow:0 2px 8px rgba(0,0,0,0.3);">
+                            <div style="font-size:1rem;font-weight:800;color:${textColor};align-self:flex-start;">${c.label}</div>
+                            <div style="font-size:2.8rem;color:${textColor};line-height:1;">${c.icon}</div>
+                            <div style="font-size:1rem;font-weight:800;color:${textColor};align-self:flex-end;transform:rotate(180deg);">${c.label}</div>
+                        </div>
+                    </div>`;
+                });
+                // The next card: flip wrapper
+                const nextN = busFinaleCards.length + 1;
+                cardsHTML += `<div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+                    <div style="font-size:0.6rem;color:var(--text-muted);font-weight:800;">Karte ${nextN}</div>
+                    <div id="nextCardFlip" style="width:85px;height:120px;perspective:800px;">
+                        <div id="nextCardInner" style="width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.55s ease;">
+                            <div class="bus-card hidden" style="position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;border:4px solid #fff;"></div>
+                            <div id="nextCardFace" style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);border-radius:10px;"></div>
+                        </div>
+                    </div>
+                </div>`;
+                cardsHTML += '</div>';
+            } else {
+                // Spiel 3: reference card + arrow (centered) + hidden next
+                cardsHTML = '<div style="display:flex;gap:0;align-items:center;justify-content:center;margin:1.5rem 0;">';
+                if (busFinaleLastCard) {
+                    const textColor = busFinaleLastCard.color === 'red' ? '#dc2626' : '#111827';
+                    cardsHTML += `<div style="width:85px;height:120px;border-radius:10px;background:#ffffff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:6px;border:1px solid rgba(0,0,0,0.15);box-shadow:0 2px 8px rgba(0,0,0,0.3);">
+                        <div style="font-size:1rem;font-weight:800;color:${textColor};align-self:flex-start;">${busFinaleLastCard.label}</div>
+                        <div style="font-size:2.8rem;color:${textColor};line-height:1;">${busFinaleLastCard.icon}</div>
+                        <div style="font-size:1rem;font-weight:800;color:${textColor};align-self:flex-end;transform:rotate(180deg);">${busFinaleLastCard.label}</div>
+                    </div>
+                    <div style="font-size:1.8rem;color:var(--text-muted);padding:0 10px;line-height:1;">&#8594;</div>`;
+                }
+                cardsHTML += `<div id="nextCardFlip" style="width:85px;height:120px;perspective:800px;">
+                    <div id="nextCardInner" style="width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.55s ease;">
+                        <div class="bus-card hidden" style="position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;border:5px solid #f8fafc;"></div>
+                        <div id="nextCardFace" style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);border-radius:10px;"></div>
+                    </div>
+                </div>`;
+                cardsHTML += '</div>';
+            }
+
+            const statusText = busRound === 2
+                ? `Schritt ${busFinaleStep} / 4 &mdash; ${getFinaleStepName()}`
+                : `Streak: ${busFinaleStep} / 5`;
+
+            content.innerHTML = `
+                <div class="bus-active-player">${driver.name}</div>
+                <div class="bus-status" style="font-size:0.85rem;margin-bottom:0;">${statusText}</div>
+                ${cardsHTML}
+                <div id="finaleBtns" style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.8rem;margin-top:0.5rem;">
+                    ${busRound === 2 ? getFinaleButtons() : getSpiel3Buttons()}
+                </div>
+            `;
+        }
+
+
+        function getSpiel3Buttons() {
+            const s = 'min-width:80px;font-size:1.4rem;padding:0.8rem 1.2rem;';
+            return `
+                <button class="bus-prediction-btn" style="${s}" onclick="makeFinaleMove('lower')">&#8595;</button>
+                <button class="bus-prediction-btn" style="${s}" onclick="makeFinaleMove('equal')">&#61;</button>
+                <button class="bus-prediction-btn" style="${s}" onclick="makeFinaleMove('higher')">&#8593;</button>
+            `;
+        }
+
+        function makeFinaleMove(pred) {
+            if (busDeck.length < 5) { busDeck = createStandardDeck(); shuffleArray(busDeck); }
+            const card = busDeck.pop();
+            let correct = false;
+
+            if (busRound === 2) {
+                switch(busFinaleStep) {
+                    case 1: correct = card.color === pred; break;
+                    case 2:
+                        const ref = busFinaleCards[0].val;
+                        if (pred === 'higher') correct = card.val > ref;
+                        else if (pred === 'lower') correct = card.val < ref;
+                        else correct = card.val === ref;
+                        break;
+                    case 3:
+                        const lo = Math.min(busFinaleCards[0].val, busFinaleCards[1].val);
+                        const hi = Math.max(busFinaleCards[0].val, busFinaleCards[1].val);
+                        if (pred === 'inside') correct = card.val > lo && card.val < hi;
+                        else correct = card.val <= lo || card.val >= hi;
+                        break;
+                    case 4:
+                        correct = (pred === 'old' && busFinaleSuitsSeen.has(card.suit)) ||
+                                  (pred === 'new' && !busFinaleSuitsSeen.has(card.suit));
+                        break;
+                }
+            } else {
+                if (pred === 'higher') correct = card.val > busFinaleLastCard.val;
+                else if (pred === 'lower') correct = card.val < busFinaleLastCard.val;
+                else correct = card.val === busFinaleLastCard.val;
+            }
+
+            document.querySelectorAll('#finaleBtns button').forEach(b => b.disabled = true);
+
+            const bgColor = '#ffffff';
+            const textColor = card.color === 'red' ? '#dc2626' : '#111827';
+            const faceHTML = '<div style="width:100%;height:100%;background:#ffffff;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:6px;box-shadow:0 2px 8px rgba(0,0,0,0.3);"><div style="font-size:1rem;font-weight:800;color:' + textColor + ';align-self:flex-start;">' + card.label + '</div><div style="font-size:2.8rem;color:' + textColor + ';line-height:1;">' + card.icon + '</div><div style="font-size:1rem;font-weight:800;color:' + textColor + ';align-self:flex-end;transform:rotate(180deg);">' + card.label + '</div></div>';
+            const face = document.getElementById('nextCardFace');
+            const inner = document.getElementById('nextCardInner');
+            if (face && inner) { face.innerHTML = faceHTML; requestAnimationFrame(() => { inner.style.transform = 'rotateY(180deg)'; }); }
+
+            setTimeout(() => {
+                if (correct) {
+                    busFinaleCards.push(card); busFinaleSuitsSeen.add(card.suit); busFinaleLastCard = card; busFinaleStep++;
+                    const goal = busRound === 2 ? 4 : 5;
+                    if (busFinaleStep > goal) {
+                        if (busRound === 2) {
+                            busFinaleCurrentDriverIdx++;
+                            const hasMore = busFinaleCurrentDriverIdx < busLoserIndices.length;
+                            showFinaleResult(true, hasMore ? 'Geschafft! Weiter — ' + busPlayersState[busLoserIndices[busFinaleCurrentDriverIdx]].name + ' ist dran!' : 'Alle Busfahrer fertig!', hasMore ? startFinaleForDriver : checkExtraRound);
+                        } else { showFinaleResult(true, 'GEWONNEN! 5 in Folge!', returnToHome); }
+                    } else { showFinaleResult(true, 'Richtig! Weiter zu Schritt ' + busFinaleStep, renderBusRound2); }
+                } else {
+                    // Deck neu mischen bei Fehler (Spiel 2 & 3)
+                    busDeck = createStandardDeck();
+                    shuffleArray(busDeck);
+
+                    if (busRound === 2) { 
+                        const di = busLoserIndices[busFinaleCurrentDriverIdx]; 
+                        busFailureCounts[di] = (busFailureCounts[di] || 0) + 1; 
+                        busFinaleStep = 1; 
+                        busFinaleCards = []; 
+                        busFinaleSuitsSeen = new Set();
+                        busFinaleLastCard = null;
+                    } else {
+                        // Spiel 3
+                        busFinaleStep = 0; 
+                        busFinaleLastCard = busDeck.pop(); // Neue Startkarte aus frischem Deck
+                    }
+                    showFinaleResult(false, 'Falsch — Trinken! Von vorne.', renderBusRound2);
+                }
+            }, 650);
+        }
+
+        function showFinaleResult(ok, msg, onContinue) {
+            const btnsDiv = document.getElementById('finaleBtns');
+            if (btnsDiv) {
+                btnsDiv.innerHTML = '<div style="width:100%;text-align:center;padding:0.5rem 0;"><div style="font-size:1.05rem;font-weight:800;color:' + (ok ? '#4ade80' : '#f87171') + ';margin-bottom:0.8rem;">' + msg + '</div><button class="btn btn-primary" style="padding:0.8rem 2.5rem;font-size:1rem;" onclick="busWeiter()">Weiter</button></div>';
+                window._busWeiterFn = onContinue;
+            }
+        }
+
+        function busWeiter() { if (window._busWeiterFn) { const fn = window._busWeiterFn; window._busWeiterFn = null; fn(); } }
+
+
+        function checkExtraRound() {
+            // Find player with most failures
+            let maxFailures = -1;
+            let leaderIdx = -1;
+            for (const [idx, count] of Object.entries(busFailureCounts)) {
+                if (count > maxFailures) {
+                    maxFailures = count;
+                    leaderIdx = parseInt(idx);
+                }
+            }
+            
+            busExtraRoundPlayerIdx = leaderIdx;
+            document.getElementById('busExtraRoundPlayerName').innerText = busPlayersState[leaderIdx].name;
+            document.getElementById('busExtraRoundModal').classList.add('active');
+        }
+
+        function confirmBusExtraRound(confirmed) {
+            closeModalDirect('busExtraRoundModal');
+            if (confirmed) {
+                busRound = 3;
+                busFinaleStep = 0;  // Streak starts at 0
+                busFinaleCards = [];
+                busFinaleSuitsSeen = new Set();
+                // Draw the first reference card immediately (player sees this, predicts the next)
+                const firstCard = busDeck.pop();
+                busFinaleLastCard = firstCard;
+                renderBusRound2();
+            } else {
+                returnToHome();
+            }
+        }
+
+        function getFinaleStepName() {
+            switch(busFinaleStep) {
+                case 1: return "Rot oder Schwarz?";
+                case 2: return "Höher, Niedriger oder Gleich?";
+                case 3: return "Innerhalb oder Außerhalb?";
+                case 4: return "Symbol Alt oder Neu?";
+                case 5: return "Finale: Höher oder Niedriger?";
+                default: return "";
+            }
+        }
+
+        function getFinaleButtons() {
+            const s = 'min-width:80px;font-size:1rem;padding:0.7rem 1rem;';
+            switch(busFinaleStep) {
+                case 1: return `
+                    <button class="bus-prediction-btn" style="${s}--primary:#ef4444;" onclick="makeFinaleMove('red')">Rot</button>
+                    <button class="bus-prediction-btn" style="${s}--primary:#94a3b8;" onclick="makeFinaleMove('black')">Schwarz</button>
+                `;
+                case 2: return `
+                    <button class="bus-prediction-btn" style="${s}font-size:1.6rem;" onclick="makeFinaleMove('lower')">&#8595;</button>
+                    <button class="bus-prediction-btn" style="${s}font-size:1.6rem;" onclick="makeFinaleMove('equal')">&#61;</button>
+                    <button class="bus-prediction-btn" style="${s}font-size:1.6rem;" onclick="makeFinaleMove('higher')">&#8593;</button>
+                `;
+                case 3: return `
+                    <button class="bus-prediction-btn" style="${s}" onclick="makeFinaleMove('inside')">Innerhalb</button>
+                    <button class="bus-prediction-btn" style="${s}" onclick="makeFinaleMove('outside')">Au&szlig;erhalb</button>
+                `;
+                case 4: return `
+                    <button class="bus-prediction-btn" style="${s}" onclick="makeFinaleMove('old')">Alt</button>
+                    <button class="bus-prediction-btn" style="${s}" onclick="makeFinaleMove('new')">Neu</button>
+                `;
+                default: return '';
+            }
+        }
+
+
+        function renderBusRound3() {
+            document.getElementById('busRoundTitle').innerText = "Spiel 3: Extra Runde";
+            const content = document.getElementById('busContent');
+            content.innerHTML = `
+                <div class="bus-status">Alle Busfahrer sind fertig!</div>
+                <button class="btn btn-primary" style="margin-top: 2rem; width: 250px;" onclick="returnToHome()">Spiel beenden</button>
+            `;
+            setTimeout(() => {
+                queueBusFeedback("Extra Runde", "Das Spiel ist vorbei. Möchtet ihr noch eine Bonusrunde starten?");
+            }, 500);
+        }
+
+        function queueBusFeedback(title, text) {
+            busFeedbackQueue.push({ title, text });
+            processBusFeedback();
+        }
+
+        function processBusFeedback() {
+            const modal = document.getElementById('busFeedbackModal');
+            if (modal.classList.contains('active') || busFeedbackQueue.length === 0) return;
+
+            const item = busFeedbackQueue.shift();
+            document.getElementById('busFeedbackTitle').innerText = item.title;
+            document.getElementById('busFeedbackText').innerText = item.text;
+            modal.classList.add('active');
+        }
+
+        function closeBusFeedback() {
+            document.getElementById('busFeedbackModal').classList.remove('active');
+            // If there's more in queue, it will process in a bit or on next check
+            setTimeout(processBusFeedback, 300);
+        }
+
+        function renderCardLarge(c) {
+            return `
+                <div class="bus-card ${c.color}">
+                    <div style="font-size: 1.5rem; text-align: left;">${c.label}</div>
+                    <div style="font-size: 4rem; align-self: center;">${c.icon}</div>
+                    <div style="font-size: 1.5rem; text-align: right; transform: rotate(180deg);">${c.label}</div>
+                </div>
+            `;
+        }
+
+        function createStandardDeck() {
+            const suits = ['hearts', 'diamonds', 'spades', 'clubs'];
+            const suitsIcons = { 'hearts': '♥', 'diamonds': '♦', 'spades': '♠', 'clubs': '♣' };
+            const ranks = [
+                { val: 2, label: '2' }, { val: 3, label: '3' }, { val: 4, label: '4' },
+                { val: 5, label: '5' }, { val: 6, label: '6' }, { val: 7, label: '7' },
+                { val: 8, label: '8' }, { val: 9, label: '9' }, { val: 10, label: '10' },
+                { val: 11, label: 'J' }, { val: 12, label: 'Q' }, { val: 13, label: 'K' },
+                { val: 14, label: 'A' }
+            ];
+            const deck = [];
+            suits.forEach(suit => {
+                ranks.forEach(rank => {
+                    deck.push({ 
+                        suit: suit, 
+                        icon: suitsIcons[suit], 
+                        val: rank.val, 
+                        label: rank.label,
+                        color: (suit === 'hearts' || suit === 'diamonds') ? 'red' : 'black'
+                    });
+                });
+            });
+            return deck;
+        }
+
+        function renderBusRound1() {
+            document.getElementById('busRoundTitle').innerText = 'Spiel 1: Pyramide';
+            const content = document.getElementById('busContent');
+
+            // Build pyramid HTML dynamically based on busPyramidRows
+            let pyramidHTML = '<div class="pyramid-grid">';
+            const totalCards = (busPyramidRows * (busPyramidRows + 1)) / 2;
+            let k = totalCards - 1;
+            
+            // Card sizing based on rows (smaller for more rows)
+            let cardW = busPyramidRows > 4 ? 55 : 65;
+            let cardH = busPyramidRows > 4 ? 80 : 90;
+
+            for (let rowSize = 1; rowSize <= busPyramidRows; rowSize++) {
+                pyramidHTML += '<div class="pyramid-row" style="gap:' + (busPyramidRows > 4 ? '4px' : '8px') + ';">';
+                for (let i = 0; i < rowSize; i++) {
+                    const idx = k--;
+                    const card = busPyramid[idx];
+                    const revealed = busPyramidRevealed[idx];
+                    const isNext = idx === busPyramidIndex;
+                    pyramidHTML += `
+                        <div class="bus-card-slot" id="pyramid-slot-${idx}"
+                            onclick="revealPyramidCard(${idx})"
+                            style="width:${cardW}px;height:${cardH}px;cursor:${isNext ? 'pointer' : 'default'};
+                                   ${isNext ? 'box-shadow:0 0 0 3px var(--secondary);border-radius:10px;' : ''}">
+                            ${revealed ? renderCardSmall(card) : `<div class="bus-card hidden" style="width:${cardW}px;height:${cardH}px;"></div>`}
+                        </div>`;
+                }
+                pyramidHTML += '</div>';
+            }
+            pyramidHTML += '</div>';
+
+            // Player hands — centered, bigger cards
+            let handsHTML = '<div style="margin-top:1.5rem;width:100%;display:flex;flex-direction:column;gap:1rem;align-items:center;">';
+            busPlayersState.forEach(p => {
+                handsHTML += `
+                    <div style="width:100%;padding:0.8rem 1rem;background:rgba(255,255,255,0.05);border-radius:12px;border:1px solid var(--glass-border);">
+                        <div style="font-weight:800;margin-bottom:0.6rem;display:flex;justify-content:space-between;font-size:0.9rem;">
+                            <span>${p.name}</span>
+                            <span style="color:var(--secondary);">${p.hand.length} Karten</span>
+                        </div>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">${renderHand(p.hand)}</div>
+                    </div>`;
+            });
+            handsHTML += '</div>';
+
+            content.innerHTML = `
+                <div class="bus-status" style="margin-bottom:0.5rem;">Tippe auf die nächste Karte, um sie aufzudecken.</div>
+                ${pyramidHTML}
+                ${handsHTML}
+            `;
+        }
+
+        function renderHand(hand) {
+            if (!hand || hand.length === 0) return '<span style="color:var(--text-muted);font-size:0.8rem;">Keine Karten</span>';
+            return hand.map(c => {
+                const textColor = c.color === 'red' ? '#dc2626' : '#111827';
+                return `
+                <div style="width:58px;height:80px;border-radius:8px;background:#ffffff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:5px;border:1px solid rgba(0,0,0,0.15);box-shadow:0 2px 6px rgba(0,0,0,0.3);">
+                    <div style="font-size:0.85rem;font-weight:800;color:${textColor};align-self:flex-start;">${c.label}</div>
+                    <div style="font-size:1.5rem;color:${textColor};line-height:1;">${c.icon}</div>
+                    <div style="font-size:0.85rem;font-weight:800;color:${textColor};align-self:flex-end;transform:rotate(180deg);">${c.label}</div>
+                </div>`;
+            }).join('');
+        }
+
+        function renderCardSmall(c) {
+            const textColor = c.color === 'red' ? '#dc2626' : '#111827';
+            return `
+                <div style="width:100%;height:100%;background:#ffffff;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:5px;">
+                    <div style="font-size:0.8rem;font-weight:800;color:${textColor};align-self:flex-start;">${c.label}</div>
+                    <div style="font-size:1.4rem;color:${textColor};line-height:1;">${c.icon}</div>
+                    <div style="font-size:0.8rem;font-weight:800;color:${textColor};align-self:flex-end;transform:rotate(180deg);">${c.label}</div>
+                </div>`;
+        }
+
+        function revealPyramidCard(idx) {
+            if (idx !== busPyramidIndex || busPyramidRevealed[idx]) return;
+
+            busPyramidRevealed[idx] = true;
+            const card = busPyramid[idx];
+
+            // Dynamic drink calculation: bottom row = 1, next = 2, etc.
+            let rowLevel = 1;
+            let cumulative = 0;
+            for (let r = 1; r <= busPyramidRows; r++) {
+                cumulative += (busPyramidRows - r + 1);
+                if (idx < cumulative) {
+                    rowLevel = r;
+                    break;
+                }
+            }
+
+            busPyramidIndex++;
+            busMatchSkipPlayers = new Set(); // Reset skip set for new card
+            renderBusRound1();
+
+            const hasMatch = checkPyramidMatches(card, rowLevel);
+            if (!hasMatch && busPyramidIndex >= busPyramid.length) {
+                setTimeout(determineLosers, 800);
+            }
+        }
+
+
+        function checkPyramidMatches(pyramidCard, drinks) {
+            for (let pIdx = 0; pIdx < busPlayersState.length; pIdx++) {
+                if (busMatchSkipPlayers.has(pIdx)) continue; // Player already said no
+                const player = busPlayersState[pIdx];
+                const matchIdx = player.hand.findIndex(c => c.val === pyramidCard.val);
+                if (matchIdx !== -1) {
+                    busDiscardPending = { playerIdx: pIdx, cardIdx: matchIdx, drinks: drinks, pyramidCard: pyramidCard };
+                    openBusDiscardModal();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function openBusDiscardModal() {
+            const { playerIdx, cardIdx, drinks } = busDiscardPending;
+            const player = busPlayersState[playerIdx];
+            const card = player.hand[cardIdx];
+            
+            document.getElementById('busDiscardPlayerName').innerText = player.name;
+            const cardInfoSpan = document.getElementById('busDiscardCardInfo');
+            cardInfoSpan.innerText = `${card.label}${card.icon}`;
+            cardInfoSpan.style.color = card.color === 'red' ? '#e11d48' : '#ffffff';
+            
+            document.getElementById('busDiscardDrinkCount').innerText = drinks;
+            document.getElementById('busDiscardModal').classList.add('active');
+        }
+
+        function confirmBusDiscard(shouldDiscard) {
+            const { playerIdx, cardIdx, drinks, pyramidCard } = busDiscardPending;
+            const playerName = busPlayersState[playerIdx].name;
+            if (shouldDiscard) {
+                busPlayersState[playerIdx].hand.splice(cardIdx, 1);
+                queueBusFeedback('Karte abgelegt!', `${playerName} legt ab und verteilt ${drinks} Schluck(e)! 🍻`);
+            } else {
+                busMatchSkipPlayers.add(playerIdx); // Skip this player for current pyramid card
+            }
+            busDiscardPending = null;
+            closeModalDirect('busDiscardModal');
+            renderBusRound1();
+
+            setTimeout(() => {
+                const moreMatches = checkPyramidMatches(pyramidCard, drinks);
+                if (!moreMatches && busPyramidIndex >= busPyramid.length) {
+                    determineLosers();
+                }
+            }, 300);
+        }
+
+        function openBusRoundSelect() {
+            document.getElementById('busRoundSelectModal').classList.add('active');
+        }
+
+        function savePlayers() {
+            localStorage.setItem('trinkspiel_players_v1', JSON.stringify(players));
+            const deleteBtn = document.getElementById('deleteAllPlayersBtn');
+            if (deleteBtn) {
+                deleteBtn.style.display = players.length > 0 ? 'block' : 'none';
+            }
+        }
+
+        function addPlayer() {
+            const nameInput = document.getElementById('playerNameInput');
+            const name = nameInput.value.trim();
+            if (name) {
+                players.push(name);
+                
+                // Dynamisches Hinzufügen während des Spiels
+                if (currentGameMode === 'busfahrer' && busRound === 1) {
+                    // Neuen Spieler in den State aufnehmen und Karten geben
+                    const newPlayerState = { name: name, hand: [] };
+                    for(let i=0; i<busStartCards; i++) {
+                        if (busDeck.length > 0) newPlayerState.hand.push(busDeck.pop());
+                    }
+                    busPlayersState.push(newPlayerState);
+                    renderBusRound1();
+                }
+
+                nameInput.value = '';
+                savePlayers();
+                renderPlayerList();
+                nameInput.focus();
+            }
+        }
+
+        function removePlayer(index) {
+            players.splice(index, 1);
+            
+            // Busfahrer State ebenfalls bereinigen
+            if (currentGameMode === 'busfahrer') {
+                busPlayersState.splice(index, 1);
+                // Indizes korrigieren
+                busLoserIndices = busLoserIndices.filter(i => i !== index).map(i => i > index ? i - 1 : i);
+                if (busFinaleCurrentDriverIdx >= busLoserIndices.length) busFinaleCurrentDriverIdx = 0;
+                renderBusRound1();
+            }
+
+            // Index-Korrektur für Trinkspiel
+            if (currentPlayerIndex >= players.length) {
+                currentPlayerIndex = Math.max(0, players.length - 1);
+            }
+
+            savePlayers();
+            renderPlayerList();
+        }
+
+        function promptDeleteAllPlayers() {
+            document.getElementById('confirmDeleteAllPlayersModal').classList.add('active');
+        }
+
+        function confirmDeleteAllPlayers() {
+            players = [];
+            savePlayers();
+            renderPlayerList();
+            closeModalDirect('confirmDeleteAllPlayersModal');
+        }
+
+        function movePlayerUp(index) {
+            if (index > 0) {
+                [players[index], players[index - 1]] = [players[index - 1], players[index]];
+                savePlayers();
+                renderPlayerList();
+            }
+        }
+
+        function movePlayerDown(index) {
+            if (index < players.length - 1) {
+                [players[index], players[index + 1]] = [players[index + 1], players[index]];
+                savePlayers();
+                renderPlayerList();
+            }
+        }
+
+        function renderPlayerList() {
+            const list = document.getElementById('playerList');
+            list.innerHTML = '';
+            
+            const deleteBtn = document.getElementById('deleteAllPlayersBtn');
+            if (deleteBtn) {
+                deleteBtn.style.display = players.length > 0 ? 'block' : 'none';
+            }
+
+            if (players.length === 0) {
+                list.innerHTML = '<div class="empty-state" style="padding: 1rem;">Keine Spieler hinzugefügt.</div>';
+                return;
+            }
+            
+            players.forEach((player, idx) => {
+                const el = document.createElement('div');
+                el.className = 'player-list-item';
+                el.innerHTML = `
+                    <span style="font-weight: 600; font-size: 1.1rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; margin-right: 0.5rem;">${player}</span>
+                    <div style="display: flex; gap: 6px; margin-right: 0.8rem;">
+                        <button class="btn" style="padding: 0; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; background: var(--icon-btn-bg); color: var(--text-color); border-radius: 10px; border: 1px solid var(--glass-border);" onclick="movePlayerUp(${idx})" ${idx === 0 ? 'disabled style="opacity: 0.15; cursor: not-allowed; pointer-events: none;"' : ''}>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                        </button>
+                        <button class="btn" style="padding: 0; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; background: var(--icon-btn-bg); color: var(--text-color); border-radius: 10px; border: 1px solid var(--glass-border);" onclick="movePlayerDown(${idx})" ${idx === players.length - 1 ? 'disabled style="opacity: 0.15; cursor: not-allowed; pointer-events: none;"' : ''}>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                    </div>
+                    <button class="btn" style="flex: 0 0 36px; padding: 0; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; background: var(--danger); color: white; border-radius: 10px;" onclick="removePlayer(${idx})" aria-label="Spieler entfernen">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </button>
+                `;
+                list.appendChild(el);
+            });
+        }
+
+        function startTrinkspielWithPlayers() {
+            closeModalDirect('playerSetupModal');
+            currentPlayerIndex = 0;
+            updateCurrentPlayerDisplay();
+            startGame('trinkspiel');
+        }
+
+        function updateCurrentPlayerDisplay() {
+            const display = document.getElementById('currentPlayerDisplay');
+            if (currentGameMode === 'trinkspiel' && players.length > 0) {
+                display.innerText = players[currentPlayerIndex];
+                display.style.display = 'block';
+            } else {
+                display.style.display = 'none';
+            }
+        }
+
+        // Add Card Logic
+        function addCard() {
+            const title = document.getElementById('newTitle').value.trim();
+            const desc = document.getElementById('newDesc').value.trim();
+
+            if (!title) {
+                alert("Bitte einen Titel eingeben.");
+                return;
+            }
+
+            if (sets.length === 0) {
+                alert("Bitte erstelle zuerst ein Set!");
+                return;
+            }
+
+            const activeSets = sets.filter(s => s.active);
+            const setIdToUse = activeSets.length > 0 ? activeSets[0].id : sets[0].id;
+            const newCard = {
+                id: Date.now(),
+                title: title,
+                desc: desc,
+                active: true,
+                count: 1,
+                setId: setIdToUse
+            };
+
+            cards.push(newCard);
+            saveCards();
+            buildDrawPool(); // Update immediately
+            
+            closeModalDirect('addModal');
+        }
+
+        // Manage Cards Logic
+        function renderManagerList(filterText = '') {
+            const list = document.getElementById('cardList');
+            list.innerHTML = '';
+
+            const activeSets = sets.filter(s => s.active);
+            if (activeSets.length === 0) {
+                list.innerHTML = '<div class="empty-state">Kein Set aktiviert.</div>';
+                return;
+            }
+
+            const activeSetIds = activeSets.map(s => s.id);
+            const setCards = cards.filter(c => activeSetIds.includes(c.setId));
+            const masterToggle = document.getElementById('masterToggle');
+            if (masterToggle) {
+                masterToggle.checked = setCards.length > 0 && setCards.every(c => c.active);
+            }
+            updateActiveCardsCount();
+
+            const filtered = setCards.filter(c => c.title.toLowerCase().includes(filterText.toLowerCase()));
+
+            if (filtered.length === 0) {
+                list.innerHTML = '<div class="empty-state">Keine Karten im aktiven Set gefunden.</div>';
+                return;
+            }
+
+            filtered.forEach(c => {
+                const count = c.count !== undefined ? c.count : 1;
+                const el = document.createElement('div');
+                el.className = `manager-card ${c.active ? '' : 'inactive'}`;
+                
+                const displayText = currentGameMode === 'fragen' ? c.desc : c.title;
+                
+                el.innerHTML = `
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('${c.id}')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${displayText}</h4>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <input type="number" class="count-input" value="${count}" min="1" max="99" onchange="updateCardCount('${c.id}', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <label class="toggle-switch" onclick="event.stopPropagation()">
+                            <input type="checkbox" ${c.active ? 'checked' : ''} onchange="toggleCard('${c.id}', this)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                `;
+                list.appendChild(el);
+            });
+        }
+
+        function updateActiveCardsCount() {
+            const countLabel = document.getElementById('activeCardsCount');
+            if (!countLabel) return;
+            const activeSetIds = sets.filter(s => s.active).map(s => s.id);
+            if (activeSetIds.length > 0) {
+                const setCards = cards.filter(c => activeSetIds.includes(c.setId));
+                const activeCount = setCards.filter(c => c.active).length;
+                countLabel.innerText = `${activeCount} von ${setCards.length} Karten aktiv`;
+            } else {
+                countLabel.innerText = `0 von 0 Karten aktiv`;
+            }
+        }
+
+        function filterCards() {
+            const val = document.getElementById('searchInput').value;
+            renderManagerList(val);
+        }
+
+        function toggleCard(id, checkbox) {
+            const card = cards.find(c => c.id == id);
+            if (card) {
+                card.active = checkbox.checked;
+                saveCards();
+                
+                // Update styling of the parent element immediately
+                const cardDiv = checkbox.closest('.manager-card');
+                if (card.active) {
+                    cardDiv.classList.remove('inactive');
+                } else {
+                    cardDiv.classList.add('inactive');
+                }
+
+                // Update master toggle state
+                const activeSetIds = sets.filter(s => s.active).map(s => s.id);
+                if (activeSetIds.length > 0) {
+                    const setCards = cards.filter(c => activeSetIds.includes(c.setId));
+                    const masterToggle = document.getElementById('masterToggle');
+                    if (masterToggle) masterToggle.checked = setCards.every(c => c.active);
+                    updateActiveCardsCount();
+                }
+            }
+        }
+
+        function toggleAllCards(isActive) {
+            const activeSetIds = sets.filter(s => s.active).map(s => s.id);
+            if (activeSetIds.length === 0) return;
+            
+            cards.forEach(c => {
+                if (activeSetIds.includes(c.setId)) {
+                    c.active = isActive;
+                }
+            });
+            saveCards();
+            renderManagerList(document.getElementById('searchInput').value);
+        }
+
+        function updateCardCount(id, value) {
+            const card = cards.find(c => c.id == id);
+            if (card) {
+                let newCount = parseInt(value, 10);
+                if (isNaN(newCount) || newCount < 1) newCount = 1;
+                if (newCount > 99) newCount = 99;
+                card.count = newCount;
+                saveCards();
+                // Pool is rebuilt when the modal closes
+            }
+        }
+
+        function shuffleDeckAnimation() {
+            const mainCard = document.getElementById('mainCard');
+            
+            // Flip back to front if needed
+            mainCard.classList.remove('flipped');
+            
+            // If in non-reshuffle mode, ONLY shuffle what's currently in the pool
+            if (currentGameMode === 'trinkspiel' && !trinkspielReshuffle) {
+                shuffleArray(drawPool);
+            } else if (currentGameMode === 'fragen') {
+                // For Fragen mode, we usually don't want to reset unless empty, 
+                // but let's stick to the user's specific request for Trinkspiel
+                shuffleArray(drawPool);
+            } else {
+                // Endless mode: rebuild the pool
+                buildDrawPool();
+            }
+            
+            // Apply animation class
+            mainCard.classList.add('shuffling');
+            
+            setTimeout(() => {
+                mainCard.classList.remove('shuffling');
+            }, 600);
+        }
+
+        // Action & Edit Logic
+        let activeCardId = null;
+
+        function promptCardAction(id, title) {
+            activeCardId = id;
+            document.getElementById('actionCardTitle').innerText = title;
+            document.getElementById('cardActionModal').classList.add('active');
+        }
+
+        function confirmDeleteCard() {
+            if (activeCardId !== null) {
+                cards = cards.filter(c => c.id != activeCardId);
+                saveCards();
+                renderManagerList(document.getElementById('searchInput').value);
+                closeModalDirect('cardActionModal');
+                buildDrawPool();
+                activeCardId = null;
+            }
+        }
+
+        function openEditModalDirectly(id) {
+            activeCardId = id;
+            const card = cards.find(c => c.id == activeCardId);
+            if (card) {
+                document.getElementById('editTitle').value = card.title;
+                document.getElementById('editDesc').value = card.desc;
+                updateCharCount('editTitle', 'editTitleCount', 38);
+                updateCharCount('editDesc', 'editDescCount', 192);
+                document.getElementById('editModal').classList.add('active');
+            }
+        }
+
+        function openEditModal() {
+            const card = cards.find(c => c.id == activeCardId);
+            if (card) {
+                document.getElementById('editTitle').value = card.title;
+                document.getElementById('editDesc').value = card.desc;
+                updateCharCount('editTitle', 'editTitleCount', 38);
+                updateCharCount('editDesc', 'editDescCount', 192);
+                closeModalDirect('cardActionModal');
+                document.getElementById('editModal').classList.add('active');
+            }
+        }
+
+        function confirmDeleteCardFromEdit() {
+            if (confirm("Karte wirklich löschen?")) {
+                confirmDeleteCard();
+                closeModalDirect('editModal');
+            }
+        }
+
+        function openMoveModalFromEdit() {
+            closeModalDirect('editModal');
+            openMoveModal();
+        }
+
+        function saveEditCard() {
+            const title = document.getElementById('editTitle').value.trim();
+            const desc = document.getElementById('editDesc').value.trim();
+
+            if (!title) {
+                alert("Bitte einen Titel eingeben.");
+                return;
+            }
+
+            const card = cards.find(c => c.id == activeCardId);
+            if (card) {
+                card.title = title;
+                card.desc = desc;
+                saveCards();
+                renderManagerList(document.getElementById('searchInput').value);
+                closeModalDirect('editModal');
+                buildDrawPool();
+            }
+        }
+
+        // Sets Management Logic
+        function openSetsModal() {
+            document.getElementById('manageSetsModal').classList.add('active');
+            renderSetsList();
+        }
+
+        function renderSetsList() {
+            const list = document.getElementById('setsList');
+            list.innerHTML = '';
+
+            sets.forEach(s => {
+                const cardCount = cards.filter(c => c.setId === s.id).length;
+                const el = document.createElement('div');
+                el.className = `manager-card ${s.active ? '' : 'inactive'}`;
+                
+                el.innerHTML = `
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('${s.id}')">
+                        <h4 style="margin-bottom: 0.5rem;">${s.name} <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">(${cardCount} Karten)</span></h4>
+                        <div style="display: flex; gap: 0.5rem;" onclick="event.stopPropagation()">
+                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; background: var(--icon-btn-hover); color: var(--text-color);" onclick="renameSet('${s.id}')">✏️</button>
+                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; background: var(--icon-btn-hover); color: var(--text-color);" onclick="exportSet('${s.id}')">Export</button>
+                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; background: var(--danger); color: white;" onclick="promptDeleteSet('${s.id}')">Löschen</button>
+                        </div>
+                    </div>
+                    <label class="toggle-switch" onclick="event.stopPropagation()">
+                        <input type="checkbox" ${s.active ? 'checked' : ''} onchange="toggleSet('${s.id}', this.checked)">
+                        <span class="slider" style="border-radius: 34px;"></span>
+                    </label>
+                `;
+                list.appendChild(el);
+            });
+        }
+
+        function toggleSet(id, isChecked) {
+            const set = sets.find(s => s.id === id);
+            if (set) {
+                set.active = isChecked;
+                saveSets();
+                renderSetsList();
+                buildDrawPool();
+            }
+        }
+
+        function createNewSet() {
+            document.getElementById('createSetInput').value = '';
+            document.getElementById('createSetModal').classList.add('active');
+            setTimeout(() => document.getElementById('createSetInput').focus(), 100);
+        }
+
+        function saveNewSet() {
+            const name = document.getElementById('createSetInput').value.trim();
+            if (name) {
+                sets.push({ id: 'set_' + Date.now(), name: name, active: false });
+                saveSets();
+                renderSetsList();
+                closeModalDirect('createSetModal');
+            } else {
+                alert("Bitte einen Namen eingeben.");
+            }
+        }
+
+        let activeRenameSetId = null;
+
+        function renameSet(id) {
+            const set = sets.find(s => s.id === id);
+            if (set) {
+                activeRenameSetId = id;
+                document.getElementById('renameSetInput').value = set.name;
+                document.getElementById('renameSetModal').classList.add('active');
+                setTimeout(() => document.getElementById('renameSetInput').focus(), 100);
+            }
+        }
+
+        function saveRenameSet() {
+            if (!activeRenameSetId) return;
+            const newName = document.getElementById('renameSetInput').value.trim();
+            if (newName) {
+                const set = sets.find(s => s.id === activeRenameSetId);
+                if (set) {
+                    set.name = newName;
+                    saveSets();
+                    renderSetsList();
+                    closeModalDirect('renameSetModal');
+                }
+            } else {
+                alert("Bitte einen Namen eingeben.");
+            }
+        }
+
+        let activeDeleteSetId = null;
+
+        function promptDeleteSet(id) {
+            const set = sets.find(s => s.id === id);
+            if (!set) return;
+            activeDeleteSetId = id;
+            document.getElementById('deleteSetName').innerText = set.name;
+            document.getElementById('deleteSetModal').classList.add('active');
+        }
+
+        function confirmDeleteSet() {
+            if (activeDeleteSetId !== null) {
+                sets = sets.filter(s => s.id !== activeDeleteSetId);
+                cards = cards.filter(c => c.setId !== activeDeleteSetId);
+                saveSets();
+                saveCards();
+                renderSetsList();
+                closeModalDirect('deleteSetModal');
+                
+                // Activate another set if the active one was deleted
+                const activeSet = sets.find(s => s.active);
+                if (!activeSet && sets.length > 0) {
+                    sets[0].active = true;
+                    saveSets();
+                    renderSetsList();
+                    buildDrawPool();
+                }
+                
+                activeDeleteSetId = null;
+            }
+        }
+
+        // Export & Import Logic
+        function exportSet(id) {
+            const set = sets.find(s => s.id === id);
+            if (!set) return;
+            const setCards = cards.filter(c => c.setId === id);
+            
+            const exportData = {
+                name: set.name,
+                cards: setCards.map(c => ({ title: c.title, desc: c.desc, active: c.active, count: c.count }))
+            };
+            
+            const jsonStr = JSON.stringify(exportData);
+            const base64 = btoa(encodeURIComponent(jsonStr));
+            
+            document.getElementById('exportSetOutput').value = base64;
+            document.getElementById('exportSetModal').classList.add('active');
+        }
+
+        function copyExportCode() {
+            const copyText = document.getElementById("exportSetOutput");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+
+            const btn = document.querySelector('#exportSetModal .btn-primary');
+            const oldText = btn.innerText;
+
+            const fallbackCopy = () => {
+                try {
+                    document.execCommand("copy");
+                    btn.innerText = "Kopiert! ✓";
+                } catch (e) {
+                    btn.innerText = "Fehler!";
+                }
+                setTimeout(() => btn.innerText = oldText, 2000);
+            };
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(copyText.value).then(() => {
+                    btn.innerText = "Kopiert! ✓";
+                    setTimeout(() => btn.innerText = oldText, 2000);
+                }).catch(() => fallbackCopy());
+            } else {
+                fallbackCopy();
+            }
+        }
+
+        function openImportModal() {
+            document.getElementById('importCode').value = '';
+            document.getElementById('importModal').classList.add('active');
+        }
+
+        function importSet() {
+            const code = document.getElementById('importCode').value.trim();
+            if (!code) {
+                alert("Bitte einen Code einfügen.");
+                return;
+            }
+            try {
+                const jsonStr = decodeURIComponent(atob(code));
+                const data = JSON.parse(jsonStr);
+                
+                if (!data.name || !Array.isArray(data.cards)) {
+                    throw new Error("Ungültiges Format");
+                }
+                
+                const newSetId = 'set_' + Date.now();
+                sets.push({ id: newSetId, name: data.name + ' (Importiert)', active: true });
+                
+                data.cards.forEach((c, index) => {
+                    cards.push({
+                        id: Date.now() + index,
+                        setId: newSetId,
+                        title: c.title || 'Ohne Titel',
+                        desc: c.desc || '',
+                        active: c.active !== false,
+                        count: c.count || 1
+                    });
+                });
+                
+                saveSets();
+                saveCards();
+                closeModalDirect('importModal');
+                renderSetsList();
+                alert(`Set "${data.name}" erfolgreich importiert!`);
+            } catch (e) {
+                alert("Fehler beim Importieren. Ist der Code korrekt?");
+            }
+        }
+
+        // Set Details & Copy Logic
+        let activeDetailSetId = null;
+
+        function openSetDetails(setId) {
+            const set = sets.find(s => s.id === setId);
+            if (!set) return;
+            activeDetailSetId = setId;
+            document.getElementById('setDetailsTitle').innerText = set.name;
+            document.getElementById('setDetailsModal').classList.add('active');
+            renderSetDetailsList();
+        }
+
+        function renderSetDetailsList() {
+            const list = document.getElementById('setDetailsList');
+            list.innerHTML = '';
+            
+            const setCards = cards.filter(c => c.setId === activeDetailSetId);
+            if (setCards.length === 0) {
+                list.innerHTML = '<div class="empty-state">Dieses Set ist leer.</div>';
+                return;
+            }
+
+            setCards.forEach(c => {
+                const el = document.createElement('div');
+                el.className = 'manager-card';
+                el.innerHTML = `
+                    <div style="padding-right: 0.5rem; flex: 1;">
+                        <h4 style="color: var(--text-color);">${c.title}</h4>
+                    </div>
+                    <button class="btn" style="padding: 0.4rem 0.8rem; font-size: 0.9rem; background: var(--secondary);" onclick="openCopyToModal('${c.id}')">Kopieren</button>
+                `;
+                list.appendChild(el);
+            });
+        }
+
+        let cardToCopyId = null;
+
+        function openCopyToModal(cardId) {
+            cardToCopyId = cardId;
+            document.getElementById('copyToSetModal').classList.add('active');
+            
+            const list = document.getElementById('copyToList');
+            list.innerHTML = '';
+            
+            sets.forEach(s => {
+                const el = document.createElement('div');
+                el.className = 'manager-card';
+                el.style.justifyContent = 'flex-start';
+                el.style.gap = '1rem';
+                el.innerHTML = `
+                    <button class="btn btn-primary" style="flex: 0 0 auto; padding: 0.5rem 1rem;" onclick="copyCardToSet('${s.id}')">Hierhin kopieren</button>
+                    <span style="font-weight: 600;">${s.name}</span>
+                `;
+                list.appendChild(el);
+            });
+        }
+
+        function copyCardToSet(targetSetId) {
+            const card = cards.find(c => c.id == cardToCopyId);
+            if (card) {
+                const newCard = {
+                    ...card,
+                    id: Date.now(),
+                    setId: targetSetId
+                };
+                cards.push(newCard);
+                saveCards();
+                closeModalDirect('copyToSetModal');
+                renderSetDetailsList(); // Optionally update details list if copied to same set
+                alert("Karte erfolgreich kopiert!");
+            }
+        }
+
+        // Move to Set Logic
+        function openMoveModal() {
+            closeModalDirect('cardActionModal');
+            document.getElementById('moveToSetModal').classList.add('active');
+            renderMoveToList();
+        }
+
+        function renderMoveToList() {
+            const list = document.getElementById('moveToList');
+            list.innerHTML = '';
+            
+            sets.forEach(s => {
+                const el = document.createElement('div');
+                el.className = 'manager-card';
+                el.style.justifyContent = 'flex-start';
+                el.style.gap = '1rem';
+                el.innerHTML = `
+                    <button class="btn btn-primary" style="flex: 0 0 auto; padding: 0.5rem 1rem;" onclick="moveToSet('${s.id}')">Verschieben</button>
+                    <span style="font-weight: 600;">${s.name}</span>
+                `;
+                list.appendChild(el);
+            });
+        }
+
+        function moveToSet(setId) {
+            const card = cards.find(c => c.id === activeCardId);
+            if (card) {
+                card.setId = setId;
+                saveCards();
+                closeModalDirect('moveToSetModal');
+                // Optionally refresh manage modal if it was open
+                renderManagerList(document.getElementById('searchInput').value);
+                alert("Karte verschoben!");
+            }
+        }
+
+        // --- Design Logic ---
+        function openDesignModal() {
+            document.getElementById('designModal').classList.add('active');
+        }
+
+        function setCardColor(color) {
+            document.documentElement.style.setProperty('--card-back-color', color);
+            localStorage.setItem('trinkspiel_card_color_v2', color);
+            updateHighlighting('.card-swatch', color, 'plus-card');
+        }
+
+        function setBgColor(color) {
+            document.documentElement.style.setProperty('--bg-color', color);
+            localStorage.setItem('trinkspiel_bg_color_v2', color);
+            updateHighlighting('.bg-swatch', color, 'plus-bg');
+        }
+
+        function setBtnColor(color) {
+            document.documentElement.style.setProperty('--primary', color);
+            // Also update hover color (simulated)
+            const hoverColor = adjustColor(color, -20);
+            document.documentElement.style.setProperty('--primary-hover', hoverColor);
+            localStorage.setItem('trinkspiel_btn_color_v2', color);
+            updateHighlighting('.btn-swatch', color, 'plus-btn');
+        }
+
+        function updateHighlighting(selector, color, plusId) {
+            let found = false;
+            document.querySelectorAll(selector).forEach(el => {
+                if (el.getAttribute('data-color') && el.getAttribute('data-color').toLowerCase() === color.toLowerCase()) {
+                    el.classList.add('selected');
+                    found = true;
+                } else {
+                    el.classList.remove('selected');
+                }
+            });
+            
+            const plus = document.getElementById(plusId);
+            if (plus) {
+                if (!found) {
+                    plus.classList.add('selected');
+                    plus.style.background = color;
+                } else {
+                    plus.classList.remove('selected');
+                    plus.style.background = 'rgba(255,255,255,0.1)';
+                }
+            }
+        }
+
+        const extraColorsData = {
+            card: ['#be123c', '#1d4ed8', '#047857', '#6d28d9', '#111827', '#f43f5e', '#3b82f6', '#10b981', '#8b5cf6', '#1f2937', '#fbbf24', '#f97316', '#06b6d4', '#84cc16', '#ec4899', '#94a3b8', '#57534e', '#451a03', '#1e1b4b', '#312e81'],
+            bg: ['#020617', '#052e16', '#1e1b4b', '#18181b', '#0c0a09', '#1a2e05', '#2e1065', '#450a0a', '#164e63', '#064e3b', '#27272a', '#000000', '#111827', '#171717', '#1c1917', '#1e1b4b', '#030712', '#082f49', '#14532d', '#3f2b96'],
+            btn: ['#dc2626', '#2563eb', '#16a34a', '#9333ea', '#ea580c', '#db2777', '#0891b2', '#65a30d', '#4f46e5', '#7c2d12', '#0f766e', '#be185d', '#334155', '#1e2937', '#b91c1c', '#1d4ed8', '#047857', '#7e22ce', '#c2410c', '#000000']
+        };
+
+        function openExtraColors(category) {
+            const modal = document.getElementById('extraColorsModal');
+            const grid = document.getElementById('extraColorsGrid');
+            const title = document.getElementById('extraColorsTitle');
+            
+            const titles = { card: 'Kartenfarben', bg: 'Hintergrundfarben', btn: 'Buttonfarben' };
+            title.innerText = titles[category] || 'Weitere Farben';
+            
+            grid.innerHTML = '';
+            extraColorsData[category].forEach(color => {
+                const swatch = document.createElement('div');
+                swatch.className = 'color-swatch';
+                swatch.style.background = color;
+                swatch.onclick = () => {
+                    if (category === 'card') setCardColor(color);
+                    else if (category === 'bg') setBgColor(color);
+                    else if (category === 'btn') setBtnColor(color);
+                    closeModalDirect('extraColorsModal');
+                };
+                grid.appendChild(swatch);
+            });
+            
+            modal.classList.add('active');
+        }
+
+        function adjustColor(hex, amt) {
+            let usePound = false;
+            if (hex[0] == "#") { hex = hex.slice(1); usePound = true; }
+            let num = parseInt(hex, 16);
+            let r = (num >> 16) + amt;
+            if (r > 255) r = 255; else if (r < 0) r = 0;
+            let b = ((num >> 8) & 0x00FF) + amt;
+            if (b > 255) b = 255; else if (b < 0) b = 0;
+            let g = (num & 0x0000FF) + amt;
+            if (g > 255) g = 255; else if (g < 0) g = 0;
+            return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16).padStart(6, '0');
+        }
+
+        // Boot
+        function init() {
+
+            // Load Design Settings
+            const cColor = localStorage.getItem('trinkspiel_card_color_v2') || '#721c24';
+            setCardColor(cColor);
+            const bgColor = localStorage.getItem('trinkspiel_bg_color_v2') || '#0f172a';
+            setBgColor(bgColor);
+            const btnColor = localStorage.getItem('trinkspiel_btn_color_v2') || '#721c24';
+            setBtnColor(btnColor);
+
+            // Load persistent players
+            const storedPlayers = localStorage.getItem('trinkspiel_players_v1');
+            if (storedPlayers) {
+                players = JSON.parse(storedPlayers);
+            }
+
+            // Load Trinkspiel settings
+            const storedReshuffle = localStorage.getItem('trinkspiel_reshuffle_v1');
+            if (storedReshuffle !== null) {
+                trinkspielReshuffle = storedReshuffle === 'true';
+            }
+            
+            // Load cards and sets
+            initData();
+
+            // Back button handling
+            window.addEventListener('popstate', function(event) {
+                if (document.getElementById('gameWrapper').style.display === 'flex' || 
+                    document.getElementById('busfahrerWrapper').style.display === 'flex') {
+                    history.pushState(null, null, window.location.pathname);
+                    returnToHome();
+                }
+            });
+            history.pushState(null, null, window.location.pathname);
+        }
+
+        init();
+
+    </script>
+</body>
+</html>
+
