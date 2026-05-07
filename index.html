@@ -450,15 +450,13 @@
             flex: 1;
             padding: 0.8rem;
             text-align: center;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            background: rgba(0, 0, 0, 0.4);
+            background: transparent !important;
             border: 2px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 800;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.3);
             text-transform: uppercase;
             font-size: 0.75rem;
             letter-spacing: 1px;
@@ -474,12 +472,23 @@
         }
 
         .tab.active {
-            background: var(--primary);
+            background: transparent !important;
             color: white;
-            border-color: #fff;
-            box-shadow: 0 0 15px var(--primary), inset 0 0 5px rgba(255,255,255,0.3);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            border: 2px solid #fff;
             opacity: 1;
+            text-shadow: 
+                0 0 1px #fff,
+                0 0 3px #fff,
+                0 0 8px var(--primary),
+                0 0 15px var(--primary),
+                0 2px 4px rgba(0,0,0,0.6);
+            box-shadow: 
+                0 0 2px #fff,
+                inset 0 0 2px #fff,
+                0 0 10px var(--primary),
+                inset 0 0 10px var(--primary),
+                0 0 20px var(--primary),
+                inset 0 0 20px var(--primary);
         }
 
         /* Info Icon */
@@ -731,29 +740,45 @@
             position: absolute;
             cursor: pointer;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: var(--danger);
+            background-color: rgba(0,0,0,0.4);
+            border: 2px solid #fff;
             transition: .4s;
             border-radius: 34px;
+            box-shadow: 
+                0 0 2px #fff,
+                inset 0 0 2px #fff,
+                0 0 10px var(--danger),
+                inset 0 0 10px var(--danger);
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 20px;
-            width: 20px;
-            left: 3px;
-            bottom: 3px;
+            height: 14px;
+            width: 14px;
+            left: 4px;
+            bottom: 4px;
             background-color: white;
             transition: .4s;
             border-radius: 50%;
+            box-shadow: 0 0 8px white;
+            z-index: 2;
         }
 
         input:checked + .slider {
-            background-color: var(--secondary);
+            background-color: rgba(16, 185, 129, 0.2);
+            border-color: #fff;
+            box-shadow: 
+                0 0 2px #fff,
+                inset 0 0 2px #fff,
+                0 0 10px var(--secondary),
+                inset 0 0 10px var(--secondary),
+                0 0 20px var(--secondary);
         }
 
         input:checked + .slider:before {
             transform: translateX(24px);
+            box-shadow: 0 0 10px white;
         }
         
         /* Empty State */
@@ -841,13 +866,13 @@
         .bus-card-slot {
             width: 70px;
             height: 100px;
-            border: 2px dashed rgba(255,255,255,0.2);
+            border: none;
             border-radius: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
-            background: rgba(255,255,255,0.05);
+            background: transparent;
         }
 
         .bus-card {
@@ -868,7 +893,7 @@
         }
 
         .bus-card.hidden {
-            background: var(--primary);
+            background: var(--card-back-color);
             border: 2px solid #fff !important;
             box-shadow: 
                 0 0 2px #fff,
@@ -928,6 +953,10 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
             text-shadow: 
                 0 0 1px #fff,
                 0 0 4px #fff,
@@ -960,6 +989,35 @@
                 0 0 20px var(--primary),
                 inset 0 0 20px var(--primary),
                 0 0 30px var(--primary);
+        }
+
+        .player-name-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.7rem 1.8rem;
+            background: transparent !important;
+            color: #fff;
+            border: 2px solid #fff;
+            border-radius: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.95rem;
+            text-shadow: 
+                0 0 1px #fff,
+                0 0 4px #fff,
+                0 0 10px var(--primary),
+                0 0 20px var(--primary);
+            box-shadow: 
+                0 0 4px #fff,
+                inset 0 0 4px #fff,
+                0 0 10px var(--primary),
+                inset 0 0 10px var(--primary),
+                0 0 15px var(--primary);
+            margin-bottom: 0.8rem;
+            min-width: 160px;
+            text-align: center;
         }
 
         .bus-header-btn {
@@ -1264,11 +1322,8 @@
                 <div class="color-swatch plus-swatch" id="plus-motifs" onclick="openExtraMotifs()" title="Mehr Muster" style="background: rgba(255, 255, 255, 0.1);">+</div>
             </div>
 
-            <div class="modal-section-title" style="margin-top: 2rem;">App Finalisieren</div>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
-                Speichere alle aktuell geladenen Kartensets und das aktuelle Design fest in der Datei. Die heruntergeladene Datei ist dann komplett standalone und enthält alle deine Daten als Standard.
-            </p>
-            <button class="btn" style="width: 100%; padding: 1rem;" onclick="generateFinalVersion()">Finale Datei (.html) erstellen</button>
+            <button class="home-btn" style="width: 100%; max-width: none; font-size: 1rem; padding: 1rem; margin-bottom: 1rem; border-width: 2px; border-color: #fff; border-radius: 12px; text-shadow: 0 0 4px #fff, 0 0 12px var(--secondary), 0 0 25px var(--secondary); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--secondary), inset 0 0 15px var(--secondary), 0 0 25px var(--secondary);" onclick="applyDesignChanges()">Änderungen übernehmen</button>
+            <button class="home-btn" style="width: 100%; max-width: none; font-size: 1rem; padding: 1rem; border-width: 2px; border-color: #fff; border-radius: 12px; text-shadow: 0 0 4px #fff, 0 0 12px var(--danger), 0 0 25px var(--danger); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--danger), inset 0 0 15px var(--danger), 0 0 25px var(--danger);" onclick="generateFinalVersion()">Finale Datei (.html) erstellen</button>
         </div>
     </div>
 
@@ -1378,8 +1433,8 @@
 
     <div id="gameWrapper" style="display: none; flex: 1 1 0%; flex-direction: column; height: 100%;">
         <header>
-            <button class="icon-btn" onclick="returnToHome()" aria-label="Zurück zum Menü">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            <button class="icon-btn" onclick="returnToHome()" aria-label="Zurück">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
             </button>
             <div>
                 <button class="icon-btn" id="playerEditBtn" onclick="openPlayerSetupFromGame()" aria-label="Spieler verwalten" style="display: inline-flex; margin-right: 0.5rem;" title="Spieler verwalten">
@@ -1518,7 +1573,7 @@
                     <div class="search-bar" style="width: 100%; margin: 0; padding: 0;">
                         <input type="text" id="searchInput" placeholder="Karte suchen..." oninput="filterCards()" autocomplete="off" style="width: 100%; box-sizing: border-box;">
                     </div>
-                    <button class="btn btn-primary" style="width: 100%; padding: 0.8rem; font-size: 2rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px var(--primary);" onclick="openAddModal()">+</button>
+                    <button class="btn" style="width: 100%; padding: 0.8rem; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;" onclick="openAddModal()">+</button>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding: 0 0.5rem;">
                     <span id="activeCardsCount" style="color: var(--text-muted); font-size: 0.9rem; font-weight: 500;">60 von 60 Karten aktiv</span>
@@ -2196,7 +2251,7 @@
                         <input type="text" id="searchSetsInput" placeholder="Sets suchen..." oninput="filterSets()" autocomplete="off" style="width: 100%; box-sizing: border-box;">
                     </div>
                     <button class="btn" style="width: 100%; padding: 0.8rem;" onclick="openImportModal()">Import</button>
-                    <button class="btn btn-primary" style="width: 100%; padding: 0.8rem; font-size: 2rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px var(--primary);" onclick="createNewSet()">+</button>
+                    <button class="btn" style="width: 100%; padding: 0.8rem; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;" onclick="createNewSet()">+</button>
                 </div>
                 <div class="card-list" id="setsTabList"><div class="manager-card inactive">
                     <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('set_1778062244891')">
@@ -2232,7 +2287,7 @@
                     <div class="search-bar" style="width: 100%; margin: 0; padding: 0;">
                         <input type="text" id="searchDeathInput" placeholder="Todesrunden suchen..." oninput="filterDeathCards()" autocomplete="off" style="width: 100%; box-sizing: border-box;">
                     </div>
-                    <button class="btn btn-danger" style="width: 100%; padding: 0.8rem; font-size: 2rem; display: flex; align-items: center; justify-content: center;" onclick="openAddDeathModal()">+</button>
+                    <button class="btn" style="width: 100%; padding: 0.8rem; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;" onclick="openAddDeathModal()">+</button>
                 </div>
                 <div class="card-list" id="deathCardList"><div class="manager-card " style="border-left: 4px solid var(--danger);">
                     <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditDeathModal('death_1')">
@@ -2318,7 +2373,7 @@
                     </div>
                     <label class="toggle-switch" onclick="event.stopPropagation()">
                         <input type="checkbox" onchange="toggleSet('set_1778062244891', this.checked)">
-                        <span class="slider" style="border-radius: 34px;"></span>
+                        <span class="slider"></span>
                     </label>
                 </div><div class="manager-card ">
                     <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('set_1778108614404')">
@@ -2331,7 +2386,7 @@
                     </div>
                     <label class="toggle-switch" onclick="event.stopPropagation()">
                         <input type="checkbox" checked="" onchange="toggleSet('set_1778108614404', this.checked)">
-                        <span class="slider" style="border-radius: 34px;"></span>
+                        <span class="slider"></span>
                     </label>
                 </div></div>
         </div>
@@ -2655,7 +2710,7 @@
                 Bist du sicher, dass du das aktuelle Spiel beenden und zum Hauptmenü zurückkehren möchtest?
             </p>
             <div style="display: flex; gap: 1rem;">
-                <button class="btn btn-danger" style="flex: 1;" onclick="confirmReturnToHome()">Ja, zurück</button>
+                <button class="btn btn-danger" style="flex: 1;" onclick="confirmReturnToHome()">Zurück</button>
                 <button class="btn" style="flex: 1; color: var(--text-color);" onclick="closeModalDirect('confirmBackModal')">Abbrechen</button>
             </div>
         </div>
@@ -2682,37 +2737,53 @@
     <div class="modal-overlay" id="trinkspielSettingsModal" onclick="closeModal(event, 'trinkspielSettingsModal')">
         <div class="modal" onclick="event.stopPropagation()">
             <div class="modal-header">
-                <h3 class="modal-title">Spiel-Optionen</h3>
+                <div style="display: flex; align-items: center; gap: 0.8rem;">
+                    <h3 class="modal-title">Spiel-Optionen</h3>
+                    <div class="info-icon" onclick="document.getElementById('optionsInfoModal').classList.add('active')" style="margin: 0; width: 28px; height: 28px; font-size: 1.1rem; border-color: var(--secondary); color: var(--secondary); box-shadow: 0 0 10px var(--secondary);">i</div>
+                </div>
                 <button class="close-btn" onclick="closeModalDirect('trinkspielSettingsModal')">✖</button>
             </div>
-            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Wähle das Verhalten des Kartenstapels:</p>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">Passe dein Spielerlebnis an:</p>
             
-            <div class="manager-card" id="reshuffleOnBtn" onclick="setReshuffle(true)" style="width: 100%; text-align: left; margin-bottom: 1rem; padding: 1.2rem; display: flex; align-items: center; border-color: var(--glass-border); box-shadow: none;">
-                <div style="flex: 1;">
-                    <h4 style="margin-bottom: 0.3rem;">Mit Zurücklegen (Endlos)</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Karten werden nach dem Ziehen wieder in den Stapel gemischt.</p>
-                </div>
-                <div class="status-indicator" id="reshuffleOnIndicator" style="width: 14px; height: 14px; border-radius: 50%; background: var(--secondary); box-shadow: 0 0 10px var(--secondary); display: none;"></div>
+            <div class="home-btn" id="reshuffleOnBtn" onclick="setReshuffle(true)" style="width: 100%; max-width: none; margin-bottom: 1.2rem; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 0 2px #fff, inset 0 0 2px #fff, 0 0 10px var(--danger), inset 0 0 10px var(--danger); text-shadow: none; opacity: 0.6;">
+                <span style="font-size: 1.1rem; font-weight: 800; letter-spacing: 1px;">Mit Zurücklegen</span>
+                <div class="status-indicator" id="reshuffleOnIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: rgb(102, 102, 102); box-shadow: none;"></div>
             </div>
 
-            <div class="manager-card" id="reshuffleOffBtn" onclick="setReshuffle(false)" style="width: 100%; text-align: left; margin-bottom: 1rem; padding: 1.2rem; display: flex; align-items: center; border-color: var(--secondary); box-shadow: 0 0 10px var(--secondary);">
-                <div style="flex: 1;">
-                    <h4 style="margin-bottom: 0.3rem;">Ohne Zurücklegen</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Karten werden aus dem Stapel entfernt. Ein Zähler wird angezeigt.</p>
-                </div>
-                <div class="status-indicator" id="reshuffleOffIndicator" style="width: 14px; height: 14px; border-radius: 50%; background: var(--secondary); box-shadow: 0 0 10px var(--secondary); display: block;"></div>
+            <div class="home-btn" id="reshuffleOffBtn" onclick="setReshuffle(false)" style="width: 100%; max-width: none; margin-bottom: 1.2rem; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgb(255, 255, 255); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--secondary), inset 0 0 15px var(--secondary), 0 0 30px var(--secondary); text-shadow: 0 0 5px #fff, 0 0 12px var(--secondary); opacity: 1;">
+                <span style="font-size: 1.1rem; font-weight: 800; letter-spacing: 1px;">Ohne Zurücklegen</span>
+                <div class="status-indicator" id="reshuffleOffIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: white; box-shadow: 0 0 10px white;"></div>
             </div>
 
-            <div class="manager-card" id="todesmodusBtn" onclick="toggleTodesmodus()" style="width: 100%; text-align: left; padding: 1.2rem; display: flex; align-items: center; border-top-width: ; border-top-style: ; border-color: var(--danger); border-right-width: ; border-right-style: ; border-bottom-width: ; border-bottom-style: ; border-left-width: ; border-left-style: ; border-image-outset: ; border-image-repeat: ; border-image-slice: ; border-image-source: ; border-image-width: ; transition: 0.3s; box-shadow: 0 0 10px var(--danger);">
-                <div style="flex: 1;">
-                    <h4 style="margin-bottom: 0.3rem;">Todesmodus</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">Aktiviert zufällige, gefährliche Todes-Karten.</p>
-                </div>
-                <div class="status-indicator" id="todesmodusIndicator" style="width: 14px; height: 14px; border-radius: 50%; background: var(--danger); box-shadow: 0 0 10px var(--danger); display: block;"></div>
+            <div class="home-btn" id="todesmodusBtn" onclick="toggleTodesmodus()" style="width: 100%; max-width: none; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgb(255, 255, 255); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--secondary), inset 0 0 15px var(--secondary), 0 0 30px var(--secondary); text-shadow: 0 0 5px #fff, 0 0 12px var(--secondary); opacity: 1;">
+                <span style="font-size: 1.1rem; font-weight: 800; letter-spacing: 1px;">Todesmodus</span>
+                <div class="status-indicator" id="todesmodusIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: white; box-shadow: 0 0 10px white;"></div>
             </div>
         </div>
     </div>
-
+    <!-- Options Info Modal -->
+    <div class="modal-overlay" id="optionsInfoModal" onclick="closeModal(event, 'optionsInfoModal')">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 class="modal-title">Modi Erklärungen</h3>
+                <button class="close-btn" onclick="closeModalDirect('optionsInfoModal')">✖</button>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div>
+                    <h4 style="color: var(--secondary); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Mit Zurücklegen</h4>
+                    <p style="color: var(--text-color); line-height: 1.4;">Der Kartenstapel ist endlos. Jede gezogene Karte wird nach dem Vorlesen wieder in den Stapel gemischt und kann erneut erscheinen.</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--secondary); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Ohne Zurücklegen</h4>
+                    <p style="color: var(--text-color); line-height: 1.4;">Karten werden nach dem Ziehen aus dem Spiel entfernt. Ein Zähler zeigt an, wie viele Karten noch im Stapel übrig sind. Das Spiel endet, wenn der Stapel leer ist.</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--danger); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Todesmodus</h4>
+                    <p style="color: var(--text-color); line-height: 1.4;">Aktiviert gefährliche Todes-Karten, die zufällig zwischen den normalen Karten erscheinen können. Diese Karten haben meist härtere Regeln.</p>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Death Info Modal -->
     <div class="modal-overlay" id="deathInfoModal" onclick="closeModal(event, 'deathInfoModal')">
         <div class="modal" onclick="event.stopPropagation()">
@@ -2854,7 +2925,7 @@
 
     <script>
         // BUILD_ID_MARKER
-        const BUILD_ID = "build_1778145697303";
+        const BUILD_ID = "build_1778164746179";
 
         // TRINKSPIEL_SETS_START
         const hardcodedTrinkspielSets = [
@@ -3302,7 +3373,7 @@
         const hardcodedFragenSets = [
           {
                     "id": "set_1778144786048",
-                    "name": "Ü 18 (Importiert)",
+                    "name": "Ü 18",
                     "cards": [
                               {
                                         "title": "Wer würde eher …",
@@ -3438,7 +3509,7 @@
           },
           {
                     "id": "set_1778144797778",
-                    "name": "Peinlich (Importiert)",
+                    "name": "Peinlich",
                     "cards": [
                               {
                                         "title": "Wer würde eher …",
@@ -3664,7 +3735,7 @@
           },
           {
                     "id": "set_1778144830779",
-                    "name": "Lustig (Importiert)",
+                    "name": "Lustig",
                     "cards": [
                               {
                                         "title": "Wer würde eher...",
@@ -3976,13 +4047,17 @@
             let html = document.documentElement.outerHTML;
             
             // Clean up: Remove 'active' and 'flipped' classes so the exported file starts with a clean UI
-            html = html.replace(/modal-overlay/g, "modal-overlay");
+            // We use specific class-based replacements to avoid breaking variable/function names in JS
+            html = html.replace(/class="modal-overlay"/g, 'class="modal-overlay"');
             html = html.replace(/card-container/g, "card-container");
             
             // Ensure Home Screen is visible and games are hidden
-            html = html.replace(/id="homeScreen" style="display: block;"/g, 'id="homeScreen" style="display: block;"');
-            html = html.replace(/id="gameWrapper" style="display: none;"/g, 'id="gameWrapper" style="display: none;"');
-            html = html.replace(/id="busfahrerWrapper" style="display: none;"/g, 'id="busfahrerWrapper" style="display: none;"');
+            html = html.replace(/id="homeScreen"\s+style="display:\s*none;"/g, 'id="homeScreen" style="display: block;"');
+            html = html.replace(/id="gameWrapper"\s+style="display:\s*flex;"/g, 'id="gameWrapper" style="display: none;"');
+            html = html.replace(/id="busfahrerWrapper"\s+style="display:\s*flex;"/g, 'id="busfahrerWrapper" style="display: none;"');
+            
+            // Specifically ensure the design modal is closed in the export
+            html = html.replace(/id="designModal"\s+class="modal-overlay\s*[^"]*"/g, 'id="designModal" class="modal-overlay"');
             
             html = "<!DOCTYPE html>\n<html" + html.substring(html.indexOf('>'));
 
@@ -4561,22 +4636,35 @@
             const offBtn = document.getElementById('reshuffleOffBtn');
             const deathBtn = document.getElementById('todesmodusBtn');
             
-            if (onInd) onInd.style.display = trinkspielReshuffle ? 'block' : 'none';
-            if (offInd) offInd.style.display = trinkspielReshuffle ? 'none' : 'block';
-            if (deathInd) deathInd.style.display = todesmodusEnabled ? 'block' : 'none';
+            // Helper to apply neon style
+            const applyNeon = (el, active, colorVar) => {
+                if (!el) return;
+                const color = active ? `var(${colorVar})` : 'rgba(255,255,255,0.1)';
+                const borderColor = active ? '#fff' : 'rgba(255,255,255,0.1)';
+                const shadow = active ? 
+                    `0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(${colorVar}), inset 0 0 15px var(${colorVar}), 0 0 30px var(${colorVar})` : 
+                    `0 0 10px var(--danger), inset 0 0 10px var(--danger)`; // Red glow if inactive as requested
+                
+                // If inactive and user wants "not glow or red", let's use red glow for inactive as requested "rot läuchten wenn nicht"
+                const finalShadow = active ? shadow : `0 0 2px #fff, inset 0 0 2px #fff, 0 0 10px var(--danger), inset 0 0 10px var(--danger)`;
+
+                el.style.borderColor = borderColor;
+                el.style.boxShadow = finalShadow;
+                el.style.textShadow = active ? `0 0 5px #fff, 0 0 12px var(${colorVar})` : 'none';
+                el.style.opacity = active ? '1' : '0.6';
+            };
+
+            applyNeon(onBtn, trinkspielReshuffle, '--secondary');
+            applyNeon(offBtn, !trinkspielReshuffle, '--secondary');
+            applyNeon(deathBtn, todesmodusEnabled, '--secondary'); // Using secondary for "active" look
+
+            if (onInd) onInd.style.background = trinkspielReshuffle ? 'white' : '#666';
+            if (offInd) offInd.style.background = !trinkspielReshuffle ? 'white' : '#666';
+            if (deathInd) deathInd.style.background = todesmodusEnabled ? 'white' : '#666';
             
-            if (onBtn) {
-                onBtn.style.borderColor = trinkspielReshuffle ? 'var(--secondary)' : 'var(--glass-border)';
-                onBtn.style.boxShadow = trinkspielReshuffle ? '0 0 10px var(--secondary)' : 'none';
-            }
-            if (offBtn) {
-                offBtn.style.borderColor = trinkspielReshuffle ? 'var(--glass-border)' : 'var(--secondary)';
-                offBtn.style.boxShadow = trinkspielReshuffle ? 'none' : '0 0 10px var(--secondary)';
-            }
-            if (deathBtn) {
-                deathBtn.style.borderColor = todesmodusEnabled ? 'var(--danger)' : 'var(--glass-border)';
-                deathBtn.style.boxShadow = todesmodusEnabled ? '0 0 10px var(--danger)' : 'none';
-            }
+            if (onInd) onInd.style.boxShadow = trinkspielReshuffle ? '0 0 10px white' : 'none';
+            if (offInd) offInd.style.boxShadow = !trinkspielReshuffle ? '0 0 10px white' : 'none';
+            if (deathInd) deathInd.style.boxShadow = todesmodusEnabled ? '0 0 10px white' : 'none';
         }
 
         // --- Busfahrer Logic ---
@@ -4779,46 +4867,44 @@
 
             let cardsHTML;
             if (busRound === 2) {
-                cardsHTML = '<div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:1rem 0;align-items:flex-end;">';
+                cardsHTML = '<div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:15px;justify-items:center;margin:1rem 0;max-width:280px;width:100%;">';
                 busFinaleCards.forEach((c, i) => {
-                    const textColor = c.color === 'red' ? '#dc2626' : '#111827';
-                    cardsHTML += `<div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+                    cardsHTML += `<div style="display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;">
                         <div style="font-size:0.6rem;color:var(--secondary);font-weight:800;">Karte ${i+1}</div>
-                        <div style="width:85px;height:120px;border-radius:10px;background:#ffffff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:6px;border:1px solid rgba(0,0,0,0.15);box-shadow:0 2px 8px rgba(0,0,0,0.3);">
-                            <div style="font-size:1rem;font-weight:800;color:${textColor};align-self:flex-start;">${c.label}</div>
-                            <div style="font-size:2.8rem;color:${textColor};line-height:1;">${c.icon}</div>
-                            <div style="font-size:1rem;font-weight:800;color:${textColor};align-self:flex-end;transform:rotate(180deg);">${c.label}</div>
+                        <div style="width:110px;height:155px;">
+                            ${renderCardFront(c, "1.2rem", "3.5rem")}
                         </div>
                     </div>`;
                 });
                 // The next card: flip wrapper
                 const nextN = busFinaleCards.length + 1;
-                cardsHTML += `<div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+                cardsHTML += `<div style="display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;">
                     <div style="font-size:0.6rem;color:var(--text-muted);font-weight:800;">Karte ${nextN}</div>
-                    <div id="nextCardFlip" style="width:85px;height:120px;perspective:800px;">
+                    <div id="nextCardFlip" style="width:110px;height:155px;perspective:1000px;">
                         <div id="nextCardInner" style="width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.55s ease;">
-                            <div class="bus-card hidden" style="position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;">${getCardIconHTML(true)}</div>
-                            <div id="nextCardFace" style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);border-radius:10px;"></div>
+                            <div class="bus-card hidden" style="position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;">${getCardIconHTML(true)}</div>
+                            <div id="nextCardFace" style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);border-radius:12px;"></div>
                         </div>
                     </div>
                 </div>`;
                 cardsHTML += '</div>';
             } else {
                 // Spiel 3: reference card + arrow (centered) + hidden next
-                cardsHTML = '<div style="display:flex;gap:0;align-items:center;justify-content:center;margin:1.5rem 0;">';
+                cardsHTML = '<div style="display:flex;gap:12px;align-items:center;justify-content:center;margin:1.5rem 0;">';
                 if (busFinaleLastCard) {
-                    const textColor = busFinaleLastCard.color === 'red' ? '#dc2626' : '#111827';
-                    cardsHTML += `<div style="width:85px;height:120px;border-radius:10px;background:#ffffff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:6px;border:1px solid rgba(0,0,0,0.15);box-shadow:0 2px 8px rgba(0,0,0,0.3);">
-                        <div style="font-size:1rem;font-weight:800;color:${textColor};align-self:flex-start;">${busFinaleLastCard.label}</div>
-                        <div style="font-size:2.8rem;color:${textColor};line-height:1;">${busFinaleLastCard.icon}</div>
-                        <div style="font-size:1rem;font-weight:800;color:${textColor};align-self:flex-end;transform:rotate(180deg);">${busFinaleLastCard.label}</div>
+                    cardsHTML += `
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+                        <div style="font-size:0.7rem;color:var(--secondary);font-weight:800;">Letzte Karte</div>
+                        <div style="width:120px;height:170px;">
+                            ${renderCardFront(busFinaleLastCard, "1.4rem", "4rem")}
+                        </div>
                     </div>
-                    <div style="font-size:1.8rem;color:var(--text-muted);padding:0 10px;line-height:1;">&#8594;</div>`;
+                    <div style="font-size:1.8rem;color:var(--text-muted);padding:0 5px;line-height:1;">&#8594;</div>`;
                 }
-                cardsHTML += `<div id="nextCardFlip" style="width:85px;height:120px;perspective:800px;">
+                cardsHTML += `<div id="nextCardFlip" style="width:110px;height:155px;perspective:1000px;">
                     <div id="nextCardInner" style="width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.55s ease;">
-                        <div class="bus-card hidden" style="position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;">${getCardIconHTML(true)}</div>
-                        <div id="nextCardFace" style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);border-radius:10px;"></div>
+                        <div class="bus-card hidden" style="position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;">${getCardIconHTML(true)}</div>
+                        <div id="nextCardFace" style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);border-radius:12px;"></div>
                     </div>
                 </div>`;
                 cardsHTML += '</div>';
@@ -4881,9 +4967,7 @@
 
             document.querySelectorAll('#finaleBtns button').forEach(b => b.disabled = true);
 
-            const bgColor = '#ffffff';
-            const textColor = card.color === 'red' ? '#dc2626' : '#111827';
-            const faceHTML = '<div style="width:100%;height:100%;background:#ffffff;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:6px;box-shadow:0 2px 8px rgba(0,0,0,0.3);"><div style="font-size:1rem;font-weight:800;color:' + textColor + ';align-self:flex-start;">' + card.label + '</div><div style="font-size:2.8rem;color:' + textColor + ';line-height:1;">' + card.icon + '</div><div style="font-size:1rem;font-weight:800;color:' + textColor + ';align-self:flex-end;transform:rotate(180deg);">' + card.label + '</div></div>';
+            const faceHTML = renderCardFront(card, "1rem", "2.8rem", "10px", "6px");
             const face = document.getElementById('nextCardFace');
             const inner = document.getElementById('nextCardInner');
             if (face && inner) { face.innerHTML = faceHTML; requestAnimationFrame(() => { inner.style.transform = 'rotateY(180deg)'; }); }
@@ -4976,7 +5060,7 @@
         }
 
         function getFinaleButtons() {
-            const s = 'min-width:80px;font-size:1rem;padding:0.7rem 1rem;';
+            const s = 'width:130px;font-size:1.1rem;padding:0.8rem 1rem;';
             switch(busFinaleStep) {
                 case 1: return `
                     <button class="bus-prediction-btn" style="${s}--primary:#ef4444;" onclick="makeFinaleMove('red')">Rot</button>
@@ -5104,12 +5188,9 @@
             let handsHTML = '<div style="margin-top:1.5rem;width:100%;display:flex;flex-direction:column;gap:1rem;align-items:center;">';
             busPlayersState.forEach(p => {
                 handsHTML += `
-                    <div style="width:100%;padding:0.8rem 1rem;background:rgba(255,255,255,0.05);border-radius:12px;border:1px solid var(--glass-border);">
-                        <div style="font-weight:800;margin-bottom:0.6rem;display:flex;justify-content:space-between;font-size:0.9rem;">
-                            <span>${p.name}</span>
-                            <span style="color:var(--secondary);">${p.hand.length} Karten</span>
-                        </div>
-                        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">${renderHand(p.hand)}</div>
+                    <div style="width:100%; display:flex; align-items:center; gap:1.5rem; margin-bottom:2rem; justify-content:center; flex-wrap:wrap;">
+                        <div class="player-name-badge" style="margin-bottom:0;">${p.name}</div>
+                        <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">${renderHand(p.hand)}</div>
                     </div>`;
             });
             handsHTML += '</div>';
@@ -5124,23 +5205,31 @@
         function renderHand(hand) {
             if (!hand || hand.length === 0) return '<span style="color:var(--text-muted);font-size:0.8rem;">Keine Karten</span>';
             return hand.map(c => {
-                const textColor = c.color === 'red' ? '#dc2626' : '#111827';
+                const isRed = c.color === 'red';
+                const neonColor = isRed ? '#ff3131' : '#ffffff';
+                const glow = `0 0 5px ${neonColor}, 0 0 10px ${neonColor}`;
                 return `
-                <div style="width:58px;height:80px;border-radius:8px;background:#ffffff;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:5px;border:1px solid rgba(0,0,0,0.15);box-shadow:0 2px 6px rgba(0,0,0,0.3);">
-                    <div style="font-size:0.85rem;font-weight:800;color:${textColor};align-self:flex-start;">${c.label}</div>
-                    <div style="font-size:1.5rem;color:${textColor};line-height:1;">${c.icon}</div>
-                    <div style="font-size:0.85rem;font-weight:800;color:${textColor};align-self:flex-end;transform:rotate(180deg);">${c.label}</div>
+                <div style="width:58px;height:80px;border-radius:10px;background:var(--card-back-color);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:6px;border:1.5px solid var(--card-neon-color);box-shadow:inset 0 0 8px rgba(0,0,0,0.5), 0 4px 10px rgba(0,0,0,0.4);">
+                    <div style="font-size:0.9rem;font-weight:900;color:${neonColor};text-shadow:${glow};align-self:flex-start;">${c.label}</div>
+                    <div style="font-size:1.8rem;color:${neonColor};text-shadow:${glow};line-height:1;">${c.icon}</div>
+                    <div style="font-size:0.9rem;font-weight:900;color:${neonColor};text-shadow:${glow};align-self:flex-end;transform:rotate(180deg);">${c.label}</div>
                 </div>`;
             }).join('');
         }
 
         function renderCardSmall(c) {
-            const textColor = c.color === 'red' ? '#dc2626' : '#111827';
+            return renderCardFront(c, "0.85rem", "1.6rem", "10px", "6px", "1.5px");
+        }
+
+        function renderCardFront(c, labelSize = "1.2rem", iconSize = "3.5rem", borderRadius = "12px", padding = "10px", borderW = "2px") {
+            const isRed = c.color === 'red';
+            const neonColor = isRed ? '#ff3131' : '#ffffff';
+            const glow = `0 0 5px ${neonColor}, 0 0 10px ${neonColor}`;
             return `
-                <div style="width:100%;height:100%;background:#ffffff;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:5px;">
-                    <div style="font-size:0.8rem;font-weight:800;color:${textColor};align-self:flex-start;">${c.label}</div>
-                    <div style="font-size:1.4rem;color:${textColor};line-height:1;">${c.icon}</div>
-                    <div style="font-size:0.8rem;font-weight:800;color:${textColor};align-self:flex-end;transform:rotate(180deg);">${c.label}</div>
+                <div style="width:100%;height:100%;background:var(--card-back-color);border-radius:${borderRadius};display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:${padding};border:${borderW} solid var(--card-neon-color);box-shadow:inset 0 0 10px rgba(0,0,0,0.5);">
+                    <div style="font-size:${labelSize};font-weight:900;color:${neonColor};text-shadow:${glow};align-self:flex-start;">${c.label}</div>
+                    <div style="font-size:${iconSize};color:${neonColor};text-shadow:${glow};line-height:1;">${c.icon}</div>
+                    <div style="font-size:${labelSize};font-weight:900;color:${neonColor};text-shadow:${glow};align-self:flex-end;transform:rotate(180deg);">${c.label}</div>
                 </div>`;
         }
 
@@ -5683,7 +5772,7 @@
                     </div>
                     <label class="toggle-switch" onclick="event.stopPropagation()">
                         <input type="checkbox" ${s.active ? 'checked' : ''} onchange="toggleSet('${s.id}', this.checked)">
-                        <span class="slider" style="border-radius: 34px;"></span>
+                        <span class="slider"></span>
                     </label>
                 `;
                 list.appendChild(el);
@@ -5986,43 +6075,54 @@
             document.getElementById('designModal').classList.add('active');
         }
 
+        let tempDesign = {
+            cardColor: '',
+            bgColor: '',
+            btnColor: '',
+            neonColor: '',
+            icon: ''
+        };
+
         function setCardColor(color) {
             document.documentElement.style.setProperty('--card-back-color', color);
-            localStorage.setItem('trinkspiel_card_color_v2', color);
+            tempDesign.cardColor = color;
             updateHighlighting('.card-swatch', color, 'plus-card');
         }
 
         function setBgColor(color) {
             document.documentElement.style.setProperty('--bg-color', color);
-            localStorage.setItem('trinkspiel_bg_color_v2', color);
+            tempDesign.bgColor = color;
             updateHighlighting('.bg-swatch', color, 'plus-bg');
         }
 
         function setBtnColor(color) {
             document.documentElement.style.setProperty('--primary', color);
-            // Also update hover color (simulated)
             const hoverColor = adjustColor(color, -20);
             document.documentElement.style.setProperty('--primary-hover', hoverColor);
-            localStorage.setItem('trinkspiel_btn_color_v2', color);
+            tempDesign.btnColor = color;
             updateHighlighting('.btn-swatch', color, 'plus-btn');
         }
 
         function setNeonColor(color) {
             document.documentElement.style.setProperty('--card-neon-color', color);
-            localStorage.setItem('trinkspiel_neon_color_v2', color);
-            // Update RGB variable for shadow effects
+            tempDesign.neonColor = color;
             const rgb = hexToRgb(color);
             if (rgb) {
                 document.documentElement.style.setProperty('--neon-rgb', `${rgb.r}, ${rgb.g}, ${rgb.b}`);
             }
-
             updateHighlighting('.neon-swatch', color, 'plus-neon');
-            
-            // Ensure icons in selector also update immediately
             document.querySelectorAll('.symbol-swatch').forEach(s => s.style.color = color);
-            
-            // Update icons on cards
             renderCardIcons();
+        }
+
+        function applyDesignChanges() {
+            if (tempDesign.cardColor) localStorage.setItem('trinkspiel_card_color_v2', tempDesign.cardColor);
+            if (tempDesign.bgColor) localStorage.setItem('trinkspiel_bg_color_v2', tempDesign.bgColor);
+            if (tempDesign.btnColor) localStorage.setItem('trinkspiel_btn_color_v2', tempDesign.btnColor);
+            if (tempDesign.neonColor) localStorage.setItem('trinkspiel_neon_color_v2', tempDesign.neonColor);
+            if (tempDesign.icon) localStorage.setItem('trinkspiel_card_icon_v2', tempDesign.icon);
+            
+            closeModalDirect('designModal');
         }
         function hexToRgb(hex) {
             const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -6175,7 +6275,7 @@
 
         function setCardIcon(icon) {
             currentCardIcon = icon;
-            localStorage.setItem('trinkspiel_card_icon_v2', icon);
+            tempDesign.icon = icon;
             
             const neonColor = getComputedStyle(document.documentElement).getPropertyValue('--card-neon-color').trim() || '#facc15';
             const plusBtn = document.getElementById('plus-motifs');
