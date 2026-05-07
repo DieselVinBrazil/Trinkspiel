@@ -1188,7 +1188,7 @@
     </div>
 
     <!-- Design Modal -->
-    <div class="modal-overlay" id="designModal" onclick="closeModal(event, 'designModal')">
+    <div class="modal-overlay active" id="designModal" onclick="closeModal(event, 'designModal')">
         <div class="modal" onclick="event.stopPropagation()" style="max-width: 400px; width: 95%;">
             <div class="modal-header">
                 <h3 class="modal-title">Design anpassen</h3>
@@ -1240,25 +1240,25 @@
             <!-- Kartenrückseiten Design -->
             <div class="modal-section-title" style="margin-top: 1.5rem;">Kartenrückseiten Design</div>
             <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 1.5rem;">
-                <div class="symbol-swatch" data-icon="none" onclick="setCardIcon('none')" title="Kein Design">
+                <div class="symbol-swatch" data-icon="none" onclick="setCardIcon('none')" title="Kein Design" style="color: rgb(114, 28, 36);">
                     <span style="font-size: 1.2rem; font-weight: 800; color: rgba(255,255,255,0.4);">X</span>
                 </div>
-                <div class="symbol-swatch" data-icon="beer" onclick="setCardIcon('beer')" title="Bier">
+                <div class="symbol-swatch selected" data-icon="beer" onclick="setCardIcon('beer')" title="Bier" style="color: rgb(114, 28, 36);">
                     <svg viewBox="0 0 50 80" xmlns="http://www.w3.org/2000/svg" style="width: 70%; height: 70%;">
-                        <path d="M15,15 L18,65 C18,70 21,72 25,72 C29,72 32,70 32,65 L35,15" fill="none" stroke="#fff" stroke-width="3" />
-                        <path d="M19,18 L21,64 C21,68 23,69 25,69 C27,69 29,68 29,64 L31,18 Z" fill="#facc15" />
-                        <path d="M17,15 C21,12 25,18 29,15 C33,12 35,18 35,15 C35,18 25,20 17,18 Z" fill="#fff" />
-                        <path d="M35,30 C42,30 42,45 34,50" fill="none" stroke="#fff" stroke-width="3" />
+                        <path d="M15,15 L18,65 C18,70 21,72 25,72 C29,72 32,70 32,65 L35,15" fill="none" stroke="#fff" stroke-width="3"></path>
+                        <path d="M19,18 L21,64 C21,68 23,69 25,69 C27,69 29,68 29,64 L31,18 Z" fill="#facc15"></path>
+                        <path d="M17,15 C21,12 25,18 29,15 C33,12 35,18 35,15 C35,18 25,20 17,18 Z" fill="#fff"></path>
+                        <path d="M35,30 C42,30 42,45 34,50" fill="none" stroke="#fff" stroke-width="3"></path>
                     </svg>
                 </div>
-                <div class="symbol-swatch" data-icon="pattern_diamonds" onclick="setCardIcon('pattern_diamonds')" title="Diamanten">
+                <div class="symbol-swatch" data-icon="pattern_diamonds" onclick="setCardIcon('pattern_diamonds')" title="Diamanten" style="color: rgb(114, 28, 36);">
                     <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 80%; height: 80%; filter: drop-shadow(0 0 2px var(--card-neon-color));">
-                        <path d="M50,10 L90,50 L50,90 L10,50 Z M50,30 L70,50 L50,70 L30,50 Z" fill="none" stroke="#fff" stroke-width="3" />
+                        <path d="M50,10 L90,50 L50,90 L10,50 Z M50,30 L70,50 L50,70 L30,50 Z" fill="none" stroke="#fff" stroke-width="3"></path>
                     </svg>
                 </div>
-                <div class="symbol-swatch" data-icon="pattern_hex" onclick="setCardIcon('pattern_hex')" title="Waben">
+                <div class="symbol-swatch" data-icon="pattern_hex" onclick="setCardIcon('pattern_hex')" title="Waben" style="color: rgb(114, 28, 36);">
                     <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 80%; height: 80%; filter: drop-shadow(0 0 2px var(--card-neon-color));">
-                        <path d="M50,10 L85,30 L85,70 L50,90 L15,70 L15,30 Z M50,30 L70,40 L70,60 L50,70 L30,60 L30,40 Z" fill="none" stroke="#fff" stroke-width="3" />
+                        <path d="M50,10 L85,30 L85,70 L50,90 L15,70 L15,30 Z M50,30 L70,40 L70,60 L50,70 L30,60 L30,40 Z" fill="none" stroke="#fff" stroke-width="3"></path>
                     </svg>
                 </div>
                 <div class="color-swatch plus-swatch" id="plus-motifs" onclick="openExtraMotifs()" title="Mehr Muster" style="background: rgba(255, 255, 255, 0.1);">+</div>
@@ -1403,15 +1403,10 @@
                     <div id="cardFrontIconContainer" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
                 <div class="neon-beer" style="width: 150px; height: 240px; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 10px #ffffff) drop-shadow(0 0 25px #ffffff);">
                     <svg viewBox="0 0 50 80" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
-                        <!-- Glass Outline -->
                         <path d="M14,10 L14,18 C14,45 36,45 36,18 L36,10" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"></path>
-                        <!-- Liquid -->
                         <path d="M16,15 L17,67 C17,71 21,72 25,72 C29,72 33,71 33,67 L36,15 Z" fill="#facc15" opacity="0.9"></path>
-                        <!-- Foam -->
                         <path d="M11,10 C16,6 20,15 25,10 C30,6 35,15 40,10 C40,15 30,18 11,15 Z" fill="#fff"></path>
-                        <!-- Handle -->
                         <path d="M38,30 C46,30 46,50 36,55" fill="none" stroke="#ffffff" stroke-width="2.2"></path>
-                        <!-- Highlights -->
                         <path d="M18,20 L19,60" stroke="#fff" stroke-width="1" opacity="0.3" stroke-linecap="round"></path>
                     </svg>
                 </div></div>
@@ -2708,12 +2703,12 @@
                 <div class="status-indicator" id="reshuffleOffIndicator" style="width: 14px; height: 14px; border-radius: 50%; background: var(--secondary); box-shadow: 0 0 10px var(--secondary); display: none;"></div>
             </div>
 
-            <div class="manager-card" id="todesmodusBtn" onclick="toggleTodesmodus()" style="width: 100%; text-align: left; padding: 1.2rem; display: flex; align-items: center; border: 2px solid var(--danger); transition: 0.3s; box-shadow: 0 0 10px var(--danger);">
+            <div class="manager-card" id="todesmodusBtn" onclick="toggleTodesmodus()" style="width: 100%; text-align: left; padding: 1.2rem; display: flex; align-items: center; border-color: var(--glass-border); transition: 0.3s; box-shadow: none;">
                 <div style="flex: 1;">
                     <h4 style="margin-bottom: 0.3rem;">Todesmodus</h4>
                     <p style="font-size: 0.85rem; color: var(--text-muted);">Aktiviert zufällige, gefährliche Todes-Karten.</p>
                 </div>
-                <div class="status-indicator" id="todesmodusIndicator" style="width: 14px; height: 14px; border-radius: 50%; background: var(--danger); box-shadow: 0 0 10px var(--danger); display: block;"></div>
+                <div class="status-indicator" id="todesmodusIndicator" style="width: 14px; height: 14px; border-radius: 50%; background: var(--danger); box-shadow: 0 0 10px var(--danger); display: none;"></div>
             </div>
         </div>
     </div>
@@ -2859,7 +2854,7 @@
 
     <script>
         // BUILD_ID_MARKER
-        const BUILD_ID = "build_1778141143685";
+        const BUILD_ID = "build_1778145952121";
 
         // TRINKSPIEL_SETS_START
         const hardcodedTrinkspielSets = [
@@ -3462,13 +3457,13 @@
             let html = document.documentElement.outerHTML;
             
             // Clean up: Remove 'active' and 'flipped' classes so the exported file starts with a clean UI
-            html = html.replace(/modal-overlay active/g, "modal-overlay");
-            html = html.replace(/card-container flipped/g, "card-container");
+            html = html.replace(/modal-overlay/g, "modal-overlay");
+            html = html.replace(/card-container/g, "card-container");
             
             // Ensure Home Screen is visible and games are hidden
-            html = html.replace(/id="homeScreen" style="display: none;"/g, 'id="homeScreen" style="display: block;"');
-            html = html.replace(/id="gameWrapper" style="display: flex;"/g, 'id="gameWrapper" style="display: none;"');
-            html = html.replace(/id="busfahrerWrapper" style="display: flex;"/g, 'id="busfahrerWrapper" style="display: none;"');
+            html = html.replace(/id="homeScreen" style="display: block;"/g, 'id="homeScreen" style="display: block;"');
+            html = html.replace(/id="gameWrapper" style="display: none;"/g, 'id="gameWrapper" style="display: none;"');
+            html = html.replace(/id="busfahrerWrapper" style="display: none;"/g, 'id="busfahrerWrapper" style="display: none;"');
             
             html = "<!DOCTYPE html>\n<html" + html.substring(html.indexOf('>'));
 
