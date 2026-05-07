@@ -1500,7 +1500,7 @@
         </header>
 
         <main>
-            <div id="fragenCounter" style="display: none; color: white; font-weight: 800; font-size: 1.2rem; margin-bottom: 1.5rem; text-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px; background: rgba(0, 0, 0, 0.4); padding: 0.5rem 1rem; border-radius: 20px;">0 von 60 Karten</div>
+            <div id="fragenCounter" style="display: block; color: white; font-weight: 800; font-size: 1.2rem; margin-bottom: 1.5rem; text-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px; background: rgba(0, 0, 0, 0.4); padding: 0.5rem 1rem; border-radius: 20px;">0 von 60 Karten</div>
             <div id="currentPlayerDisplay" style="display: block; color: white; font-weight: 800; font-size: 1.8rem; margin-bottom: 1rem; text-shadow: rgba(0, 0, 0, 0.8) 0px 4px 8px; letter-spacing: 1px; text-transform: uppercase;">Spieler 1</div>
             <div class="card-container" id="mainCard" onclick="handleCardTap()">
                 <div class="card-face card-front">
@@ -2849,19 +2849,19 @@
             <div class="modal-body" style="padding-top: 0.5rem;">
             <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">Passe dein Spielerlebnis an:</p>
             
-            <div class="home-btn" id="reshuffleOnBtn" onclick="setReshuffle(true)" style="width: 100%; max-width: none; margin-bottom: 1.2rem; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgb(255, 255, 255); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--secondary), inset 0 0 15px var(--secondary), 0 0 30px var(--secondary); text-shadow: 0 0 5px #fff, 0 0 12px var(--secondary); opacity: 1;">
+            <div class="home-btn" id="reshuffleOnBtn" onclick="setReshuffle(true)" style="width: 100%; max-width: none; margin-bottom: 1.2rem; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 0 2px #fff, inset 0 0 2px #fff, 0 0 10px var(--danger), inset 0 0 10px var(--danger); text-shadow: none; opacity: 0.6;">
                 <span style="font-size: 1.1rem; font-weight: 800; letter-spacing: 1px;">Mit Zurücklegen</span>
-                <div class="status-indicator" id="reshuffleOnIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: white; box-shadow: white 0px 0px 10px;"></div>
+                <div class="status-indicator" id="reshuffleOnIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: rgb(102, 102, 102); box-shadow: none;"></div>
             </div>
 
-            <div class="home-btn" id="reshuffleOffBtn" onclick="setReshuffle(false)" style="width: 100%; max-width: none; margin-bottom: 1.2rem; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 0 2px #fff, inset 0 0 2px #fff, 0 0 10px var(--danger), inset 0 0 10px var(--danger); text-shadow: none; opacity: 0.6;">
+            <div class="home-btn" id="reshuffleOffBtn" onclick="setReshuffle(false)" style="width: 100%; max-width: none; margin-bottom: 1.2rem; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgb(255, 255, 255); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--secondary), inset 0 0 15px var(--secondary), 0 0 30px var(--secondary); text-shadow: 0 0 5px #fff, 0 0 12px var(--secondary); opacity: 1;">
                 <span style="font-size: 1.1rem; font-weight: 800; letter-spacing: 1px;">Ohne Zurücklegen</span>
-                <div class="status-indicator" id="reshuffleOffIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: rgb(102, 102, 102); box-shadow: none;"></div>
+                <div class="status-indicator" id="reshuffleOffIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: white; box-shadow: white 0px 0px 10px;"></div>
             </div>
 
-            <div class="home-btn" id="todesmodusBtn" onclick="toggleTodesmodus()" style="width: 100%; max-width: none; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 0 2px #fff, inset 0 0 2px #fff, 0 0 10px var(--danger), inset 0 0 10px var(--danger); text-shadow: none; opacity: 0.6;">
+            <div class="home-btn" id="todesmodusBtn" onclick="toggleTodesmodus()" style="width: 100%; max-width: none; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgb(255, 255, 255); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--secondary), inset 0 0 15px var(--secondary), 0 0 30px var(--secondary); text-shadow: 0 0 5px #fff, 0 0 12px var(--secondary); opacity: 1;">
                 <span style="font-size: 1.1rem; font-weight: 800; letter-spacing: 1px;">Todesmodus</span>
-                <div class="status-indicator" id="todesmodusIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: rgb(102, 102, 102); box-shadow: none;"></div>
+                <div class="status-indicator" id="todesmodusIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: white; box-shadow: white 0px 0px 10px;"></div>
             </div>
         </div>
     </div>
@@ -3043,7 +3043,7 @@
 
     <script>
         // BUILD_ID_MARKER
-        const BUILD_ID = "build_1778180949047";
+        const BUILD_ID = "build_1778188244610";
 
         // TRINKSPIEL_SETS_START
         const hardcodedTrinkspielSets = [
@@ -3489,128 +3489,525 @@
 
         // FRAGEN_SETS_START
         const hardcodedFragenSets = [
-            {
-                id: "set_u18",
-                name: "Ü 18",
-                active: true,
-                cards: [
-                    { title: "Wer würde eher …", desc: "einen Porno drehen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "an einer Orgie teilnehmen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "sofort sein Oberteil ausziehen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "Viagra nehmen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "sich auspeitschen lassen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "als Sexsklave dienen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "eine Sexschaukel ausprobieren?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "BDSM ausprobieren?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "ein Kondom 2x verwenden?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "im Bett der Eltern Sex haben?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "in der Öffentlichkeit Sex haben?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "in einen Swingerclub gehen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "in einer offenen Beziehung leben?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "mit jemandem schlafen, den man nicht leiden kann?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "eine Affäre anfangen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "einen Orgasmus vortäuschen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "eine Enttäuschung im Bett sein?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "ein Nippelpiercing stechen lassen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "eine aufblasbare Puppe bestellen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "an dreckigen Socken riechen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "ein erotisches Fotoshooting machen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "einen Dreier haben?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "Gemüse als Sextoy verwenden?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "schmutzige Unterwäsche verkaufen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "auf OnlyFans „arbeiten“?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "zur Erotik-Massage gehen?", active: true, count: 1 }
-                ]
-            },
-            {
-                id: "set_peinlich",
-                name: "Peinlich",
-                active: true,
-                cards: [
-                    { title: "Wer würde eher …", desc: "eine Schönheits-OP machen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "in die Dusche pinkeln?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "als Stripper arbeiten?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "im Pyjama zur Arbeit gehen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "auf einer Beerdigung laut lachen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "in einem Restaurant selbst mitgebrachtes Essen essen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "mit einem Borat-Anzug an den Strand gehen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "sich eine Glatze rasieren?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "ohne Unterwäsche aus dem Haus gehen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "sich eine Woche lang nicht waschen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "eine Woche lang die gleichen Klamotten tragen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "mit dem eigenen Chef flirten?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "wieder bei Mutti einziehen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "auf eine Schlagerparty gehen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "ins Kloster gehen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "das Ohr eines Fremden lecken?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "furzen und es auf jemand anderes schieben?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "auf 50.000 Euro verzichten, um ein kleines Kätzchen zu retten?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "sich nackt auf der Terrasse/auf dem Balkon sonnen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "in die Wildnis ziehen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "seine/n Ex auf Social Media stalken?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "jemanden heiraten, nur weil er reich ist?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "Drogen dealen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "mit Justin Bieber ein Duett aufnehmen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "im Kirchenchor singen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "den Partner betrügen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "der besten Freundin den Freund ausspannen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "mit der Schwiegermutter in den Urlaub fahren?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "bei einer Dating-Show mitmachen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "eine Woche nicht in den Spiegel schauen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "den ersten Hochzeitstag vergessen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "den Geburtstag des Partners vergessen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "nackt schlafen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "an seinem eigenen Pups schnuppern?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "Hochzeitsringe bei Amazon bestellen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "lebende Insekten essen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "Katzenfutter probieren?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "für Geld nackt putzen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "auf der Toilette telefonieren?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "eine Türklinke ablecken?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "aus einer Psychiatrie ausbrechen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "eine Bank ausrauben?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "seinen Lieblingsfußballverein tätowieren lassen?", active: true, count: 1 },
-                    { title: "Wer würde eher …", desc: "heimlich die Nachbarn beobachten?", active: true, count: 1 }
-                ]
-            },
-            {
-                id: "set_lustig",
-                name: "Lustig",
-                active: true,
-                cards: [
-                    { title: "Wer würde eher...", desc: "ein Kind schubsen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "Furzen und es auf jemand anderes schieben?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "2x die selbe Unterhose tragen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "in die Dusche pinkeln?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "einen Popel essen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "im Internet trollen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "den eigenen Furz genießen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "bei einem Film weinen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "sich besoffen die Augenbrauen abrasieren?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "sich online betrügen lassen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "online jemanden betrügen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "so tun als hätte man den Witz verstanden, obwohl das nicht der Fall ist?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "alleine ins Kino gehen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "in einem Geschäft klauen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "wegen Erregung öffentlichen Ärgernisses verhaftet werden?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "Make Up zum ersten Mal ausprobieren?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "einen Monat keinen Alkohol trinken können?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "einen Fremden küssen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "einen Bungee Sprung machen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "einen Monat nur Fast Food essen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "Wurstwasser für Geld trinken?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "auf der Toilette einschlafen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "eine Schönheits-OP durchführen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "auf einer Schlager-Party richtig abgehen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "einem Kind das Eis klauen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "bei einer Dating-Show teilnehmen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "die Haare Grün färben lassen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "eine Nacht mit Justin Bieber verbringen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "zwei Wochen lang keine Zähne putzen?", active: true, count: 1 },
-                    { title: "Wer würde eher...", desc: "im Urlaub alles verlieren – Handy, Geld, Würde?", active: true, count: 1 }
-                ]
-            }
-        ];
+          {
+                    "id": "set_1778181926636",
+                    "name": "Ü 18 (Importiert)",
+                    "cards": [
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "einen Porno drehen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "an einer Orgie teilnehmen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "sofort sein Oberteil ausziehen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "Viagra nehmen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "sich auspeitschen lassen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "als Sexsklave dienen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "eine Sexschaukel ausprobieren?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "BDSM ausprobieren?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "ein Kondom 2x verwenden?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "im Bett der Eltern Sex haben?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "in der Öffentlichkeit Sex haben?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "in einen Swingerclub gehen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "in einer offenen Beziehung leben?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "mit jemandem schlafen, den man nicht leiden kann?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "eine Affäre anfangen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "einen Orgasmus vortäuschen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "eine Enttäuschung im Bett sein?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "ein Nippelpiercing stechen lassen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "eine aufblasbare Puppe bestellen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "an dreckigen Socken riechen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "ein erotisches Fotoshooting machen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "einen Dreier haben?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "Gemüse als Sextoy verwenden?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "schmutzige Unterwäsche verkaufen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "auf OnlyFans “arbeiten”?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "zur Erotik-Massage gehen?",
+                                        "count": 1
+                              }
+                    ]
+          },
+          {
+                    "id": "set_1778181933188",
+                    "name": "Peinlich (Importiert)",
+                    "cards": [
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "eine Schönheits-OP machen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "in die Dusche pinkeln?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "als Stripper arbeiten?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "im Pyjama zur Arbeit gehen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "auf einer Beerdigung laut lachen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "in einem Restaurant selbst mitgebrachtes Essen essen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "mit einem Borat-Anzug an den Strand gehen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "sich eine Glatze rasieren?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "ohne Unterwäsche aus dem Haus gehen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "sich eine Woche lang nicht waschen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "eine Woche lang die gleichen Klamotten tragen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "mit dem eigenen Chef flirten?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "wieder bei Mutti einziehen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "auf eine Schlagerparty gehen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "ins Kloster gehen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "das Ohr eines Fremden lecken?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "furzen und es auf jemand anderes schieben?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "auf 50.000 Euro verzichten, um ein kleines Kätzchen zu retten?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "sich nackt auf der Terrasse/auf dem Balkon sonnen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "in die Wildnis ziehen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "seine/n Ex auf Social Media stalken?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "jemanden heiraten, nur weil er reich ist?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "Drogen dealen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "mit Justin Bieber ein Duett aufnehmen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "im Kirchenchor singen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "den Partner betrügen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "der besten Freundin den Freund ausspannen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "mit der Schwiegermutter in den Urlaub fahren?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "bei einer Dating-Show mitmachen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "eine Woche nicht in den Spiegel schauen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "den ersten Hochzeitstag vergessen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "den Geburtstag des Partners vergessen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "nackt schlafen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "an seinem eigenen Pups schnuppern?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "Hochzeitsringe bei Amazon bestellen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "lebende Insekten essen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "Katzenfutter probieren?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "für Geld nackt putzen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "auf der Toilette telefonieren?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "eine Türklinke ablecken?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "aus einer Psychiatrie ausbrechen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "eine Bank ausrauben?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "seinen Lieblingsfußballverein tätowieren lassen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher …",
+                                        "desc": "heimlich die Nachbarn beobachten?",
+                                        "count": 1
+                              }
+                    ]
+          },
+          {
+                    "id": "set_1778181939844",
+                    "name": "Lustig (Importiert)",
+                    "cards": [
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "ein Kind schubsen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "Furzen und es auf jemand anderes schieben?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "2x die selbe Unterhose tragen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "in die Dusche pinkeln?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "einen Popel essen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "im Internet trollen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "den eigenen Furz genießen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "bei einem Film weinen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "sich besoffen die Augenbrauen abrasieren?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "sich online betrügen lassen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "online jemanden betrügen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "so tun als hätte man den Witz verstanden, obwohl das nicht der Fall ist?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "alleine ins Kino gehen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "in einem Geschäft klauen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "wegen Erregung öffentlichen Ärgernisses verhaftet werden?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "Make Up zum ersten Mal ausprobieren?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "einen Monat keinen Alkohol trinken können?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "einen Fremden küssen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "einen Bungee Sprung machen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "einen Monat nur Fast Food essen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "Wurstwasser für Geld trinken?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "auf der Toilette einschlafen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "eine Schönheits-OP durchführen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "auf einer Schlager-Party richtig abgehen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "einem Kind das Eis klauen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "bei einer Dating-Show teilnehmen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "die Haare Grün färben lassen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "eine Nacht mit Justin Bieber verbringen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "zwei Wochen lang keine Zähne putzen?",
+                                        "count": 1
+                              },
+                              {
+                                        "title": "Wer würde eher...",
+                                        "desc": "im Urlaub alles verlieren – Handy, Geld, Würde?",
+                                        "count": 1
+                              }
+                    ]
+          }
+];
         // FRAGEN_SETS_END
 
 
@@ -3769,7 +4166,7 @@
             
             // Clean up: Remove 'active' classes from all modals so the exported file starts with a clean UI
             // We use a more flexible regex that handles different attribute orders (id vs class)
-            html = html.replace(/class="modal-overlay active"/g, 'class="modal-overlay"');
+            html = html.replace(/class="modal-overlay"/g, 'class="modal-overlay"');
             html = html.replace(/class="modal-overlay\s+active"/g, 'class="modal-overlay"');
             
             // Specifically ensure the design modal is closed in the export, regardless of attribute order
