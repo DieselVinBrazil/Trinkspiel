@@ -560,7 +560,7 @@
 
         .modal-overlay.active {
             opacity: 1;
-            pointer-events: all;
+            pointer-events: auto;
         }
 
         .modal {
@@ -571,14 +571,62 @@
             max-width: 500px;
             max-height: 85%;
             border-radius: 20px;
-            padding: 1.5rem;
             transform: translateY(20px);
             transition: transform 0.3s ease;
+            overflow: hidden; /* Crucial: Clips everything to the border-radius */
             display: flex;
             flex-direction: column;
+            padding: 0; /* Padding moved to modal-body */
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+
+        .modal-body {
+            flex: 1;
             overflow-y: auto;
-            overscroll-behavior: contain; /* Prevents pull-to-refresh when scrolling inside modals */
+            padding: 1.5rem;
+            overscroll-behavior: contain;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+        }
+
+        /* Webkit Scrollbar Customization for modal-body */
+        .modal-body::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .modal-body::-webkit-scrollbar-track {
+            background: transparent;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border-radius: 20px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            transition: all 0.3s ease;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb:hover,
+        .modal-body::-webkit-scrollbar-thumb:active {
+            background: #fff;
+            box-shadow: 
+                0 0 4px #fff,
+                0 0 10px var(--primary),
+                0 0 15px var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .modal::-webkit-scrollbar-thumb:hover,
+        .modal::-webkit-scrollbar-thumb:active {
+            background: #fff;
+            box-shadow: 
+                0 0 4px #fff,
+                0 0 10px var(--primary),
+                0 0 15px var(--primary);
+            border: 1px solid var(--primary);
         }
 
         .modal-overlay.active .modal {
@@ -1248,12 +1296,12 @@
     <!-- Design Modal -->
     <div class="modal-overlay" id="designModal" onclick="closeModal(event, 'designModal')">
         <div class="modal" onclick="event.stopPropagation()" style="max-width: 400px; width: 95%;">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Design anpassen</h3>
                 <button class="close-btn" onclick="closeModalDirect('designModal')">✖</button>
             </div>
-            
-            <!-- Kartenfarbe -->
+            <div class="modal-body">
+                <!-- Kartenfarbe -->
             <div class="modal-section-title">Kartenfarbe</div>
             <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 1.5rem;">
                 <div class="color-swatch card-swatch" data-color="#032012" onclick="setCardColor('#032012')" style="background: #032012;"></div>
@@ -1323,7 +1371,8 @@
             </div>
 
             <button class="home-btn" style="width: 100%; max-width: none; font-size: 1rem; padding: 1rem; margin-bottom: 1rem; border-width: 2px; border-color: #fff; border-radius: 12px; text-shadow: 0 0 4px #fff, 0 0 12px var(--secondary), 0 0 25px var(--secondary); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--secondary), inset 0 0 15px var(--secondary), 0 0 25px var(--secondary);" onclick="applyDesignChanges()">Änderungen übernehmen</button>
-            <button class="home-btn" style="width: 100%; max-width: none; font-size: 1rem; padding: 1rem; border-width: 2px; border-color: #fff; border-radius: 12px; text-shadow: 0 0 4px #fff, 0 0 12px var(--danger), 0 0 25px var(--danger); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--danger), inset 0 0 15px var(--danger), 0 0 25px var(--danger);" onclick="generateFinalVersion()">Finale Datei (.html) erstellen</button>
+            <button class="home-btn" style="width: 100%; max-width: none; font-size: 1rem; padding: 1rem; border-width: 2px; border-color: #fff; border-radius: 12px; text-shadow: 0 0 4px #fff, 0 0 12px var(--danger), 0 0 25px var(--danger); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--danger), inset 0 0 15px var(--danger), 0 0 25px var(--danger);" onclick="generateFinalVersion()">Datei exportieren</button>
+            </div>
         </div>
     </div>
 
@@ -1427,8 +1476,9 @@
                     <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 0 3px #721c24);">
                         <path d="M30,15 L70,15 L90,40 L50,85 L10,40 Z M10,40 L90,40 M30,15 L50,85 L70,15" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                </div></div>
         </div>
+    </div>
+    </div>
     </div>
 
     <div id="gameWrapper" style="display: none; flex: 1 1 0%; flex-direction: column; height: 100%;">
@@ -1450,8 +1500,8 @@
         </header>
 
         <main>
-            <div id="fragenCounter" style="display: block; color: white; font-weight: 800; font-size: 1.2rem; margin-bottom: 1.5rem; text-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px; background: rgba(0, 0, 0, 0.4); padding: 0.5rem 1rem; border-radius: 20px;">0 von 60 Karten</div>
-            <div id="currentPlayerDisplay" style="display: none; color: white; font-weight: 800; font-size: 1.8rem; margin-bottom: 1rem; text-shadow: 0 4px 8px rgba(0,0,0,0.8); letter-spacing: 1px; text-transform: uppercase;"></div>
+            <div id="fragenCounter" style="display: none; color: white; font-weight: 800; font-size: 1.2rem; margin-bottom: 1.5rem; text-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px; background: rgba(0, 0, 0, 0.4); padding: 0.5rem 1rem; border-radius: 20px;">0 von 60 Karten</div>
+            <div id="currentPlayerDisplay" style="display: block; color: white; font-weight: 800; font-size: 1.8rem; margin-bottom: 1rem; text-shadow: rgba(0, 0, 0, 0.8) 0px 4px 8px; letter-spacing: 1px; text-transform: uppercase;">Spieler 1</div>
             <div class="card-container" id="mainCard" onclick="handleCardTap()">
                 <div class="card-face card-front">
                     <h2 id="cardFrontText" style="display: none;">Trinkspiel</h2>
@@ -1511,29 +1561,45 @@
     <!-- Player Setup Modal -->
     <div class="modal-overlay" id="playerSetupModal" onclick="closeModal(event, 'playerSetupModal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0.5rem 1.5rem;">
                 <h3 class="modal-title">Spieler hinzufügen</h3>
                 <div style="display: flex; gap: 0.5rem; align-items: center;">
-                    <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; display: none;" id="deleteAllPlayersBtn" onclick="promptDeleteAllPlayers()">Alle entfernen</button>
+                    <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; display: block;" id="deleteAllPlayersBtn" onclick="promptDeleteAllPlayers()">Alle entfernen</button>
                     <button class="close-btn" onclick="closeModalDirect('playerSetupModal')">✖</button>
                 </div>
             </div>
+            <div class="modal-body" style="padding-top: 0.5rem;">
             <div class="input-group" style="display: flex; gap: 0.5rem;">
                 <input type="text" id="playerNameInput" placeholder="Name..." autocomplete="off" onkeydown="if(event.key === 'Enter') addPlayer()">
                 <button class="btn btn-primary" style="flex: 0 0 auto; padding: 0.75rem;" onclick="addPlayer()">Hinzufügen</button>
             </div>
-            <div class="card-list" id="playerList" style="max-height: 200px; margin-bottom: 1.5rem;"><div class="empty-state" style="padding: 1rem;">Keine Spieler hinzugefügt.</div></div>
+            <div class="card-list" id="playerList" style="max-height: 200px; margin-bottom: 1.5rem;"><div class="player-list-item">
+                    <span style="font-weight: 600; font-size: 1.1rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; margin-right: 0.5rem;">Spieler 1</span>
+                    <div style="display: flex; gap: 6px; margin-right: 0.8rem;">
+                        <button class="btn" style="padding: 0; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; border-radius: 10px;" onclick="movePlayerUp(0)" disabled="">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                        </button>
+                        <button class="btn" style="padding: 0; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; border-radius: 10px;" onclick="movePlayerDown(0)" disabled="">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                    </div>
+                    <button class="btn btn-danger" style="flex: 0 0 36px; padding: 0; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; border-radius: 10px;" onclick="removePlayer(0)" aria-label="Spieler entfernen">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </button>
+                </div></div>
             <button class="btn btn-secondary" id="playerSetupActionBtn" style="width: 100%;" onclick="startTrinkspielWithPlayers()">Spiel starten</button>
+            </div>
         </div>
     </div>
 
     <!-- Add Card Modal -->
     <div class="modal-overlay" id="addModal" onclick="closeModal(event, 'addModal')" style="z-index: 300;">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Neue Karte</h3>
                 <button class="close-btn" onclick="closeModalDirect('addModal')">✖</button>
             </div>
+            <div class="modal-body">
             <div class="input-group">
                 <label style="display: flex; justify-content: space-between;">
                     <span>Titel (max 2 Zeilen)</span>
@@ -1549,24 +1615,26 @@
                 <textarea id="newDesc" rows="4" placeholder="Beschreibe die Aufgabe..." maxlength="192" oninput="updateCharCount('newDesc', 'addDescCount', 192)"></textarea>
             </div>
             <button class="btn btn-primary" style="width: 100%;" onclick="addCard()">Hinzufügen</button>
+            </div>
         </div>
     </div>
 
     <!-- Manage Cards Modal -->
     <div class="modal-overlay" id="manageModal" onclick="closeModal(event, 'manageModal')">
         <div class="modal" onclick="event.stopPropagation()" style="height: 80vh;">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0.5rem 1.5rem;">
                 <div style="display: flex; align-items: center; gap: 0.5rem;">
                     <h3 class="modal-title" style="margin: 0;">Karten verwalten</h3>
                     <span class="info-icon" id="deathInfoIcon" style="width: 24px; height: 24px; font-size: 1rem; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;" onclick="openDeathInfo()">i</span>
                 </div>
                 <button class="close-btn" onclick="closeModalDirect('manageModal')">✖</button>
             </div>
-            <div class="tabs">
+            <div class="tabs" style="padding: 0 1.5rem; margin-bottom: 1rem;">
                 <div class="tab" id="tabSets" onclick="switchTab('sets')">Sets</div>
                 <div class="tab" id="tabStandard" onclick="switchTab('standard')">Standard</div>
                 <div class="tab active" id="tabDeath" onclick="switchTab('death')" style="display: block;">Todesrunden</div>
             </div>
+            <div class="modal-body" style="padding-top: 0;">
 
             <div id="standardTabContent" style="display: none;">
                 <div style="display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1rem; padding: 0 0.5rem;">
@@ -1575,12 +1643,15 @@
                     </div>
                     <button class="btn" style="width: 100%; padding: 0.8rem; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;" onclick="openAddModal()">+</button>
                 </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding: 0 0.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding: 0 1rem;">
                     <span id="activeCardsCount" style="color: var(--text-muted); font-size: 0.9rem; font-weight: 500;">60 von 60 Karten aktiv</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="masterToggle" onchange="toggleAllCards(this.checked)">
-                        <span class="slider"></span>
-                    </label>
+                    <div style="display: flex; align-items: center;">
+                        <div style="width: 45px;"></div> <!-- Spacer matching the card inputs -->
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="masterToggle" onchange="toggleAllCards(this.checked)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
                 </div>
                 <div class="card-list" id="cardList"><div class="manager-card ">
                     <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('1778108614404')">
@@ -2242,8 +2313,9 @@
                             <span class="slider"></span>
                         </label>
                     </div>
-                </div></div>
+                </div>
             </div>
+        </div>
 
             <div id="setsTabContent" style="display: none;">
                 <div style="padding: 0 0.5rem; margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.8rem;">
@@ -2282,6 +2354,8 @@
                 </div></div>
             </div>
 
+
+
             <div id="deathTabContent" style="display: block;">
                 <div style="padding: 0 0.5rem; margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.8rem;">
                     <div class="search-bar" style="width: 100%; margin: 0; padding: 0;">
@@ -2315,37 +2389,42 @@
             </div>
         </div>
     </div>
+    </div>
 
     <!-- Pyramid Settings Modal -->
     <div class="modal-overlay" id="pyramidSettingsModal" onclick="closeModal(event, 'pyramidSettingsModal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Pyramide Stufen</h3>
                 <button class="close-btn" onclick="closeModalDirect('pyramidSettingsModal')">✖</button>
             </div>
-            <div style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">
-                Wähle die Anzahl der Stufen für die Pyramide. Eine Änderung setzt das Spiel zurück.
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
-                <button class="btn btn-secondary" style="padding: 1rem;" onclick="setPyramidRows(3)">3 Stufen</button>
-                <button class="btn btn-secondary" style="padding: 1rem;" onclick="setPyramidRows(4)">4 Stufen</button>
-                <button class="btn btn-secondary" style="padding: 1rem;" onclick="setPyramidRows(5)">5 Stufen</button>
-                <button class="btn btn-secondary" style="padding: 1rem;" onclick="setPyramidRows(6)">6 Stufen</button>
+            <div class="modal-body">
+                <div style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">
+                    Wähle die Anzahl der Stufen für die Pyramide. Eine Änderung setzt das Spiel zurück.
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                    <button class="btn btn-secondary" style="padding: 1rem;" onclick="setPyramidRows(3)">3 Stufen</button>
+                    <button class="btn btn-secondary" style="padding: 1rem;" onclick="setPyramidRows(4)">4 Stufen</button>
+                    <button class="btn btn-secondary" style="padding: 1rem;" onclick="setPyramidRows(5)">5 Stufen</button>
+                    <button class="btn btn-secondary" style="padding: 1rem;" onclick="setPyramidRows(6)">6 Stufen</button>
+                </div>
             </div>
         </div>
     </div>
     <div class="modal-overlay" id="cardActionModal" onclick="closeModal(event, 'cardActionModal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Optionen</h3>
                 <button class="close-btn" onclick="closeModalDirect('cardActionModal')">✖</button>
             </div>
-            <p style="margin-bottom: 1.5rem; color: var(--text-muted);"><strong id="actionCardTitle" style="color: var(--text-color);"></strong></p>
-            <div class="btn-group" style="flex-direction: column; gap: 0.5rem;">
-                <button class="btn btn-primary" onclick="openEditModal()">Bearbeiten</button>
-                <button class="btn btn-secondary" onclick="openMoveModal()">In Set verschieben</button>
-                <button class="btn btn-danger" onclick="confirmDeleteCard()">Löschen</button>
-                <button class="btn" onclick="closeModalDirect('cardActionModal')">Abbrechen</button>
+            <div class="modal-body">
+                <p style="margin-bottom: 1.5rem; color: var(--text-muted);"><strong id="actionCardTitle" style="color: var(--text-color);"></strong></p>
+                <div class="btn-group" style="flex-direction: column; gap: 0.5rem;">
+                    <button class="btn btn-primary" onclick="openEditModal()">Bearbeiten</button>
+                    <button class="btn btn-secondary" onclick="openMoveModal()">In Set verschieben</button>
+                    <button class="btn btn-danger" onclick="confirmDeleteCard()">Löschen</button>
+                    <button class="btn" onclick="closeModalDirect('cardActionModal')">Abbrechen</button>
+                </div>
             </div>
         </div>
     </div>
@@ -2353,15 +2432,16 @@
     <!-- Manage Sets Modal -->
     <div class="modal-overlay" id="manageSetsModal" onclick="closeModal(event, 'manageSetsModal')">
         <div class="modal" onclick="event.stopPropagation()" style="height: 80vh;">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0.5rem 1.5rem;">
                 <h3 class="modal-title">Kartensets</h3>
                 <button class="close-btn" onclick="closeModalDirect('manageSetsModal')">✖</button>
             </div>
-            <div class="btn-group" style="margin-bottom: 1rem;">
-                <button class="btn btn-primary" onclick="createNewSet()">+ Neues Set</button>
-                <button class="btn" style="color: var(--text-color);" onclick="openImportModal()">Importieren</button>
-                <button class="btn" style="flex: 0 0 50px; padding: 0; font-size: 1.5rem; display: flex; justify-content: center; align-items: center;" onclick="document.getElementById('setsInfoModal').classList.add('active')">ℹ</button>
-            </div>
+            <div class="modal-body" style="padding-top: 0;">
+                <div class="btn-group" style="margin-bottom: 1rem;">
+                    <button class="btn btn-primary" onclick="createNewSet()">+ Neues Set</button>
+                    <button class="btn" style="color: var(--text-color);" onclick="openImportModal()">Importieren</button>
+                    <button class="btn" style="flex: 0 0 50px; padding: 0; font-size: 1.5rem; display: flex; justify-content: center; align-items: center;" onclick="document.getElementById('setsInfoModal').classList.add('active')">ℹ</button>
+                </div>
             <div class="card-list" id="setsList"><div class="manager-card inactive">
                     <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('set_1778062244891')">
                         <h4 style="margin-bottom: 0.5rem;">1 Mai <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">(25 Karten)</span></h4>
@@ -2389,72 +2469,80 @@
                         <span class="slider"></span>
                     </label>
                 </div></div>
+            </div>
         </div>
     </div>
 
     <!-- Sets Info Modal -->
     <div class="modal-overlay" id="setsInfoModal" onclick="closeModal(event, 'setsInfoModal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Info</h3>
                 <button class="close-btn" onclick="closeModalDirect('setsInfoModal')">✖</button>
             </div>
-            <div style="font-size: 0.95rem; line-height: 1.5; color: var(--text-color); margin-bottom: 1rem; max-height: 60vh; overflow-y: auto;">
-                <h4 style="color: var(--primary); margin-bottom: 0.5rem; margin-top: 0;">Neues Set erstellen</h4>
-                <p style="margin-top: 0; margin-bottom: 1rem;">Erstelle ein komplett eigenes Kartenset. In der Kartenverwaltung kannst du neue Karten anlegen und dieses Set als Ziel auswählen.</p>
-                
-                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Karten kopieren &amp; verschieben</h4>
-                <p style="margin-top: 0; margin-bottom: 1rem;">Tippe in der Kartenverwaltung auf eine bestehende Karte. Im Bearbeitungsmenü kannst du diese Karte dann mit einem Klick in eines deiner eigenen Sets <b>kopieren</b> oder <b>verschieben</b>.</p>
-                
-                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Exportieren &amp; Teilen</h4>
-                <p style="margin-top: 0; margin-bottom: 1rem;">Über "Export" kannst du ein erstelltes Set als Text-Code speichern. Diesen Code kannst du einfach kopieren und an deine Freunde (z.B. über WhatsApp) schicken.</p>
-                
-                <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Importieren</h4>
-                <p style="margin-top: 0; margin-bottom: 1rem;">Hast du einen Code von Freunden erhalten? Klicke auf "Importieren", füge den Code ein und das neue Kartenset ist sofort für dich verfügbar!</p>
+            <div class="modal-body">
+                <div style="font-size: 0.95rem; line-height: 1.5; color: var(--text-color); margin-bottom: 1rem;">
+                    <h4 style="color: var(--primary); margin-bottom: 0.5rem; margin-top: 0;">Neues Set erstellen</h4>
+                    <p style="margin-top: 0; margin-bottom: 1rem;">Erstelle ein komplett eigenes Kartenset. In der Kartenverwaltung kannst du neue Karten anlegen und dieses Set als Ziel auswählen.</p>
+                    
+                    <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Karten kopieren &amp; verschieben</h4>
+                    <p style="margin-top: 0; margin-bottom: 1rem;">Tippe in der Kartenverwaltung auf eine bestehende Karte. Im Bearbeitungsmenü kannst du diese Karte dann mit einem Klick in eines deiner eigenen Sets <b>kopieren</b> oder <b>verschieben</b>.</p>
+                    
+                    <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Exportieren &amp; Teilen</h4>
+                    <p style="margin-top: 0; margin-bottom: 1rem;">Über "Export" kannst du ein erstelltes Set als Text-Code speichern. Diesen Code kannst du einfach kopieren und an deine Freunde (z.B. über WhatsApp) schicken.</p>
+                    
+                    <h4 style="color: var(--primary); margin-bottom: 0.5rem;">Importieren</h4>
+                    <p style="margin-top: 0; margin-bottom: 1rem;">Hast du einen Code von Freunden erhalten? Klicke auf "Importieren", füge den Code ein und das neue Kartenset ist sofort für dich verfügbar!</p>
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="closeModalDirect('setsInfoModal')">Verstanden</button>
             </div>
-            <button class="btn btn-primary" style="width: 100%;" onclick="closeModalDirect('setsInfoModal')">Verstanden</button>
         </div>
     </div>
 
     <!-- Import Set Modal -->
     <div class="modal-overlay" id="importModal" onclick="closeModal(event, 'importModal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Set importieren</h3>
                 <button class="close-btn" onclick="closeModalDirect('importModal')">✖</button>
             </div>
-            <div class="input-group">
-                <label>Set-Code einfügen</label>
-                <textarea id="importCode" placeholder="Code hier einfügen..."></textarea>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label>Set-Code einfügen</label>
+                    <textarea id="importCode" placeholder="Code hier einfügen..."></textarea>
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="importSet()">Importieren</button>
             </div>
-            <button class="btn btn-primary" style="width: 100%;" onclick="importSet()">Importieren</button>
         </div>
     </div>
 
     <!-- Move To Set Modal -->
     <div class="modal-overlay" id="moveToSetModal" onclick="closeModal(event, 'moveToSetModal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">In Set verschieben</h3>
                 <button class="close-btn" onclick="closeModalDirect('moveToSetModal')">✖</button>
             </div>
-            <div class="card-list" id="moveToList"><div class="manager-card" style="justify-content: flex-start; gap: 1rem;">
+            <div class="modal-body">
+                <div class="card-list" id="moveToList"><div class="manager-card" style="justify-content: flex-start; gap: 1rem;">
                     <button class="btn btn-primary" style="flex: 0 0 auto; padding: 0.5rem 1rem;" onclick="moveToSet('set_1778062244891')">Verschieben</button>
                     <span style="font-weight: 600;">1 Mai</span>
                 </div><div class="manager-card" style="justify-content: flex-start; gap: 1rem;">
                     <button class="btn btn-primary" style="flex: 0 0 auto; padding: 0.5rem 1rem;" onclick="moveToSet('set_1778108614404')">Verschieben</button>
                     <span style="font-weight: 600;">Bar</span>
                 </div></div>
+            </div>
         </div>
     </div>
 
     <!-- Set Details Modal -->
     <div class="modal-overlay" id="setDetailsModal" onclick="closeModal(event, 'setDetailsModal')">
         <div class="modal" onclick="event.stopPropagation()" style="height: 80vh;">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0.5rem 1.5rem;">
                 <h3 class="modal-title" id="setDetailsTitle">1 Mai</h3>
                 <button class="close-btn" onclick="closeModalDirect('setDetailsModal')">✖</button>
             </div>
+            <div class="modal-body" style="padding-top: 0;">
             <div class="card-list" id="setDetailsList"><div class="manager-card">
                     <div style="padding-right: 0.5rem; flex: 1;">
                         <h4 style="color: var(--text-color);">👆 Zeigefinger</h4>
@@ -2581,72 +2669,81 @@
                     </div>
                     <button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.9rem;" onclick="openCopyToModal('t_set_1778062244891_24')">Kopieren</button>
                 </div></div>
+            </div>
         </div>
     </div>
 
     <!-- Copy to Set Modal -->
     <div class="modal-overlay" id="copyToSetModal" onclick="closeModal(event, 'copyToSetModal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">In Set kopieren</h3>
                 <button class="close-btn" onclick="closeModalDirect('copyToSetModal')">✖</button>
             </div>
-            <div class="card-list" id="copyToList"><div class="manager-card" style="justify-content: flex-start; gap: 1rem;">
+            <div class="modal-body">
+                <div class="card-list" id="copyToList"><div class="manager-card" style="justify-content: flex-start; gap: 1rem;">
                     <button class="btn btn-primary" style="flex: 0 0 auto; padding: 0.5rem 1rem;" onclick="copyCardToSet('set_1778062244891')">Hierhin kopieren</button>
                     <span style="font-weight: 600;">1 Mai</span>
                 </div><div class="manager-card" style="justify-content: flex-start; gap: 1rem;">
                     <button class="btn btn-primary" style="flex: 0 0 auto; padding: 0.5rem 1rem;" onclick="copyCardToSet('set_1778108614404')">Hierhin kopieren</button>
                     <span style="font-weight: 600;">Bar</span>
                 </div></div>
+            </div>
         </div>
     </div>
 
     <!-- Create Set Modal -->
     <div class="modal-overlay" id="createSetModal" onclick="closeModal(event, 'createSetModal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Neues Set erstellen</h3>
                 <button class="close-btn" onclick="closeModalDirect('createSetModal')">✖</button>
             </div>
-            <div class="input-group">
-                <label>Name des Sets</label>
-                <input type="text" id="createSetInput" placeholder="z.B. Party Set" autocomplete="off">
+            <div class="modal-body">
+                <div class="input-group">
+                    <label>Name des Sets</label>
+                    <input type="text" id="createSetInput" placeholder="z.B. Party Set" autocomplete="off">
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="saveNewSet()">Erstellen</button>
             </div>
-            <button class="btn btn-primary" style="width: 100%;" onclick="saveNewSet()">Erstellen</button>
         </div>
     </div>
 
     <!-- Rename Set Modal -->
     <div class="modal-overlay" id="renameSetModal" onclick="closeModal(event, 'renameSetModal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Set umbenennen</h3>
                 <button class="close-btn" onclick="closeModalDirect('renameSetModal')">✖</button>
             </div>
-            <div class="input-group">
-                <label>Neuer Name</label>
-                <input type="text" id="renameSetInput" autocomplete="off">
+            <div class="modal-body">
+                <div class="input-group">
+                    <label>Neuer Name</label>
+                    <input type="text" id="renameSetInput" autocomplete="off">
+                </div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="saveRenameSet()">Speichern</button>
             </div>
-            <button class="btn btn-primary" style="width: 100%;" onclick="saveRenameSet()">Speichern</button>
         </div>
     </div>
 
     <!-- Export Set Modal -->
     <div class="modal-overlay" id="exportSetModal" onclick="closeModal(event, 'exportSetModal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Set Exportieren</h3>
                 <button class="close-btn" onclick="closeModalDirect('exportSetModal')">✖</button>
             </div>
-            <div style="margin-bottom: 1rem; color: var(--text-color); font-size: 0.9rem;">
-                Kopiere diesen Code, um dein Set z.B. auf WhatsApp mit Freunden zu teilen:
-            </div>
-            <div class="input-group">
-                <textarea id="exportSetOutput" rows="4" readonly="" style="width: 100%; resize: none; font-family: monospace; font-size: 0.8rem; padding: 0.8rem; color: var(--text-color); border: 1px solid var(--glass-border); border-radius: 8px;"></textarea>
-            </div>
-            <div style="display: flex; gap: 1rem;">
-                <button class="btn btn-primary" style="flex: 1; padding: 0.8rem;" onclick="copyExportCode()">Code kopieren</button>
-                <button class="btn btn-secondary" style="flex: 1; padding: 0.8rem;" onclick="closeModalDirect('exportSetModal')">Schließen</button>
+            <div class="modal-body">
+                <div style="margin-bottom: 1rem; color: var(--text-color); font-size: 0.9rem;">
+                    Kopiere diesen Code, um dein Set z.B. auf WhatsApp mit Freunden zu teilen:
+                </div>
+                <div class="input-group">
+                    <textarea id="exportSetOutput" rows="4" readonly="" style="width: 100%; resize: none; font-family: monospace; font-size: 0.8rem; padding: 0.8rem; color: var(--text-color); border: 1px solid var(--glass-border); border-radius: 8px;"></textarea>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn btn-primary" style="flex: 1; padding: 0.8rem;" onclick="copyExportCode()">Code kopieren</button>
+                    <button class="btn btn-secondary" style="flex: 1; padding: 0.8rem;" onclick="closeModalDirect('exportSetModal')">Schließen</button>
+                </div>
             </div>
         </div>
     </div>
@@ -2654,16 +2751,16 @@
     <!-- Confirm Delete Set Modal -->
     <div class="modal-overlay" id="deleteSetModal" onclick="closeModal(event, 'deleteSetModal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Set löschen?</h3>
                 <button class="close-btn" onclick="closeModalDirect('deleteSetModal')">✖</button>
             </div>
-            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
-                Bist du sicher? Das Set <strong id="deleteSetName" style="color: var(--text-color);"></strong> und <strong style="color: var(--danger);">alle</strong> darin enthaltenen Karten werden unwiderruflich gelöscht.
-            </p>
-            <div style="display: flex; gap: 1rem;">
-                <button class="btn btn-danger" style="flex: 1;" onclick="confirmDeleteSet()">Löschen</button>
-                <button class="btn" style="flex: 1; color: var(--text-color);" onclick="closeModalDirect('deleteSetModal')">Abbrechen</button>
+            <div class="modal-body">
+                <p style="margin-bottom: 1.5rem; color: var(--text-color);">Willst du das Set "<span id="deleteSetName" style="font-weight: 600; color: var(--danger);"></span>" wirklich unwiderruflich löschen?</p>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn btn-danger" style="flex: 1;" onclick="confirmDeleteSet()">Löschen</button>
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="closeModalDirect('deleteSetModal')">Abbrechen</button>
+                </div>
             </div>
         </div>
     </div>
@@ -2671,10 +2768,11 @@
     <!-- Edit Card Modal -->
     <div class="modal-overlay" id="editModal" onclick="closeModal(event, 'editModal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Karte bearbeiten</h3>
                 <button class="close-btn" onclick="closeModalDirect('editModal')">✖</button>
             </div>
+            <div class="modal-body">
             <div class="input-group">
                 <label style="display: flex; justify-content: space-between;">
                     <span>Titel (max 2 Zeilen)</span>
@@ -2696,16 +2794,18 @@
                     <button class="btn btn-danger" style="flex: 1; font-size: 0.9rem; padding: 0.6rem;" onclick="confirmDeleteCardFromEdit()">Löschen</button>
                 </div>
             </div>
+            </div>
         </div>
     </div>
 
     <!-- Confirm Back Modal -->
     <div class="modal-overlay" id="confirmBackModal" onclick="closeModal(event, 'confirmBackModal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Zurück zum Menü?</h3>
                 <button class="close-btn" onclick="closeModalDirect('confirmBackModal')">✖</button>
             </div>
+            <div class="modal-body">
             <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
                 Bist du sicher, dass du das aktuelle Spiel beenden und zum Hauptmenü zurückkehren möchtest?
             </p>
@@ -2713,22 +2813,25 @@
                 <button class="btn btn-danger" style="flex: 1;" onclick="confirmReturnToHome()">Zurück</button>
                 <button class="btn" style="flex: 1; color: var(--text-color);" onclick="closeModalDirect('confirmBackModal')">Abbrechen</button>
             </div>
+            </div>
         </div>
     </div>
 
     <!-- Confirm Delete All Players Modal -->
     <div class="modal-overlay" id="confirmDeleteAllPlayersModal" onclick="closeModal(event, 'confirmDeleteAllPlayersModal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Alle Spieler löschen?</h3>
                 <button class="close-btn" onclick="closeModalDirect('confirmDeleteAllPlayersModal')">✖</button>
             </div>
-            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
-                Möchtest du wirklich alle hinzugefügten Spieler entfernen?
-            </p>
-            <div style="display: flex; gap: 1rem;">
-                <button class="btn btn-danger" style="flex: 1;" onclick="confirmDeleteAllPlayers()">Ja, alle löschen</button>
-                <button class="btn" style="flex: 1; color: var(--text-color);" onclick="closeModalDirect('confirmDeleteAllPlayersModal')">Abbrechen</button>
+            <div class="modal-body">
+                <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+                    Möchtest du wirklich alle hinzugefügten Spieler entfernen?
+                </p>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn btn-danger" style="flex: 1;" onclick="confirmDeleteAllPlayers()">Ja, alle löschen</button>
+                    <button class="btn" style="flex: 1; color: var(--text-color);" onclick="closeModalDirect('confirmDeleteAllPlayersModal')">Abbrechen</button>
+                </div>
             </div>
         </div>
     </div>
@@ -2736,50 +2839,54 @@
     <!-- Trinkspiel Settings Modal -->
     <div class="modal-overlay" id="trinkspielSettingsModal" onclick="closeModal(event, 'trinkspielSettingsModal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0.5rem 1.5rem;">
                 <div style="display: flex; align-items: center; gap: 0.8rem;">
                     <h3 class="modal-title">Spiel-Optionen</h3>
                     <div class="info-icon" onclick="document.getElementById('optionsInfoModal').classList.add('active')" style="margin: 0; width: 28px; height: 28px; font-size: 1.1rem; border-color: var(--secondary); color: var(--secondary); box-shadow: 0 0 10px var(--secondary);">i</div>
                 </div>
                 <button class="close-btn" onclick="closeModalDirect('trinkspielSettingsModal')">✖</button>
             </div>
+            <div class="modal-body" style="padding-top: 0.5rem;">
             <p style="margin-bottom: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">Passe dein Spielerlebnis an:</p>
             
-            <div class="home-btn" id="reshuffleOnBtn" onclick="setReshuffle(true)" style="width: 100%; max-width: none; margin-bottom: 1.2rem; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 0 2px #fff, inset 0 0 2px #fff, 0 0 10px var(--danger), inset 0 0 10px var(--danger); text-shadow: none; opacity: 0.6;">
+            <div class="home-btn" id="reshuffleOnBtn" onclick="setReshuffle(true)" style="width: 100%; max-width: none; margin-bottom: 1.2rem; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgb(255, 255, 255); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--secondary), inset 0 0 15px var(--secondary), 0 0 30px var(--secondary); text-shadow: 0 0 5px #fff, 0 0 12px var(--secondary); opacity: 1;">
                 <span style="font-size: 1.1rem; font-weight: 800; letter-spacing: 1px;">Mit Zurücklegen</span>
-                <div class="status-indicator" id="reshuffleOnIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: rgb(102, 102, 102); box-shadow: none;"></div>
+                <div class="status-indicator" id="reshuffleOnIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: white; box-shadow: white 0px 0px 10px;"></div>
             </div>
 
-            <div class="home-btn" id="reshuffleOffBtn" onclick="setReshuffle(false)" style="width: 100%; max-width: none; margin-bottom: 1.2rem; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgb(255, 255, 255); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--secondary), inset 0 0 15px var(--secondary), 0 0 30px var(--secondary); text-shadow: 0 0 5px #fff, 0 0 12px var(--secondary); opacity: 1;">
+            <div class="home-btn" id="reshuffleOffBtn" onclick="setReshuffle(false)" style="width: 100%; max-width: none; margin-bottom: 1.2rem; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 0 2px #fff, inset 0 0 2px #fff, 0 0 10px var(--danger), inset 0 0 10px var(--danger); text-shadow: none; opacity: 0.6;">
                 <span style="font-size: 1.1rem; font-weight: 800; letter-spacing: 1px;">Ohne Zurücklegen</span>
-                <div class="status-indicator" id="reshuffleOffIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: white; box-shadow: 0 0 10px white;"></div>
+                <div class="status-indicator" id="reshuffleOffIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: rgb(102, 102, 102); box-shadow: none;"></div>
             </div>
 
-            <div class="home-btn" id="todesmodusBtn" onclick="toggleTodesmodus()" style="width: 100%; max-width: none; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgb(255, 255, 255); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--secondary), inset 0 0 15px var(--secondary), 0 0 30px var(--secondary); text-shadow: 0 0 5px #fff, 0 0 12px var(--secondary); opacity: 1;">
+            <div class="home-btn" id="todesmodusBtn" onclick="toggleTodesmodus()" style="width: 100%; max-width: none; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 0 2px #fff, inset 0 0 2px #fff, 0 0 10px var(--danger), inset 0 0 10px var(--danger); text-shadow: none; opacity: 0.6;">
                 <span style="font-size: 1.1rem; font-weight: 800; letter-spacing: 1px;">Todesmodus</span>
-                <div class="status-indicator" id="todesmodusIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: white; box-shadow: 0 0 10px white;"></div>
+                <div class="status-indicator" id="todesmodusIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: rgb(102, 102, 102); box-shadow: none;"></div>
             </div>
         </div>
+    </div>
     </div>
     <!-- Options Info Modal -->
     <div class="modal-overlay" id="optionsInfoModal" onclick="closeModal(event, 'optionsInfoModal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Modi Erklärungen</h3>
                 <button class="close-btn" onclick="closeModalDirect('optionsInfoModal')">✖</button>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                <div>
-                    <h4 style="color: var(--secondary); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Mit Zurücklegen</h4>
-                    <p style="color: var(--text-color); line-height: 1.4;">Der Kartenstapel ist endlos. Jede gezogene Karte wird nach dem Vorlesen wieder in den Stapel gemischt und kann erneut erscheinen.</p>
-                </div>
-                <div>
-                    <h4 style="color: var(--secondary); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Ohne Zurücklegen</h4>
-                    <p style="color: var(--text-color); line-height: 1.4;">Karten werden nach dem Ziehen aus dem Spiel entfernt. Ein Zähler zeigt an, wie viele Karten noch im Stapel übrig sind. Das Spiel endet, wenn der Stapel leer ist.</p>
-                </div>
-                <div>
-                    <h4 style="color: var(--danger); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Todesmodus</h4>
-                    <p style="color: var(--text-color); line-height: 1.4;">Aktiviert gefährliche Todes-Karten, die zufällig zwischen den normalen Karten erscheinen können. Diese Karten haben meist härtere Regeln.</p>
+            <div class="modal-body">
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div>
+                        <h4 style="color: var(--secondary); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Mit Zurücklegen</h4>
+                        <p style="color: var(--text-color); line-height: 1.4;">Der Kartenstapel ist endlos. Jede gezogene Karte wird nach dem Vorlesen wieder in den Stapel gemischt und kann erneut erscheinen.</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--secondary); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Ohne Zurücklegen</h4>
+                        <p style="color: var(--text-color); line-height: 1.4;">Karten werden nach dem Ziehen aus dem Spiel entfernt. Ein Zähler zeigt an, wie viele Karten noch im Stapel übrig sind. Das Spiel endet, wenn der Stapel leer ist.</p>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--danger); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px;">Todesmodus</h4>
+                        <p style="color: var(--text-color); line-height: 1.4;">Aktiviert gefährliche Todes-Karten, die zufällig zwischen den normalen Karten erscheinen können. Diese Karten haben meist härtere Regeln.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2787,145 +2894,156 @@
     <!-- Death Info Modal -->
     <div class="modal-overlay" id="deathInfoModal" onclick="closeModal(event, 'deathInfoModal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Todesrunden Info</h3>
                 <button class="close-btn" onclick="closeModalDirect('deathInfoModal')">✖</button>
             </div>
-            <div style="font-size: 0.95rem; line-height: 1.6; color: var(--text-color); max-height: 60vh; overflow-y: auto; padding: 0.5rem;">
-                <p>Du kannst hier eigene Todesrunden-Karten erstellen.</p>
-                <p style="margin-top: 1rem;">Verwende den Platzhalter <strong>{player}</strong>, damit automatisch ein zufälliger Spielername eingefügt wird.</p>
-                
-                <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 10px; margin: 1rem 0; border-left: 4px solid var(--danger);">
-                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem;">Beispiel:</div>
-                    <code style="color: var(--text-color);">{player}, du musst 2 Shots trinken.</code>
+            <div class="modal-body">
+                <div style="font-size: 0.95rem; line-height: 1.6; color: var(--text-color);">
+                    <p>Du kannst hier eigene Todesrunden-Karten erstellen.</p>
+                    <p style="margin-top: 1rem;">Verwende den Platzhalter <strong>{player}</strong>, damit automatisch ein zufälliger Spielername eingefügt wird.</p>
+                    <div style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 10px; margin: 1rem 0; border-left: 4px solid var(--danger);">
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem;">Beispiel:</div>
+                        <code style="color: var(--text-color);">{player}, du musst 2 Shots trinken.</code>
+                    </div>
+                    <ul style="margin-top: 1.5rem; padding-left: 1.2rem; color: var(--text-muted); font-size: 0.9rem;">
+                        <li style="margin-bottom: 0.5rem;">Mehrere Todesrunden-Karten sind gleichzeitig möglich.</li>
+                        <li style="margin-bottom: 0.5rem;">Nur aktivierte Karten können im Spiel erscheinen.</li>
+                        <li style="margin-bottom: 0.5rem;">Die Wahrscheinlichkeit steigt mit jeder normalen Karte an.</li>
+                        <li>Nach einer Todeskarte gibt es eine Schutzphase von 2 Runden.</li>
+                    </ul>
                 </div>
-
-                <p>Im Spiel wird daraus z. B.:</p>
-                <p style="font-style: italic; color: var(--text-muted);">"Max, du musst 2 Shots trinken."</p>
-
-                <ul style="margin-top: 1.5rem; padding-left: 1.2rem; color: var(--text-muted); font-size: 0.9rem;">
-                    <li style="margin-bottom: 0.5rem;">Mehrere Todesrunden-Karten sind gleichzeitig möglich.</li>
-                    <li style="margin-bottom: 0.5rem;">Nur aktivierte Karten können im Spiel erscheinen.</li>
-                    <li style="margin-bottom: 0.5rem;">Die Wahrscheinlichkeit steigt mit jeder normalen Karte an.</li>
-                    <li>Nach einer Todeskarte gibt es eine Schutzphase von 2 Runden.</li>
-                </ul>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="closeModalDirect('deathInfoModal')">Verstanden</button>
             </div>
-            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="closeModalDirect('deathInfoModal')">Verstanden</button>
         </div>
     </div>
 
     <!-- Game Complete Modal -->
     <div class="modal-overlay" id="gameCompleteModal" onclick="closeModal(event, 'gameCompleteModal')">
         <div class="modal" onclick="event.stopPropagation()">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Spiel beendet!</h3>
                 <button class="close-btn" onclick="closeModalDirect('gameCompleteModal')">✖</button>
             </div>
-            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
-                Alle Karten wurden gezogen. Möchtest du den Stapel neu mischen und von vorne beginnen?
-            </p>
-            <div style="display: flex; gap: 1rem;">
-                <button class="btn btn-secondary" style="flex: 1;" onclick="restartGame()">Ja, neu mischen</button>
-                <button class="btn" style="flex: 1;" onclick="closeModalDirect('gameCompleteModal')">Beenden</button>
+            <div class="modal-body">
+                <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+                    Alle Karten wurden gezogen. Möchtest du den Stapel neu mischen und von vorne beginnen?
+                </p>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn btn-secondary" style="flex: 1;" onclick="restartGame()">Ja, neu mischen</button>
+                    <button class="btn" style="flex: 1;" onclick="closeModalDirect('gameCompleteModal')">Beenden</button>
+                </div>
             </div>
         </div>
     </div>
 
     <div id="busFeedbackModal" class="modal-overlay" style="z-index: 200;">
         <div class="modal" style="max-width: 350px;">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title" id="busFeedbackTitle">Ergebnis</h3>
                 <button class="close-btn" onclick="closeBusFeedback()">✖</button>
             </div>
-            <p id="busFeedbackText" style="margin-bottom: 1.5rem; font-size: 1.2rem; text-align: center; font-weight: 600;"></p>
-            <button class="btn btn-primary" style="width: 100%;" onclick="closeBusFeedback()">OK</button>
+            <div class="modal-body">
+                <p id="busFeedbackText" style="margin-bottom: 1.5rem; font-size: 1.2rem; text-align: center; font-weight: 600;"></p>
+                <button class="btn btn-primary" style="width: 100%;" onclick="closeBusFeedback()">OK</button>
+            </div>
         </div>
     </div>
 
     <div id="busDiscardModal" class="modal-overlay" style="z-index: 200;">
         <div class="modal" style="max-width: 350px;">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Karte ablegen?</h3>
                 <button class="close-btn" onclick="confirmBusDiscard(false)">✖</button>
             </div>
-            <p id="busDiscardText" style="margin-bottom: 1.5rem; color: var(--text-muted); text-align: center;">
-                <span id="busDiscardPlayerName" style="color: white; font-weight: 800;"></span>, du hast eine passende Karte (<span id="busDiscardCardInfo" style="font-weight: 800;"></span>)! Möchtest du sie ablegen und <span id="busDiscardDrinkCount" style="color: var(--secondary); font-weight: 800;"></span> Schluck(e) verteilen?
-            </p>
-            <div style="display: flex; gap: 1rem;">
-                <button class="btn btn-primary" style="flex: 1;" onclick="confirmBusDiscard(true)">Ja</button>
-                <button class="btn" style="flex: 1;" onclick="confirmBusDiscard(false)">Nein</button>
+            <div class="modal-body">
+                <p id="busDiscardText" style="margin-bottom: 1.5rem; color: var(--text-muted); text-align: center;">
+                    <span id="busDiscardPlayerName" style="color: white; font-weight: 800;"></span>, du hast eine passende Karte (<span id="busDiscardCardInfo" style="font-weight: 800;"></span>)! Möchtest du sie ablegen und <span id="busDiscardDrinkCount" style="color: var(--secondary); font-weight: 800;"></span> Schluck(e) verteilen?
+                </p>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn btn-primary" style="flex: 1;" onclick="confirmBusDiscard(true)">Ja</button>
+                    <button class="btn" style="flex: 1;" onclick="confirmBusDiscard(false)">Nein</button>
+                </div>
             </div>
         </div>
     </div>
 
     <div id="busRoundSelectModal" class="modal-overlay" style="z-index: 200;">
         <div class="modal">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Runden-Auswahl</h3>
                 <button class="close-btn" onclick="closeModalDirect('busRoundSelectModal')">✖</button>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 1rem;">
-                <button class="btn btn-primary" onclick="jumpToBusRound(1)">Spiel 1 – Pyramide</button>
-                <button class="btn btn-primary" onclick="jumpToBusRound(2)">Spiel 2 – Busfahren</button>
-                <button class="btn btn-primary" onclick="jumpToBusRound(3)">Spiel 3 – Extra Runde</button>
-                <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 0.5rem 0;">
-                <button class="btn" onclick="closeModalDirect('busRoundSelectModal'); startGame('trinkspiel')">Wechsel zu: Trinkspiel</button>
-                <button class="btn" onclick="closeModalDirect('busRoundSelectModal'); startGame('fragen')">Wechsel zu: Fragen</button>
+            <div class="modal-body">
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <button class="btn btn-primary" onclick="jumpToBusRound(1)">Spiel 1 – Pyramide</button>
+                    <button class="btn btn-primary" onclick="jumpToBusRound(2)">Spiel 2 – Busfahren</button>
+                    <button class="btn btn-primary" onclick="jumpToBusRound(3)">Spiel 3 – Extra Runde</button>
+                    <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 0.5rem 0;">
+                    <button class="btn" onclick="closeModalDirect('busRoundSelectModal'); startGame('trinkspiel')">Wechsel zu: Trinkspiel</button>
+                    <button class="btn" onclick="closeModalDirect('busRoundSelectModal'); startGame('fragen')">Wechsel zu: Fragen</button>
+                </div>
             </div>
         </div>
     </div>
 
     <div id="busStartSettingsModal" class="modal-overlay" style="z-index: 200;">
         <div class="modal" style="max-width: 350px;">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Busfahrer Start</h3>
                 <button class="close-btn" onclick="closeModalDirect('busStartSettingsModal')">✖</button>
             </div>
-            <p style="margin-bottom: 1.5rem; color: var(--text-muted); text-align: center;">Wähle die Anzahl der Karten, mit denen jeder Spieler startet:</p>
-            <div style="display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 2rem;">
-                <button class="icon-btn" onclick="adjustStartCards(-1)" style="width: 50px; height: 50px;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                </button>
-                <span id="startCardValue" style="font-size: 3rem; font-weight: 800; width: 40px; text-align: center;">2</span>
-                <button class="icon-btn" onclick="adjustStartCards(1)" style="width: 50px; height: 50px;">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </button>
+            <div class="modal-body">
+                <p style="margin-bottom: 1.5rem; color: var(--text-muted); text-align: center;">Wähle die Anzahl der Karten, mit denen jeder Spieler startet:</p>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-bottom: 2rem;">
+                    <button class="icon-btn" onclick="adjustStartCards(-1)" style="width: 50px; height: 50px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    <span id="startCardValue" style="font-size: 3rem; font-weight: 800; width: 40px; text-align: center;">2</span>
+                    <button class="icon-btn" onclick="adjustStartCards(1)" style="width: 50px; height: 50px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </div>
+                <button class="btn btn-primary" id="confirmBusStartBtn" style="width: 100%; padding: 1.2rem; font-size: 1.2rem;" onclick="confirmBusStart()">Spiel starten</button>
             </div>
-            <button class="btn btn-primary" id="confirmBusStartBtn" style="width: 100%; padding: 1.2rem; font-size: 1.2rem;" onclick="confirmBusStart()">Spiel starten</button>
         </div>
     </div>
 
     <div id="busLoserListModal" class="modal-overlay" style="z-index: 200;">
         <div class="modal">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Busfahrer-Kandidaten</h3>
                 <button class="close-btn" onclick="closeModalDirect('busLoserListModal')">✖</button>
             </div>
-            <p style="margin-bottom: 1.5rem; color: var(--text-muted); text-align: center;">Die folgenden Spieler haben am meisten Karten übrig und müssen zum Karten raten:</p>
-            <div id="busLoserListContent" style="display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem;"></div>
-            <button class="btn btn-primary" style="width: 100%;" onclick="startBusRound2()">Karten raten starten</button>
+            <div class="modal-body">
+                <p style="margin-bottom: 1.5rem; color: var(--text-muted); text-align: center;">Die folgenden Spieler haben am meisten Karten übrig und müssen zum Karten raten:</p>
+                <div id="busLoserListContent" style="display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem;"></div>
+                <button class="btn btn-primary" style="width: 100%;" onclick="startBusRound2()">Karten raten starten</button>
+            </div>
         </div>
     </div>
 
     <div id="busExtraRoundModal" class="modal-overlay" style="z-index: 200;">
         <div class="modal" style="max-width: 350px;">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 1.5rem 1.5rem 0 1.5rem;">
                 <h3 class="modal-title">Extra Runde?</h3>
                 <button class="close-btn" onclick="closeModalDirect('busExtraRoundModal')">✖</button>
             </div>
-            <p style="margin-bottom: 1.5rem; color: var(--text-muted); text-align: center;">
-                <span id="busExtraRoundPlayerName" style="color: white; font-weight: 800;"></span> hat die meisten Fehlversuche gesammelt! Möchtest du eine Extra Runde (Höher/Tiefer) drehen?
-            </p>
-            <div style="display: flex; gap: 1rem;">
-                <button class="btn btn-primary" style="flex: 1;" onclick="confirmBusExtraRound(true)">Ja</button>
-                <button class="btn" style="flex: 1;" onclick="confirmBusExtraRound(false)">Nein</button>
+            <div class="modal-body">
+                <p style="margin-bottom: 1.5rem; color: var(--text-muted); text-align: center;">
+                    <span id="busExtraRoundPlayerName" style="color: white; font-weight: 800;"></span> hat die meisten Fehlversuche gesammelt! Möchtest du eine Extra Runde (Höher/Tiefer) drehen?
+                </p>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn btn-primary" style="flex: 1;" onclick="confirmBusExtraRound(true)">Ja</button>
+                    <button class="btn" style="flex: 1;" onclick="confirmBusExtraRound(false)">Nein</button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         // BUILD_ID_MARKER
-        const BUILD_ID = "build_1778164746179";
+        const BUILD_ID = "build_1778180949047";
 
         // TRINKSPIEL_SETS_START
         const hardcodedTrinkspielSets = [
@@ -3370,526 +3488,7 @@
         // TRINKSPIEL_SETS_END
 
         // FRAGEN_SETS_START
-        const hardcodedFragenSets = [
-          {
-                    "id": "set_1778144786048",
-                    "name": "Ü 18",
-                    "cards": [
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "einen Porno drehen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "an einer Orgie teilnehmen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "sofort sein Oberteil ausziehen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "Viagra nehmen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "sich auspeitschen lassen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "als Sexsklave dienen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "eine Sexschaukel ausprobieren?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "BDSM ausprobieren?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "ein Kondom 2x verwenden?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "im Bett der Eltern Sex haben?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "in der Öffentlichkeit Sex haben?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "in einen Swingerclub gehen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "in einer offenen Beziehung leben?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "mit jemandem schlafen, den man nicht leiden kann?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "eine Affäre anfangen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "einen Orgasmus vortäuschen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "eine Enttäuschung im Bett sein?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "ein Nippelpiercing stechen lassen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "eine aufblasbare Puppe bestellen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "an dreckigen Socken riechen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "ein erotisches Fotoshooting machen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "einen Dreier haben?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "Gemüse als Sextoy verwenden?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "schmutzige Unterwäsche verkaufen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "auf OnlyFans “arbeiten”?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "zur Erotik-Massage gehen?",
-                                        "count": 1
-                              }
-                    ]
-          },
-          {
-                    "id": "set_1778144797778",
-                    "name": "Peinlich",
-                    "cards": [
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "eine Schönheits-OP machen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "in die Dusche pinkeln?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "als Stripper arbeiten?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "im Pyjama zur Arbeit gehen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "auf einer Beerdigung laut lachen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "in einem Restaurant selbst mitgebrachtes Essen essen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "mit einem Borat-Anzug an den Strand gehen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "sich eine Glatze rasieren?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "ohne Unterwäsche aus dem Haus gehen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "sich eine Woche lang nicht waschen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "eine Woche lang die gleichen Klamotten tragen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "mit dem eigenen Chef flirten?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "wieder bei Mutti einziehen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "auf eine Schlagerparty gehen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "ins Kloster gehen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "das Ohr eines Fremden lecken?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "furzen und es auf jemand anderes schieben?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "auf 50.000 Euro verzichten, um ein kleines Kätzchen zu retten?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "sich nackt auf der Terrasse/auf dem Balkon sonnen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "in die Wildnis ziehen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "seine/n Ex auf Social Media stalken?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "jemanden heiraten, nur weil er reich ist?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "Drogen dealen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "mit Justin Bieber ein Duett aufnehmen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "im Kirchenchor singen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "den Partner betrügen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "der besten Freundin den Freund ausspannen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "mit der Schwiegermutter in den Urlaub fahren?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "bei einer Dating-Show mitmachen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "eine Woche nicht in den Spiegel schauen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "den ersten Hochzeitstag vergessen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "den Geburtstag des Partners vergessen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "nackt schlafen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "an seinem eigenen Pups schnuppern?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "Hochzeitsringe bei Amazon bestellen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "lebende Insekten essen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "Katzenfutter probieren?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "für Geld nackt putzen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "auf der Toilette telefonieren?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "eine Türklinke ablecken?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "aus einer Psychiatrie ausbrechen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "eine Bank ausrauben?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "seinen Lieblingsfußballverein tätowieren lassen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher …",
-                                        "desc": "heimlich die Nachbarn beobachten?",
-                                        "count": 1
-                              }
-                    ]
-          },
-          {
-                    "id": "set_1778144830779",
-                    "name": "Lustig",
-                    "cards": [
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "ein Kind schubsen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "Furzen und es auf jemand anderes schieben?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "2x die selbe Unterhose tragen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "in die Dusche pinkeln?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "einen Popel essen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "im Internet trollen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "den eigenen Furz genießen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "bei einem Film weinen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "sich besoffen die Augenbrauen abrasieren?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "sich online betrügen lassen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "online jemanden betrügen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "so tun als hätte man den Witz verstanden, obwohl das nicht der Fall ist?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "alleine ins Kino gehen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "in einem Geschäft klauen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "wegen Erregung öffentlichen Ärgernisses verhaftet werden?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "Make Up zum ersten Mal ausprobieren?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "einen Monat keinen Alkohol trinken können?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "einen Fremden küssen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "einen Bungee Sprung machen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "einen Monat nur Fast Food essen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "Wurstwasser für Geld trinken?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "auf der Toilette einschlafen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "eine Schönheits-OP durchführen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "auf einer Schlager-Party richtig abgehen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "einem Kind das Eis klauen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "bei einer Dating-Show teilnehmen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "die Haare Grün färben lassen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "eine Nacht mit Justin Bieber verbringen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "zwei Wochen lang keine Zähne putzen?",
-                                        "count": 1
-                              },
-                              {
-                                        "title": "Wer würde eher...",
-                                        "desc": "im Urlaub alles verlieren – Handy, Geld, Würde?",
-                                        "count": 1
-                              }
-                    ]
-          }
-];
+        const hardcodedFragenSets = [];
         // FRAGEN_SETS_END
 
 
@@ -4046,18 +3645,19 @@
             // Fetch current source
             let html = document.documentElement.outerHTML;
             
-            // Clean up: Remove 'active' and 'flipped' classes so the exported file starts with a clean UI
-            // We use specific class-based replacements to avoid breaking variable/function names in JS
-            html = html.replace(/class="modal-overlay"/g, 'class="modal-overlay"');
-            html = html.replace(/card-container/g, "card-container");
+            // Clean up: Remove 'active' classes from all modals so the exported file starts with a clean UI
+            // We use a more flexible regex that handles different attribute orders (id vs class)
+            html = html.replace(/class="modal-overlay active"/g, 'class="modal-overlay"');
+            html = html.replace(/class="modal-overlay\s+active"/g, 'class="modal-overlay"');
+            
+            // Specifically ensure the design modal is closed in the export, regardless of attribute order
+            html = html.replace(/id="designModal"[^>]*class="modal-overlay\s+active"/g, 'id="designModal" class="modal-overlay"');
+            html = html.replace(/class="modal-overlay\s+active"[^>]*id="designModal"/g, 'class="modal-overlay" id="designModal"');
             
             // Ensure Home Screen is visible and games are hidden
-            html = html.replace(/id="homeScreen"\s+style="display:\s*none;"/g, 'id="homeScreen" style="display: block;"');
-            html = html.replace(/id="gameWrapper"\s+style="display:\s*flex;"/g, 'id="gameWrapper" style="display: none;"');
-            html = html.replace(/id="busfahrerWrapper"\s+style="display:\s*flex;"/g, 'id="busfahrerWrapper" style="display: none;"');
-            
-            // Specifically ensure the design modal is closed in the export
-            html = html.replace(/id="designModal"\s+class="modal-overlay\s*[^"]*"/g, 'id="designModal" class="modal-overlay"');
+            html = html.replace(/id="homeScreen"[^>]*style="display:\s*none;"/g, 'id="homeScreen" style="display: flex;"');
+            html = html.replace(/id="gameWrapper"[^>]*style="display:\s*flex;"/g, 'id="gameWrapper" style="display: none;"');
+            html = html.replace(/id="busfahrerWrapper"[^>]*style="display:\s*flex;"/g, 'id="busfahrerWrapper" style="display: none;"');
             
             html = "<!DOCTYPE html>\n<html" + html.substring(html.indexOf('>'));
 
@@ -4901,10 +4501,14 @@
                     </div>
                     <div style="font-size:1.8rem;color:var(--text-muted);padding:0 5px;line-height:1;">&#8594;</div>`;
                 }
-                cardsHTML += `<div id="nextCardFlip" style="width:110px;height:155px;perspective:1000px;">
-                    <div id="nextCardInner" style="width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.55s ease;">
-                        <div class="bus-card hidden" style="position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;">${getCardIconHTML(true)}</div>
-                        <div id="nextCardFace" style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);border-radius:12px;"></div>
+                cardsHTML += `
+                <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+                    <div style="font-size:0.7rem;opacity:0;">Placeholder</div>
+                    <div id="nextCardFlip" style="width:120px;height:170px;perspective:1000px;">
+                        <div id="nextCardInner" style="width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.55s ease;">
+                            <div class="bus-card hidden" style="position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;">${getCardIconHTML(true)}</div>
+                            <div id="nextCardFace" style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);border-radius:12px;"></div>
+                        </div>
                     </div>
                 </div>`;
                 cardsHTML += '</div>';
@@ -4967,7 +4571,7 @@
 
             document.querySelectorAll('#finaleBtns button').forEach(b => b.disabled = true);
 
-            const faceHTML = renderCardFront(card, "1rem", "2.8rem", "10px", "6px");
+            const faceHTML = renderCardFront(card, "1.4rem", "4rem", "10px", "6px");
             const face = document.getElementById('nextCardFace');
             const inner = document.getElementById('nextCardInner');
             if (face && inner) { face.innerHTML = faceHTML; requestAnimationFrame(() => { inner.style.transform = 'rotateY(180deg)'; }); }
@@ -5671,6 +5275,7 @@
                 cards = cards.filter(c => c.id != activeCardId);
                 saveCards();
                 renderManagerList(document.getElementById('searchInput').value);
+                renderSetDetailsList();
                 closeModalDirect('cardActionModal');
                 buildDrawPool();
                 activeCardId = null;
@@ -5679,6 +5284,7 @@
 
         function openEditModalDirectly(id) {
             activeCardId = id;
+            isEditingDeathCard = false;
             const card = cards.find(c => c.id == activeCardId);
             if (card) {
                 document.getElementById('editTitle').value = card.title;
@@ -5690,6 +5296,7 @@
         }
 
         function openEditModal() {
+            isEditingDeathCard = false;
             const card = cards.find(c => c.id == activeCardId);
             if (card) {
                 document.getElementById('editTitle').value = card.title;
@@ -5990,7 +5597,10 @@
                     <div style="padding-right: 0.5rem; flex: 1;">
                         <h4 style="color: var(--text-color);">${c.title}</h4>
                     </div>
-                    <button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.9rem;" onclick="openCopyToModal('${c.id}')">Kopieren</button>
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <button class="btn" style="padding: 0.4rem 0.8rem; font-size: 0.9rem;" onclick="openEditModalDirectly('${c.id}')">✏️</button>
+                        <button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.9rem;" onclick="openCopyToModal('${c.id}')">Kopieren</button>
+                    </div>
                 `;
                 list.appendChild(el);
             });
