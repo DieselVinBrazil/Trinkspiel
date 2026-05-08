@@ -64,6 +64,10 @@
             position: relative;
             z-index: 10;
         }
+        /* FIX: Vollbild-Modus hinzufügen Button */
+        .fullscreen-btn {
+            margin-right: 1rem;
+        }
 
         .icon-btn {
             background: transparent !important;
@@ -79,6 +83,15 @@
             justify-content: center;
             transition: all 0.3s ease;
             z-index: 10;
+        }
+
+        /* FIX: Tap-Feedback auf Mobile */
+        .btn:active, .home-btn:active, .bus-prediction-btn:active, .icon-btn:active {
+            transform: scale(0.95) !important;
+        }
+
+        /* FIX: Neon-CSS vereinheitlicht */
+        .neon-style {
             text-shadow: 
                 0 0 1px #fff,
                 0 0 3px #fff,
@@ -91,6 +104,15 @@
                 inset 0 0 8px var(--primary),
                 0 0 15px var(--primary),
                 inset 0 0 15px var(--primary);
+        }
+
+        .icon-btn {
+            @extend .neon-style; /* Fallback for conceptual logic, explicit below */
+        }
+        
+        .icon-btn {
+            text-shadow: 0 0 1px #fff, 0 0 3px #fff, 0 0 8px var(--primary), 0 2px 4px rgba(0,0,0,0.5);
+            box-shadow: 0 0 2px #fff, inset 0 0 2px #fff, 0 0 8px var(--primary), inset 0 0 8px var(--primary), 0 0 15px var(--primary), inset 0 0 15px var(--primary);
         }
 
         .icon-btn:hover {
@@ -166,23 +188,12 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             white-space: nowrap;
-            /* Static Neon Styling */
             background: transparent !important;
             color: #fff;
             border: 3px solid #fff;
-            text-shadow: 
-                0 0 1px #fff,
-                0 0 4px #fff,
-                0 0 12px var(--primary),
-                0 0 25px var(--primary),
-                0 2px 5px rgba(0,0,0,0.7);
-            box-shadow: 
-                0 0 5px #fff,
-                inset 0 0 5px #fff,
-                0 0 15px var(--primary),
-                inset 0 0 15px var(--primary),
-                0 0 30px var(--primary),
-                inset 0 0 30px var(--primary);
+            /* FIX: Neon-CSS vereinheitlicht */
+            text-shadow: 0 0 1px #fff, 0 0 4px #fff, 0 0 12px var(--primary), 0 0 25px var(--primary), 0 2px 5px rgba(0,0,0,0.7);
+            box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--primary), inset 0 0 15px var(--primary), 0 0 30px var(--primary), inset 0 0 30px var(--primary);
         }
 
         .home-btn:hover {
@@ -310,7 +321,8 @@
 
         .card-back {
             transform: rotateY(180deg);
-            background: #ffffff !important;
+            /* FIX: Karten-Rückseite konsistent machen */
+            background: #faf7f2 !important;
             border: 1px solid rgba(0,0,0,0.1);
             color: #0f172a;
             padding: 2rem;
@@ -369,22 +381,11 @@
             letter-spacing: 1px;
             white-space: nowrap;
             
-            /* Neon Base */
             background: transparent !important;
             border: 2px solid #fff;
-            text-shadow: 
-                0 0 1px #fff,
-                0 0 3px #fff,
-                0 0 8px var(--primary),
-                0 0 15px var(--primary),
-                0 2px 4px rgba(0,0,0,0.6);
-            box-shadow: 
-                0 0 2px #fff,
-                inset 0 0 2px #fff,
-                0 0 10px var(--primary),
-                inset 0 0 10px var(--primary),
-                0 0 20px var(--primary),
-                inset 0 0 20px var(--primary);
+            /* FIX: Neon-CSS vereinheitlicht */
+            text-shadow: 0 0 1px #fff, 0 0 3px #fff, 0 0 8px var(--primary), 0 0 15px var(--primary), 0 2px 4px rgba(0,0,0,0.6);
+            box-shadow: 0 0 2px #fff, inset 0 0 2px #fff, 0 0 10px var(--primary), inset 0 0 10px var(--primary), 0 0 20px var(--primary), inset 0 0 20px var(--primary);
         }
 
         .btn-secondary {
@@ -476,19 +477,9 @@
             color: white;
             border: 2px solid #fff;
             opacity: 1;
-            text-shadow: 
-                0 0 1px #fff,
-                0 0 3px #fff,
-                0 0 8px var(--primary),
-                0 0 15px var(--primary),
-                0 2px 4px rgba(0,0,0,0.6);
-            box-shadow: 
-                0 0 2px #fff,
-                inset 0 0 2px #fff,
-                0 0 10px var(--primary),
-                inset 0 0 10px var(--primary),
-                0 0 20px var(--primary),
-                inset 0 0 20px var(--primary);
+            /* FIX: Neon-CSS vereinheitlicht */
+            text-shadow: 0 0 1px #fff, 0 0 3px #fff, 0 0 8px var(--primary), 0 0 15px var(--primary), 0 2px 4px rgba(0,0,0,0.6);
+            box-shadow: 0 0 2px #fff, inset 0 0 2px #fff, 0 0 10px var(--primary), inset 0 0 10px var(--primary), 0 0 20px var(--primary), inset 0 0 20px var(--primary);
         }
 
         /* Info Icon */
@@ -1088,17 +1079,9 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
             font-size: 0.95rem;
-            text-shadow: 
-                0 0 1px #fff,
-                0 0 4px #fff,
-                0 0 10px var(--primary),
-                0 0 20px var(--primary);
-            box-shadow: 
-                0 0 4px #fff,
-                inset 0 0 4px #fff,
-                0 0 10px var(--primary),
-                inset 0 0 10px var(--primary),
-                0 0 15px var(--primary);
+            /* FIX: Neon-CSS vereinheitlicht */
+            text-shadow: 0 0 1px #fff, 0 0 4px #fff, 0 0 10px var(--primary), 0 0 20px var(--primary);
+            box-shadow: 0 0 4px #fff, inset 0 0 4px #fff, 0 0 10px var(--primary), inset 0 0 10px var(--primary), 0 0 15px var(--primary);
             margin-bottom: 0.8rem;
             min-width: 160px;
             text-align: center;
@@ -1187,9 +1170,6 @@
             transform: scale(1.1);
             box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
             z-index: 2;
-        }
-        .color-swatch:hover {
-            transform: scale(1.05);
         }
 
         .spectrum-box {
@@ -1303,6 +1283,19 @@
             45%, 60% { opacity: 1; }
             65%, 100% { opacity: 0; }
         }
+
+        /* FIX: Neon-Effekte auf Mobile reduzieren */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+                box-shadow: 0 0 5px var(--primary) !important;
+            }
+        }
+        .low-perf * {
+            box-shadow: 0 0 5px var(--primary), inset 0 0 2px #fff !important;
+            text-shadow: 0 0 2px #fff !important;
+        }
     </style>
 </head>
 <body>
@@ -1394,21 +1387,21 @@
                     </svg>
                 </div>
                 <!-- Cocktail Slot (Replacing Flamingo) -->
-                <div class="symbol-swatch" data-icon="cocktail" onclick="setCardIcon('cocktail')" title="Cocktail" style="color: rgb(114, 28, 36);">
+                <div class="symbol-swatch" data-icon="cocktail" onclick="setCardIcon('cocktail')" title="Cocktail" style="color: #00f2ff;">
                     <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" style="width: 75%; height: 75%; filter: drop-shadow(0 0 3px #00f2ff);">
-                        <path d="M30,35 L70,35 L50,68 Z" fill="#00f2ff" opacity="0.6"></path>
+                        <path d="M30,35 L70,35 L50,68 Z" fill="#00f2ff" opacity="0.6" />
                         <g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M25,25 L75,25 L50,75 L50,105 M35,105 L65,105"></path>
+                            <path d="M25,25 L75,25 L50,75 L50,105 M35,105 L65,105" />
                         </g>
                     </svg>
                 </div>
                 <!-- Whiskey Tumbler Slot -->
-                <div class="symbol-swatch" data-icon="whiskey" onclick="setCardIcon('whiskey')" title="Whiskey" style="color: rgb(114, 28, 36);">
+                <div class="symbol-swatch" data-icon="whiskey" onclick="setCardIcon('whiskey')" title="Whiskey" style="color: #ffa500;">
                     <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 80%; height: 80%; filter: drop-shadow(0 0 3px #ffa500);">
-                        <path d="M20,15 L80,15 L72,90 L28,90 Z" fill="#ffa500" opacity="0.6"></path>
-                        <path d="M20,15 L80,15 L72,90 L28,90 Z" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round"></path>
-                        <rect x="35" y="50" width="18" height="18" fill="#fff" opacity="0.8" transform="rotate(15, 44, 59)"></rect>
-                        <rect x="50" y="60" width="16" height="16" fill="#fff" opacity="0.6" transform="rotate(-10, 58, 68)"></rect>
+                        <path d="M20,15 L80,15 L72,90 L28,90 Z" fill="#ffa500" opacity="0.6" />
+                        <path d="M20,15 L80,15 L72,90 L28,90 Z" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round" />
+                        <rect x="35" y="50" width="18" height="18" fill="#fff" opacity="0.8" transform="rotate(15, 44, 59)" />
+                        <rect x="50" y="60" width="16" height="16" fill="#fff" opacity="0.6" transform="rotate(-10, 58, 68)" />
                     </svg>
                 </div>
                 <div class="color-swatch plus-swatch" id="plus-motifs" onclick="openExtraMotifs()" title="Mehr Muster" style="background: rgba(255, 255, 255, 0.1);">+</div>
@@ -1424,10 +1417,12 @@
     <div class="modal-overlay" id="extraColorsModal" onclick="closeModal(event, 'extraColorsModal')">
         <div class="modal" onclick="event.stopPropagation()" style="max-width: 450px; width: 95%;">
             <div class="modal-header">
-                <h3 class="modal-title" id="extraColorsTitle">Kartenfarben</h3>
+                <h3 class="modal-title" id="extraColorsTitle">Weitere Farben</h3>
                 <button class="close-btn" onclick="closeModalDirect('extraColorsModal')">✖</button>
             </div>
-            <div id="extraColorsGrid" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 5px;"><div class="color-swatch" style="background: rgb(2, 6, 23);"></div><div class="color-swatch" style="background: rgb(5, 46, 22);"></div><div class="color-swatch" style="background: rgb(30, 27, 75);"></div><div class="color-swatch" style="background: rgb(24, 24, 27);"></div><div class="color-swatch" style="background: rgb(12, 10, 9);"></div><div class="color-swatch" style="background: rgb(26, 46, 5);"></div><div class="color-swatch" style="background: rgb(46, 16, 101);"></div><div class="color-swatch" style="background: rgb(69, 10, 10);"></div><div class="color-swatch" style="background: rgb(22, 78, 99);"></div><div class="color-swatch" style="background: rgb(6, 78, 59);"></div><div class="color-swatch" style="background: rgb(39, 39, 42);"></div><div class="color-swatch" style="background: rgb(0, 0, 0);"></div><div class="color-swatch" style="background: rgb(17, 24, 39);"></div><div class="color-swatch" style="background: rgb(23, 23, 23);"></div><div class="color-swatch" style="background: rgb(28, 25, 23);"></div><div class="color-swatch" style="background: rgb(30, 27, 75);"></div><div class="color-swatch" style="background: rgb(3, 7, 18);"></div><div class="color-swatch" style="background: rgb(8, 47, 73);"></div><div class="color-swatch" style="background: rgb(20, 83, 45);"></div><div class="color-swatch" style="background: rgb(63, 43, 150);"></div></div>
+            <div id="extraColorsGrid" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 5px;">
+                <!-- Dynamically filled -->
+            </div>
         </div>
     </div>
 
@@ -1438,151 +1433,9 @@
                 <h3 class="modal-title">Weitere Motive</h3>
                 <button class="close-btn" onclick="closeModalDirect('extraMotifsModal')">✖</button>
             </div>
-            <div id="extraMotifsGrid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 15px; max-height: 65vh; overflow-y: auto;"><div class="symbol-swatch">
-                <div class="neon-cocktail-variant" style="width: 50px; height: 50px; filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 4px #ff0033) drop-shadow(0 0 10px #ff0033); display: flex; align-items: center; justify-content: center;">
-                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;" preserveAspectRatio="xMidYMid meet">
-                        <!-- Liquid (Color Glow) -->
-                        <path d="M30,35 L70,35 L50,68 Z" fill="#ff0033" opacity="0.8"></path>
-                        
-                        <!-- Outer Glass Tube (White) -->
-                        <g fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M25,25 L75,25 L50,75 L50,105 M35,105 L65,105"></path>
-                        </g>
-
-                        <!-- Olive & Stick Detail -->
-                        <path d="M45,20 L55,45" stroke="#fff" stroke-width="1.2" stroke-linecap="round"></path>
-                        <circle cx="53" cy="38" r="4" fill="#00ff41" opacity="0.9"></circle>
-                        
-                        <!-- Inner Shine Detail -->
-                        <path d="M35,35 L40,35" stroke="#fff" stroke-width="1" opacity="0.4"></path>
-                    </svg>
-                </div></div><div class="symbol-swatch">
-                <div class="neon-cocktail-variant" style="width: 50px; height: 50px; filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 4px #39FF14) drop-shadow(0 0 10px #39FF14); display: flex; align-items: center; justify-content: center;">
-                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;" preserveAspectRatio="xMidYMid meet">
-                        <!-- Liquid (Color Glow) -->
-                        <path d="M30,35 L70,35 L50,68 Z" fill="#39FF14" opacity="0.8"></path>
-                        
-                        <!-- Outer Glass Tube (White) -->
-                        <g fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M25,25 L75,25 L50,75 L50,105 M35,105 L65,105"></path>
-                        </g>
-
-                        <!-- Olive & Stick Detail -->
-                        <path d="M45,20 L55,45" stroke="#fff" stroke-width="1.2" stroke-linecap="round"></path>
-                        <circle cx="53" cy="38" r="4" fill="#00ff41" opacity="0.9"></circle>
-                        
-                        <!-- Inner Shine Detail -->
-                        <path d="M35,35 L40,35" stroke="#fff" stroke-width="1" opacity="0.4"></path>
-                    </svg>
-                </div></div><div class="symbol-swatch">
-                <div class="neon-cocktail-variant" style="width: 50px; height: 50px; filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 4px #fde047) drop-shadow(0 0 10px #fde047); display: flex; align-items: center; justify-content: center;">
-                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;" preserveAspectRatio="xMidYMid meet">
-                        <!-- Liquid (Color Glow) -->
-                        <path d="M30,35 L70,35 L50,68 Z" fill="#fde047" opacity="0.8"></path>
-                        
-                        <!-- Outer Glass Tube (White) -->
-                        <g fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M25,25 L75,25 L50,75 L50,105 M35,105 L65,105"></path>
-                        </g>
-
-                        <!-- Olive & Stick Detail -->
-                        <path d="M45,20 L55,45" stroke="#fff" stroke-width="1.2" stroke-linecap="round"></path>
-                        <circle cx="53" cy="38" r="4" fill="#00ff41" opacity="0.9"></circle>
-                        
-                        <!-- Inner Shine Detail -->
-                        <path d="M35,35 L40,35" stroke="#fff" stroke-width="1" opacity="0.4"></path>
-                    </svg>
-                </div></div><div class="symbol-swatch">
-                <div class="neon-cocktail-variant" style="width: 50px; height: 50px; filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 4px #ff007f) drop-shadow(0 0 10px #ff007f); display: flex; align-items: center; justify-content: center;">
-                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;" preserveAspectRatio="xMidYMid meet">
-                        <!-- Liquid (Color Glow) -->
-                        <path d="M30,35 L70,35 L50,68 Z" fill="#ff007f" opacity="0.8"></path>
-                        
-                        <!-- Outer Glass Tube (White) -->
-                        <g fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M25,25 L75,25 L50,75 L50,105 M35,105 L65,105"></path>
-                        </g>
-
-                        <!-- Olive & Stick Detail -->
-                        <path d="M45,20 L55,45" stroke="#fff" stroke-width="1.2" stroke-linecap="round"></path>
-                        <circle cx="53" cy="38" r="4" fill="#00ff41" opacity="0.9"></circle>
-                        
-                        <!-- Inner Shine Detail -->
-                        <path d="M35,35 L40,35" stroke="#fff" stroke-width="1" opacity="0.4"></path>
-                    </svg>
-                </div></div><div class="symbol-swatch">
-                <div class="neon-cocktail-variant" style="width: 50px; height: 50px; filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 4px #bf00ff) drop-shadow(0 0 10px #bf00ff); display: flex; align-items: center; justify-content: center;">
-                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;" preserveAspectRatio="xMidYMid meet">
-                        <!-- Liquid (Color Glow) -->
-                        <path d="M30,35 L70,35 L50,68 Z" fill="#bf00ff" opacity="0.8"></path>
-                        
-                        <!-- Outer Glass Tube (White) -->
-                        <g fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M25,25 L75,25 L50,75 L50,105 M35,105 L65,105"></path>
-                        </g>
-
-                        <!-- Olive & Stick Detail -->
-                        <path d="M45,20 L55,45" stroke="#fff" stroke-width="1.2" stroke-linecap="round"></path>
-                        <circle cx="53" cy="38" r="4" fill="#00ff41" opacity="0.9"></circle>
-                        
-                        <!-- Inner Shine Detail -->
-                        <path d="M35,35 L40,35" stroke="#fff" stroke-width="1" opacity="0.4"></path>
-                    </svg>
-                </div></div><div class="symbol-swatch">
-                <div class="neon-cocktail-variant" style="width: 50px; height: 50px; filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 4px #ff8c00) drop-shadow(0 0 10px #ff8c00); display: flex; align-items: center; justify-content: center;">
-                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;" preserveAspectRatio="xMidYMid meet">
-                        <!-- Liquid (Color Glow) -->
-                        <path d="M30,35 L70,35 L50,68 Z" fill="#ff8c00" opacity="0.8"></path>
-                        
-                        <!-- Outer Glass Tube (White) -->
-                        <g fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M25,25 L75,25 L50,75 L50,105 M35,105 L65,105"></path>
-                        </g>
-
-                        <!-- Olive & Stick Detail -->
-                        <path d="M45,20 L55,45" stroke="#fff" stroke-width="1.2" stroke-linecap="round"></path>
-                        <circle cx="53" cy="38" r="4" fill="#00ff41" opacity="0.9"></circle>
-                        
-                        <!-- Inner Shine Detail -->
-                        <path d="M35,35 L40,35" stroke="#fff" stroke-width="1" opacity="0.4"></path>
-                    </svg>
-                </div></div><div class="symbol-swatch">
-                <div class="neon-cocktail-variant" style="width: 50px; height: 50px; filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 4px #2563eb) drop-shadow(0 0 10px #2563eb); display: flex; align-items: center; justify-content: center;">
-                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;" preserveAspectRatio="xMidYMid meet">
-                        <!-- Liquid (Color Glow) -->
-                        <path d="M30,35 L70,35 L50,68 Z" fill="#2563eb" opacity="0.8"></path>
-                        
-                        <!-- Outer Glass Tube (White) -->
-                        <g fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M25,25 L75,25 L50,75 L50,105 M35,105 L65,105"></path>
-                        </g>
-
-                        <!-- Olive & Stick Detail -->
-                        <path d="M45,20 L55,45" stroke="#fff" stroke-width="1.2" stroke-linecap="round"></path>
-                        <circle cx="53" cy="38" r="4" fill="#00ff41" opacity="0.9"></circle>
-                        
-                        <!-- Inner Shine Detail -->
-                        <path d="M35,35 L40,35" stroke="#fff" stroke-width="1" opacity="0.4"></path>
-                    </svg>
-                </div></div><div class="symbol-swatch">
-                <div class="neon-cocktail-variant" style="width: 50px; height: 50px; filter: drop-shadow(0 0 1px #fff) drop-shadow(0 0 4px #2dd4bf) drop-shadow(0 0 10px #2dd4bf); display: flex; align-items: center; justify-content: center;">
-                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;" preserveAspectRatio="xMidYMid meet">
-                        <!-- Liquid (Color Glow) -->
-                        <path d="M30,35 L70,35 L50,68 Z" fill="#2dd4bf" opacity="0.8"></path>
-                        
-                        <!-- Outer Glass Tube (White) -->
-                        <g fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M25,25 L75,25 L50,75 L50,105 M35,105 L65,105"></path>
-                        </g>
-
-                        <!-- Olive & Stick Detail -->
-                        <path d="M45,20 L55,45" stroke="#fff" stroke-width="1.2" stroke-linecap="round"></path>
-                        <circle cx="53" cy="38" r="4" fill="#00ff41" opacity="0.9"></circle>
-                        
-                        <!-- Inner Shine Detail -->
-                        <path d="M35,35 L40,35" stroke="#fff" stroke-width="1" opacity="0.4"></path>
-                    </svg>
-                </div></div></div>
+            <div id="extraMotifsGrid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 15px; max-height: 65vh; overflow-y: auto;">
+                <!-- Dynamically filled by JS from extraMotifsData -->
+            </div>
         </div>
     </div>
 
@@ -1591,7 +1444,11 @@
             <button class="icon-btn" onclick="returnToHome()" aria-label="Zurück">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
             </button>
-            <div>
+            <div style="display: flex; align-items: center;">
+                <!-- FIX: Vollbild-Modus hinzufügen Button -->
+                <button class="icon-btn fullscreen-btn" id="fullscreenBtn" onclick="toggleFullscreen()" title="Vollbild" style="margin-right: 0.5rem; display: inline-flex;">
+                    <span id="fsIcon">⛶</span>
+                </button>
                 <button class="icon-btn" id="playerEditBtn" onclick="openPlayerSetupFromGame()" aria-label="Spieler verwalten" style="display: none; margin-right: 0.5rem;" title="Spieler verwalten">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 </button>
@@ -1640,7 +1497,11 @@
                 <button class="icon-btn" onclick="returnToHome()" aria-label="Zurück">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                 </button>
-                <div style="display: flex; gap: 0.5rem;">
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <!-- FIX: Vollbild-Modus hinzufügen Button -->
+                    <button class="icon-btn fullscreen-btn" id="busFullscreenBtn" onclick="toggleFullscreen()" title="Vollbild">
+                        <span class="fsIconClass">⛶</span>
+                    </button>
                     <button class="icon-btn" onclick="openPlayerSetupFromGame()" aria-label="Spieler">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                     </button>
@@ -1679,7 +1540,7 @@
                 <button class="btn btn-primary" style="flex: 0 0 auto; padding: 0.75rem;" onclick="addPlayer()">Hinzufügen</button>
             </div>
             <div class="card-list" id="playerList" style="max-height: 200px; margin-bottom: 1.5rem;"><div class="empty-state" style="padding: 1rem;">Keine Spieler hinzugefügt.</div></div>
-            <button class="btn btn-secondary" id="playerSetupActionBtn" style="width: 100%;" onclick="startTrinkspielWithPlayers()">Weiter</button>
+            <button class="btn btn-secondary" id="playerSetupActionBtn" style="width: 100%;" onclick="startTrinkspielWithPlayers()">Speichern &amp; Schließen</button>
             </div>
         </div>
     </div>
@@ -1722,13 +1583,13 @@
                 <button class="close-btn" onclick="closeModalDirect('manageModal')">✖</button>
             </div>
             <div class="tabs" style="padding: 0 1.5rem; margin-bottom: 1rem;">
-                <div class="tab active" id="tabSets" onclick="switchTab('sets')">Sets</div>
-                <div class="tab" id="tabStandard" onclick="switchTab('standard')">Standard</div>
-                <div class="tab" id="tabDeath" onclick="switchTab('death')" style="display: block;">Todesrunden</div>
+                <div class="tab" id="tabSets" onclick="switchTab('sets')">Sets</div>
+                <div class="tab active" id="tabStandard" onclick="switchTab('standard')">Standard</div>
+                <div class="tab" id="tabDeath" onclick="switchTab('death')" style="display: none;">Todesrunden</div>
             </div>
             <div class="modal-body" style="padding-top: 0;">
 
-            <div id="standardTabContent" style="display: none;">
+            <div id="standardTabContent" style="display: block;">
                 <div style="display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1rem; padding: 0 0.5rem;">
                     <div class="search-bar" style="width: 100%; margin: 0; padding: 0;">
                         <input type="text" id="searchInput" placeholder="Karte suchen..." oninput="filterCards()" autocomplete="off" style="width: 100%; box-sizing: border-box;">
@@ -1736,7 +1597,7 @@
                     <button class="btn" style="width: 100%; padding: 0.8rem; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;" onclick="openAddModal()">+</button>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding: 0 1rem;">
-                    <span id="activeCardsCount" style="color: var(--text-muted); font-size: 0.9rem; font-weight: 500;">85 von 85 Karten aktiv</span>
+                    <span id="activeCardsCount" style="color: var(--text-muted); font-size: 0.9rem; font-weight: 500;">100 von 100 Karten aktiv</span>
                     <div style="display: flex; align-items: center;">
                         <div style="width: 45px;"></div> <!-- Spacer matching the card inputs -->
                         <label class="toggle-switch">
@@ -1746,944 +1607,1109 @@
                     </div>
                 </div>
                 <div class="card-list" id="cardList"><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_0')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">👆 Zeigefinger</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_0')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">einen Porno drehen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_0', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_0', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_0', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_0', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_1')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🎵 Summsumm</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_1')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">an einer Orgie teilnehmen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_1', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_1', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_1', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_1', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_2')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🌸 Kompliment</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_2')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">sofort sein Oberteil ausziehen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_2', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_2', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_2', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_2', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_3')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🐸 Frosch</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_3')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Viagra nehmen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_3', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_3', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_3', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_3', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_4')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🧠 Kategorien</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_4')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">sich auspeitschen lassen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_4', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_4', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_4', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_4', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_5')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🌊 Wellengang</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_5')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">als Sexsklave dienen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_5', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_5', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_5', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_5', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_6')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🗺️ Himmelsrichtung</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_6')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">eine Sexschaukel ausprobieren?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_6', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_6', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_6', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_6', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_7')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🌊 Fluss</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_7')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">BDSM ausprobieren?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_7', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_7', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_7', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_7', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_8')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🎭 Schauspieler</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_8')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">ein Kondom 2x verwenden?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_8', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_8', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_8', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_8', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_9')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🕵️ Lügner</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_9')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">im Bett der Eltern Sex haben?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_9', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_9', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_9', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_9', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_10')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🥃 Shotgun</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_10')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">in der Öffentlichkeit Sex haben?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_10', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_10', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_10', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_10', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_11')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🌿 Naturkenner</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_11')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">in einen Swingerclub gehen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_11', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_11', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_11', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_11', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_12')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🌅 Kompass</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_12')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">in einer offenen Beziehung leben?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_12', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_12', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_12', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_12', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_13')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🎒 Rucksack-Roulette</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_13')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">mit jemandem schlafen, den man nicht leiden kann?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_13', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_13', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_13', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_13', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_14')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🌡️ Temperatur-Schätzer</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_14')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">eine Affäre anfangen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_14', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_14', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_14', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_14', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_15')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🧲 Magnet</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_15')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">einen Orgasmus vortäuschen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_15', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_15', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_15', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_15', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_16')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🎪 Menschenpyramide</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_16')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">eine Enttäuschung im Bett sein?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_16', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_16', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_16', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_16', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_17')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🥃 Naturshot</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_17')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">ein Nippelpiercing stechen lassen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_17', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_17', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_17', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_17', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_18')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">👉 Fingerzeig</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_18')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">eine aufblasbare Puppe bestellen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_18', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_18', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_18', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_18', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_19')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🥃 Letzter stehend</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_19')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">an dreckigen Socken riechen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_19', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_19', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_19', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_19', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_20')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🃏 Russisches Kartenroulette</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_20')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">ein erotisches Fotoshooting machen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_20', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_20', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_20', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_20', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_21')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🐍 Medusa</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_21')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">einen Dreier haben?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_21', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_21', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_21', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_21', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_22')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">📸 Lustige Pose</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_22')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Gemüse als Sextoy verwenden?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_22', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_22', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_22', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_22', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_23')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">✊ Schnick Schnack Schnuck Duell</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_23')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">schmutzige Unterwäsche verkaufen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_23', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_23', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_23', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_23', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778062244891_24')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">🧠 Gedankenlesen</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_24')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">auf OnlyFans „arbeiten“?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778062244891_24', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_24', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778062244891_24', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_24', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_0')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Rücken-Workout</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_u18_25')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">zur Erotik-Massage gehen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_0', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_u18_25', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_0', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_u18_25', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_1')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Komplimente-Runde</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_0')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">eine Schönheits-OP machen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_1', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_0', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_1', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_0', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_2')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Blinzelduell</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_1')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">in die Dusche pinkeln?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_2', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_1', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_2', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_1', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_3')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Trink-Ausgleich</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_2')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">als Stripper arbeiten?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_3', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_2', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_3', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_2', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_4')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">P-Länder</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_3')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">im Pyjama zur Arbeit gehen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_4', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_3', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_4', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_3', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_5')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Zahlen-Partner</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_4')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">auf einer Beerdigung laut lachen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_5', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_4', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_5', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_4', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_6')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Geldbeutel-Raten</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_5')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">in einem Restaurant selbst mitgebrachtes Essen essen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_6', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_5', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_6', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_5', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_7')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Münzwurf</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_6')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">mit einem Borat-Anzug an den Strand gehen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_7', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_6', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_7', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_6', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_8')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">3-Sekunden-Challenge</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_7')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">sich eine Glatze rasieren?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_8', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_7', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_8', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_7', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_9')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Starr-Challenge</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_8')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">ohne Unterwäsche aus dem Haus gehen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_9', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_8', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_9', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_8', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_10')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Bundesländer-Challenge</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_9')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">sich eine Woche lang nicht waschen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_10', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_9', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_10', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_9', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_11')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Alkohol-Schätzung</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_10')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">eine Woche lang die gleichen Klamotten tragen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_11', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_10', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_11', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_10', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_12')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Cross-Drink</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_11')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">mit dem eigenen Chef flirten?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_12', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_11', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_12', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_11', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_13')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Drink-Upgrading</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_12')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">wieder bei Mutti einziehen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_13', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_12', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_13', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_12', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_14')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Risiko-Upgrade</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_13')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">auf eine Schlagerparty gehen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_14', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_13', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_14', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_13', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_15')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Karten-Kette</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_14')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">ins Kloster gehen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_15', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_14', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_15', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_14', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_16')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Story oder Strafe</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_15')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">das Ohr eines Fremden lecken?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_16', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_15', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_16', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_15', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_17')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Ex oder Schwul</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_16')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">furzen und es auf jemand anderes schieben?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_17', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_16', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_17', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_16', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_18')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Ältesten-Regel</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_17')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">auf 50.000 Euro verzichten, um ein kleines Kätzchen zu retten?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_18', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_17', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_18', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_17', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_19')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Enterbungswahl</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_18')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">sich nackt auf der Terrasse/auf dem Balkon sonnen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_19', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_18', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_19', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_18', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_20')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Abstimmung</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_19')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">in die Wildnis ziehen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_20', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_19', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_20', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_19', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_21')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Abstimmung</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_20')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">seine/n Ex auf Social Media stalken?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_21', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_20', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_21', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_20', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_22')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Abstimmung</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_21')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">jemanden heiraten, nur weil er reich ist?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_22', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_21', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_22', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_21', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_23')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Abstimmung</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_22')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Drogen dealen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_23', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_22', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_23', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_22', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_24')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Abstimmung</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_23')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">mit Justin Bieber ein Duett aufnehmen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_24', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_23', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_24', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_23', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_25')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Abstimmung</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_24')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">im Kirchenchor singen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_25', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_24', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_25', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_24', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_26')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Abstimmung</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_25')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">den Partner betrügen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_26', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_25', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_26', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_25', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_27')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Aufwach-Runde</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_26')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">der besten Freundin den Freund ausspannen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_27', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_26', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_27', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_26', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_28')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Schnarch-Regel</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_27')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">mit der Schwiegermutter in den Urlaub fahren?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_28', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_27', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_28', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_27', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_29')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Backpfeifen-Wahl</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_28')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">bei einer Dating-Show mitmachen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_29', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_28', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_29', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_28', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_30')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Halb oder Homo</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_29')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">eine Woche nicht in den Spiegel schauen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_30', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_29', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_30', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_29', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_31')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Schreib-Kandidat</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_30')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">den ersten Hochzeitstag vergessen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_31', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_30', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_31', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_30', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_32')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Frisuren-Runde</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_31')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">den Geburtstag des Partners vergessen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_32', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_31', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_32', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_31', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_33')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Vertrauensfrage</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_32')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">nackt schlafen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_33', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_32', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_33', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_32', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_34')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Glas-Tausch</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_33')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">an seinem eigenen Pups schnuppern?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_34', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_33', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_34', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_33', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_35')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Ex oder unangenhmes Telefonat</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_34')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Hochzeitsringe bei Amazon bestellen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_35', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_34', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_35', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_34', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_36')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Ex oder Ex</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_35')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">lebende Insekten essen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_36', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_35', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_36', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_35', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_37')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Ex oder schäm dich!</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_36')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Katzenfutter probieren?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_37', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_36', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_37', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_36', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_38')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Ex oder leak</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_37')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">für Geld nackt putzen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_38', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_37', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_38', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_37', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_39')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Ex oder Leck</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_38')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">auf der Toilette telefonieren?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_39', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_38', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_39', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_38', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_40')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Imitation</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_39')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">eine Türklinke ablecken?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_40', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_39', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_40', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_39', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_41')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Ex oder Rizz</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_40')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">aus einer Psychiatrie ausbrechen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_41', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_40', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_41', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_40', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_42')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Wahrscheinlichkeits- spiel</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_41')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">eine Bank ausrauben?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_42', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_41', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_42', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_41', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_43')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Anton Chigurh</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_42')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">seinen Lieblingsfußballverein tätowieren lassen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_43', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_42', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_43', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_42', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_44')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Juiced up!</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_peinlich_43')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">heimlich die Nachbarn beobachten?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_44', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_peinlich_43', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_44', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_peinlich_43', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_45')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Schwächling</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_0')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">ein Kind schubsen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_45', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_0', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_45', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_0', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_46')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Hopla!</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_1')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Furzen und es auf jemand anderes schieben?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_46', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_1', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_46', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_1', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_47')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Abstimmung</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_2')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">2x die selbe Unterhose tragen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_47', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_2', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_47', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_2', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_48')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">BOMBA</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_3')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">in die Dusche pinkeln?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_48', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_3', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_48', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_3', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_49')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">High-Noon</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_4')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">einen Popel essen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_49', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_4', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_49', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_4', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_50')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Showdown</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_5')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">im Internet trollen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_50', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_5', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_50', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_5', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_51')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Trinkduell</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_6')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">den eigenen Furz genießen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_51', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_6', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_51', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_6', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_52')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Abstimmung</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_7')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">bei einem Film weinen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_52', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_7', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_52', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_7', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_53')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">What´s your type?</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_8')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">sich besoffen die Augenbrauen abrasieren?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_53', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_8', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_53', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_8', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_54')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Schlücke auf Shakira</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_9')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">sich online betrügen lassen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_54', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_9', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_54', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_9', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_55')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Abstimmung</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_10')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">online jemanden betrügen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_55', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_10', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_55', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_10', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_56')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Handvergleich</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_11')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">so tun als hätte man den Witz verstanden, obwohl das nicht der Fall ist?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_56', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_11', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_56', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_11', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_57')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Frauenpower</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_12')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">alleine ins Kino gehen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_57', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_12', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_57', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_12', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_58')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Männerpower</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_13')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">in einem Geschäft klauen?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_58', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_13', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_58', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_13', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('t_set_1778108614404_59')">
-                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Gender equality</h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_14')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">wegen Erregung öffentlichen Ärgernisses verhaftet werden?</h4>
                     </div>
                     <div style="display: flex; align-items: center;">
-                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('t_set_1778108614404_59', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_14', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
                         <label class="toggle-switch" onclick="event.stopPropagation()">
-                            <input type="checkbox" checked="" onchange="toggleCard('t_set_1778108614404_59', this)">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_14', this)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div><div class="manager-card ">
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_15')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Make Up zum ersten Mal ausprobieren?</h4>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_15', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <label class="toggle-switch" onclick="event.stopPropagation()">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_15', this)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div><div class="manager-card ">
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_16')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">einen Monat keinen Alkohol trinken können?</h4>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_16', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <label class="toggle-switch" onclick="event.stopPropagation()">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_16', this)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div><div class="manager-card ">
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_17')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">einen Fremden küssen?</h4>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_17', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <label class="toggle-switch" onclick="event.stopPropagation()">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_17', this)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div><div class="manager-card ">
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_18')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">einen Bungee Sprung machen?</h4>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_18', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <label class="toggle-switch" onclick="event.stopPropagation()">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_18', this)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div><div class="manager-card ">
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_19')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">einen Monat nur Fast Food essen?</h4>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_19', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <label class="toggle-switch" onclick="event.stopPropagation()">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_19', this)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div><div class="manager-card ">
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_20')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Wurstwasser für Geld trinken?</h4>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_20', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <label class="toggle-switch" onclick="event.stopPropagation()">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_20', this)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div><div class="manager-card ">
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_21')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">auf der Toilette einschlafen?</h4>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_21', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <label class="toggle-switch" onclick="event.stopPropagation()">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_21', this)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div><div class="manager-card ">
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_22')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">eine Schönheits-OP durchführen?</h4>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_22', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <label class="toggle-switch" onclick="event.stopPropagation()">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_22', this)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div><div class="manager-card ">
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_23')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">auf einer Schlager-Party richtig abgehen?</h4>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_23', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <label class="toggle-switch" onclick="event.stopPropagation()">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_23', this)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div><div class="manager-card ">
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_24')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">einem Kind das Eis klauen?</h4>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_24', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <label class="toggle-switch" onclick="event.stopPropagation()">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_24', this)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div><div class="manager-card ">
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_25')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">bei einer Dating-Show teilnehmen?</h4>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_25', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <label class="toggle-switch" onclick="event.stopPropagation()">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_25', this)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div><div class="manager-card ">
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_26')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">die Haare Grün färben lassen?</h4>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_26', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <label class="toggle-switch" onclick="event.stopPropagation()">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_26', this)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div><div class="manager-card ">
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_27')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">eine Nacht mit Justin Bieber verbringen?</h4>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_27', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <label class="toggle-switch" onclick="event.stopPropagation()">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_27', this)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div><div class="manager-card ">
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_28')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">zwei Wochen lang keine Zähne putzen?</h4>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_28', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <label class="toggle-switch" onclick="event.stopPropagation()">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_28', this)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div><div class="manager-card ">
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer; min-width: 0;" onclick="openEditModalDirectly('f_set_lustig_29')">
+                        <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">im Urlaub alles verlieren – Handy, Geld, Würde?</h4>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <input type="number" class="count-input" value="1" min="1" max="99" onchange="updateCardCount('f_set_lustig_29', this.value)" title="Anzahl der Karte" onclick="event.stopPropagation()">
+                        <label class="toggle-switch" onclick="event.stopPropagation()">
+                            <input type="checkbox" checked="" onchange="toggleCard('f_set_lustig_29', this)">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div></div>
         </div>
 
-            <div id="setsTabContent" style="display: block;">
+            <div id="setsTabContent" style="display: none;">
                 <div style="padding: 0 0.5rem; margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.8rem;">
                     <div class="search-bar" style="width: 100%; margin: 0; padding: 0;">
                         <input type="text" id="searchSetsInput" placeholder="Sets suchen..." oninput="filterSets()" autocomplete="off" style="width: 100%; box-sizing: border-box;">
@@ -2692,29 +2718,42 @@
                     <button class="btn" style="width: 100%; padding: 0.8rem; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;" onclick="createNewSet()">+</button>
                 </div>
                 <div class="card-list" id="setsTabList"><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('set_1778062244891')">
-                        <h4 style="margin-bottom: 0.5rem;">1 Mai <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">(25 Karten)</span></h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('set_u18')">
+                        <h4 style="margin-bottom: 0.5rem;">Ü 18 <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">(26 Karten)</span></h4>
                         <div style="display: flex; gap: 0.5rem;" onclick="event.stopPropagation()">
-                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="renameSet('set_1778062244891')">Umbenennen</button>
-                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="exportSet('set_1778062244891')">Export</button>
-                            <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="promptDeleteSet('set_1778062244891')">Löschen</button>
+                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="renameSet('set_u18')">Umbenennen</button>
+                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="exportSet('set_u18')">Export</button>
+                            <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="promptDeleteSet('set_u18')">Löschen</button>
                         </div>
                     </div>
                     <label class="toggle-switch" onclick="event.stopPropagation()">
-                        <input type="checkbox" checked="" onchange="toggleSet('set_1778062244891', this.checked)">
+                        <input type="checkbox" checked="" onchange="toggleSet('set_u18', this.checked)">
                         <span class="slider"></span>
                     </label>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('set_1778108614404')">
-                        <h4 style="margin-bottom: 0.5rem;">Bar <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">(60 Karten)</span></h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('set_peinlich')">
+                        <h4 style="margin-bottom: 0.5rem;">Peinlich <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">(44 Karten)</span></h4>
                         <div style="display: flex; gap: 0.5rem;" onclick="event.stopPropagation()">
-                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="renameSet('set_1778108614404')">Umbenennen</button>
-                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="exportSet('set_1778108614404')">Export</button>
-                            <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="promptDeleteSet('set_1778108614404')">Löschen</button>
+                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="renameSet('set_peinlich')">Umbenennen</button>
+                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="exportSet('set_peinlich')">Export</button>
+                            <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="promptDeleteSet('set_peinlich')">Löschen</button>
                         </div>
                     </div>
                     <label class="toggle-switch" onclick="event.stopPropagation()">
-                        <input type="checkbox" checked="" onchange="toggleSet('set_1778108614404', this.checked)">
+                        <input type="checkbox" checked="" onchange="toggleSet('set_peinlich', this.checked)">
+                        <span class="slider"></span>
+                    </label>
+                </div><div class="manager-card ">
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('set_lustig')">
+                        <h4 style="margin-bottom: 0.5rem;">Lustig <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">(30 Karten)</span></h4>
+                        <div style="display: flex; gap: 0.5rem;" onclick="event.stopPropagation()">
+                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="renameSet('set_lustig')">Umbenennen</button>
+                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="exportSet('set_lustig')">Export</button>
+                            <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="promptDeleteSet('set_lustig')">Löschen</button>
+                        </div>
+                    </div>
+                    <label class="toggle-switch" onclick="event.stopPropagation()">
+                        <input type="checkbox" checked="" onchange="toggleSet('set_lustig', this.checked)">
                         <span class="slider"></span>
                     </label>
                 </div></div>
@@ -3227,9 +3266,9 @@
                 <div class="status-indicator" id="reshuffleOffIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: white; box-shadow: white 0px 0px 10px;"></div>
             </div>
 
-            <div class="home-btn" id="todesmodusBtn" onclick="toggleTodesmodus()" style="width: 100%; max-width: none; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgb(255, 255, 255); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--danger), inset 0 0 15px var(--danger), 0 0 30px var(--danger); text-shadow: 0 0 5px #fff, 0 0 12px var(--danger); opacity: 1;">
+            <div class="home-btn" id="todesmodusBtn" onclick="toggleTodesmodus()" style="width: 100%; max-width: none; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgb(255, 255, 255); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--secondary), inset 0 0 15px var(--secondary), 0 0 30px var(--secondary); text-shadow: 0 0 5px #fff, 0 0 12px var(--secondary); opacity: 1;">
                 <span style="font-size: 1.1rem; font-weight: 800; letter-spacing: 1px;">Todesmodus</span>
-                <div class="status-indicator" id="todesmodusIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: white; box-shadow: 0 0 10px white, 0 0 20px var(--danger);"></div>
+                <div class="status-indicator" id="todesmodusIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: white; box-shadow: white 0px 0px 10px;"></div>
             </div>
         </div>
     </div>
@@ -3410,8 +3449,45 @@
     </div>
 
     <script>
+        /* FIX: Performance-Erkennung & LocalStorage Absicherung */
+        (function() {
+            if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) {
+                document.body.classList.add('low-perf');
+            }
+        })();
+
+        const safeStorage = {
+            getItem: (key) => {
+                try { return localStorage.getItem(key); }
+                catch (e) { console.warn("LocalStorage access failed", e); return null; }
+            },
+            setItem: (key, val) => {
+                try { localStorage.setItem(key, val); }
+                catch (e) { console.warn("LocalStorage write failed", e); }
+            },
+            removeItem: (key) => {
+                try { safeStorage.removeItem(key); }
+                catch (e) { console.warn("LocalStorage remove failed", e); }
+            }
+        };
+
+        /* FIX: Vollbild-Modus Logik */
+        function toggleFullscreen() {
+            const doc = document.documentElement;
+            const fsIcons = document.querySelectorAll('.fsIconClass, #fsIcon');
+            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                if (doc.requestFullscreen) doc.requestFullscreen();
+                else if (doc.webkitRequestFullscreen) doc.webkitRequestFullscreen();
+                fsIcons.forEach(icon => icon.innerText = '✕');
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                fsIcons.forEach(icon => icon.innerText = '⛶');
+            }
+        }
+
         // BUILD_ID_MARKER
-        const BUILD_ID = "build_1778233315455";
+        const BUILD_ID = "build_1778224738241";
 
         // TRINKSPIEL_SETS_START
         const hardcodedTrinkspielSets = [
@@ -4495,10 +4571,10 @@
             const tKeys = { cards: 'trinkspiel_cards_v1', sets: 'trinkspiel_sets_v1' };
             const fKeys = { cards: 'fragen_cards_v1', sets: 'fragen_sets_v1' };
 
-            const tSets = JSON.parse(localStorage.getItem(tKeys.sets) || '[]');
-            const tCards = JSON.parse(localStorage.getItem(tKeys.cards) || '[]');
-            const fSets = JSON.parse(localStorage.getItem(fKeys.sets) || '[]');
-            const fCards = JSON.parse(localStorage.getItem(fKeys.cards) || '[]');
+            const tSets = JSON.parse(safeStorage.getItem(tKeys.sets) || '[]');
+            const tCards = JSON.parse(safeStorage.getItem(tKeys.cards) || '[]');
+            const fSets = JSON.parse(safeStorage.getItem(fKeys.sets) || '[]');
+            const fCards = JSON.parse(safeStorage.getItem(fKeys.cards) || '[]');
 
             // Helper to group cards by set
             function buildHardcodedSets(sets, cards) {
@@ -4516,7 +4592,7 @@
             }
 
             // Load Death Cards
-            const storedDeathCards = localStorage.getItem('trinkspiel_death_cards_v1');
+            const storedDeathCards = safeStorage.getItem('trinkspiel_death_cards_v1');
             if (storedDeathCards) {
                 deathCards = JSON.parse(storedDeathCards);
             } else {
@@ -4527,7 +4603,7 @@
             }
 
             // Load Todesmodus Setting
-            todesmodusEnabled = localStorage.getItem('trinkspiel_todesmodus_v1') === 'true';
+            todesmodusEnabled = safeStorage.getItem('trinkspiel_todesmodus_v1') === 'true';
             updateSettingsUI();
 
             const hardcodedT = buildHardcodedSets(tSets, tCards);
@@ -4578,10 +4654,10 @@
             // Inject current design as defaults
             const designKeys = ['trinkspiel_card_color_v2', 'trinkspiel_bg_color_v2', 'trinkspiel_btn_color_v2', 'trinkspiel_neon_color_v2', 'trinkspiel_card_icon_v2'];
             designKeys.forEach(key => {
-                const val = localStorage.getItem(key);
+                const val = safeStorage.getItem(key);
                 if (val) {
                     const designRegex = new RegExp(`localStorage\\.getItem\\('${key}'\\) \\|\\| '([^']+)'`, 'g');
-                    html = html.replace(designRegex, `localStorage.getItem('${key}') || '${val}'`);
+                    html = html.replace(designRegex, `safeStorage.getItem('${key}') || '${val}'`);
                 }
             });
 
@@ -4604,17 +4680,17 @@
             const keys = getStorageKeys();
 
             // Check for Build Update
-            const lastBuildId = localStorage.getItem('trinkspiel_build_id');
+            const lastBuildId = safeStorage.getItem('trinkspiel_build_id');
             const isNewBuild = lastBuildId !== BUILD_ID && BUILD_ID !== "default";
             
             // WE REMOVED localStorage.clear() here because it wiped the other game mode's data!
             // Instead, we handle updates gracefully.
             if (isNewBuild) {
-                localStorage.setItem('trinkspiel_build_id', BUILD_ID);
+                safeStorage.setItem('trinkspiel_build_id', BUILD_ID);
             }
 
             // Load Sets
-            const storedSets = localStorage.getItem(keys.sets);
+            const storedSets = safeStorage.getItem(keys.sets);
             // If it's a new build, we prioritize hardcoded sets but could also merge
             if (storedSets && !isNewBuild) {
                 sets = JSON.parse(storedSets);
@@ -4635,7 +4711,7 @@
             }
 
             // Load Cards
-            const storedCards = localStorage.getItem(keys.cards);
+            const storedCards = safeStorage.getItem(keys.cards);
             if (storedCards && !isNewBuild) {
                 cards = JSON.parse(storedCards);
                 // Merge neue Karten aus hardcoded Sets, falls sie fehlen (anhand der ID)
@@ -4683,7 +4759,7 @@
 
 
             // Load Death Cards
-            const storedDeathCards = localStorage.getItem(keys.deathCards);
+            const storedDeathCards = safeStorage.getItem(keys.deathCards);
             if (storedDeathCards) {
                 deathCards = JSON.parse(storedDeathCards);
             } else {
@@ -4694,22 +4770,22 @@
             }
 
             // Load Todesmodus Setting
-            todesmodusEnabled = localStorage.getItem('trinkspiel_todesmodus_v1') === 'true';
+            todesmodusEnabled = safeStorage.getItem('trinkspiel_todesmodus_v1') === 'true';
             
             buildDrawPool();
             updateSettingsUI();
         }
 
         function saveSets() {
-            localStorage.setItem(getStorageKeys().sets, JSON.stringify(sets));
+            safeStorage.setItem(getStorageKeys().sets, JSON.stringify(sets));
         }
 
         function saveCards() {
-            localStorage.setItem(getStorageKeys().cards, JSON.stringify(cards));
+            safeStorage.setItem(getStorageKeys().cards, JSON.stringify(cards));
         }
 
         function saveDeathCards() {
-            localStorage.setItem(getStorageKeys().deathCards, JSON.stringify(deathCards));
+            safeStorage.setItem(getStorageKeys().deathCards, JSON.stringify(deathCards));
         }
 
         function buildDrawPool() {
@@ -4942,7 +5018,7 @@
 
         function toggleTodesmodus() {
             todesmodusEnabled = !todesmodusEnabled;
-            localStorage.setItem('trinkspiel_todesmodus_v1', todesmodusEnabled);
+            safeStorage.setItem('trinkspiel_todesmodus_v1', todesmodusEnabled);
             updateSettingsUI();
             deathCounter = 0;
             protectionCounter = 0;
@@ -5124,7 +5200,7 @@
 
         function setReshuffle(val) {
             trinkspielReshuffle = val;
-            localStorage.setItem('trinkspiel_reshuffle_v1', trinkspielReshuffle);
+            safeStorage.setItem('trinkspiel_reshuffle_v1', trinkspielReshuffle);
             updateSettingsUI();
             updateFragenCounter();
             // Rebuild pool to reflect mode change
@@ -5822,7 +5898,7 @@
         }
 
         function savePlayers() {
-            localStorage.setItem('trinkspiel_players_v1', JSON.stringify(players));
+            safeStorage.setItem('trinkspiel_players_v1', JSON.stringify(players));
             const deleteBtn = document.getElementById('deleteAllPlayersBtn');
             if (deleteBtn) {
                 deleteBtn.style.display = players.length > 0 ? 'block' : 'none';
@@ -6629,11 +6705,11 @@
         }
 
         function applyDesignChanges() {
-            if (tempDesign.cardColor) localStorage.setItem('trinkspiel_card_color_v2', tempDesign.cardColor);
-            if (tempDesign.bgColor) localStorage.setItem('trinkspiel_bg_color_v2', tempDesign.bgColor);
-            if (tempDesign.btnColor) localStorage.setItem('trinkspiel_btn_color_v2', tempDesign.btnColor);
-            if (tempDesign.neonColor) localStorage.setItem('trinkspiel_neon_color_v2', tempDesign.neonColor);
-            if (tempDesign.icon) localStorage.setItem('trinkspiel_card_icon_v2', tempDesign.icon);
+            if (tempDesign.cardColor) safeStorage.setItem('trinkspiel_card_color_v2', tempDesign.cardColor);
+            if (tempDesign.bgColor) safeStorage.setItem('trinkspiel_bg_color_v2', tempDesign.bgColor);
+            if (tempDesign.btnColor) safeStorage.setItem('trinkspiel_btn_color_v2', tempDesign.btnColor);
+            if (tempDesign.neonColor) safeStorage.setItem('trinkspiel_neon_color_v2', tempDesign.neonColor);
+            if (tempDesign.icon) safeStorage.setItem('trinkspiel_card_icon_v2', tempDesign.icon);
             
             closeModalDirect('designModal');
         }
@@ -6646,7 +6722,7 @@
             } : null;
         }
 
-        let currentCardIcon = localStorage.getItem('trinkspiel_card_icon_v2') || 'beer';
+        let currentCardIcon = safeStorage.getItem('trinkspiel_card_icon_v2') || 'beer';
 
 
         const extraMotifsData = {
@@ -7031,44 +7107,45 @@
             modal.classList.add('active');
         }
 
+        /* FIX: adjustColor()-Funktion fixen */
         function adjustColor(hex, amt) {
             let usePound = false;
             if (hex[0] == "#") { hex = hex.slice(1); usePound = true; }
             let num = parseInt(hex, 16);
             let r = (num >> 16) + amt;
             if (r > 255) r = 255; else if (r < 0) r = 0;
-            let b = ((num >> 8) & 0x00FF) + amt;
-            if (b > 255) b = 255; else if (b < 0) b = 0;
-            let g = (num & 0x0000FF) + amt;
+            let g = ((num >> 8) & 0x00FF) + amt;
             if (g > 255) g = 255; else if (g < 0) g = 0;
-            return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16).padStart(6, '0');
+            let b = (num & 0x0000FF) + amt;
+            if (b > 255) b = 255; else if (b < 0) b = 0;
+            return (usePound ? "#" : "") + (b | (g << 8) | (r << 16)).toString(16).padStart(6, '0');
         }
 
         // Boot
         function init() {
 
             // Load Design Settings
-            const cColor = localStorage.getItem('trinkspiel_card_color_v2') || '#0f172a';
+            const cColor = safeStorage.getItem('trinkspiel_card_color_v2') || '#0f172a';
             setCardColor(cColor);
-            const bgColor = localStorage.getItem('trinkspiel_bg_color_v2') || '#0f172a';
+            const bgColor = safeStorage.getItem('trinkspiel_bg_color_v2') || '#0f172a';
             setBgColor(bgColor);
-            const btnColor = localStorage.getItem('trinkspiel_btn_color_v2') || '#721c24';
+            const btnColor = safeStorage.getItem('trinkspiel_btn_color_v2') || '#721c24';
             setBtnColor(btnColor);
 
-            const neonColor = localStorage.getItem('trinkspiel_neon_color_v2') || '#721c24';
+            const neonColor = safeStorage.getItem('trinkspiel_neon_color_v2') || '#721c24';
             setNeonColor(neonColor);
             
-            const savedIcon = localStorage.getItem('trinkspiel_card_icon_v2') || 'beer';
+            const savedIcon = safeStorage.getItem('trinkspiel_card_icon_v2') || 'beer';
             setCardIcon(savedIcon);
 
             // Load persistent players
-            const storedPlayers = localStorage.getItem('trinkspiel_players_v1');
+            const storedPlayers = safeStorage.getItem('trinkspiel_players_v1');
             if (storedPlayers) {
                 players = JSON.parse(storedPlayers);
             }
 
             // Load Trinkspiel settings
-            const storedReshuffle = localStorage.getItem('trinkspiel_reshuffle_v1');
+            const storedReshuffle = safeStorage.getItem('trinkspiel_reshuffle_v1');
             if (storedReshuffle !== null) {
                 trinkspielReshuffle = storedReshuffle === 'true';
             }
