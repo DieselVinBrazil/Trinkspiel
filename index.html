@@ -106,10 +106,7 @@
                 inset 0 0 15px var(--primary);
         }
 
-        .icon-btn {
-            @extend .neon-style; /* Fallback for conceptual logic, explicit below */
-        }
-        
+
         .icon-btn {
             text-shadow: 0 0 1px #fff, 0 0 3px #fff, 0 0 8px var(--primary), 0 2px 4px rgba(0,0,0,0.5);
             box-shadow: 0 0 2px #fff, inset 0 0 2px #fff, 0 0 8px var(--primary), inset 0 0 8px var(--primary), 0 0 15px var(--primary), inset 0 0 15px var(--primary);
@@ -1248,6 +1245,25 @@
                 0 0 30px var(--primary),
                 0 0 50px var(--primary),
                 0 4px 10px rgba(0,0,0,0.7);
+            /* FIX: Unregelmäßiges Flackern */
+            animation: flicker 5s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow: 
+                    0 0 2px #fff,
+                    0 0 6px #fff,
+                    0 0 15px var(--primary),
+                    0 0 30px var(--primary),
+                    0 0 50px var(--primary),
+                    0 4px 10px rgba(0,0,0,0.7);
+                opacity: 1;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+                opacity: 0.4;
+            }
         }
 
         .neon-beer {
@@ -1301,6 +1317,11 @@
 <body>
 
     <div id="homeScreen" style="display: flex;">
+        <div style="position: absolute; top: 1rem; right: 1rem; z-index: 100;">
+            <button id="homeFullscreenBtn" onclick="toggleFullscreen()" style="background: none; border: none; color: #fff; cursor: pointer; font-size: 1.8rem; padding: 10px; display: flex; align-items: center; justify-content: center; opacity: 0.5; transition: all 0.2s;" onmouseover="this.style.opacity='1'; this.style.textShadow='0 0 10px #fff';" onmouseout="this.style.opacity='0.5'; this.style.textShadow='none';">
+                <span class="fsIconClass">⛶</span>
+            </button>
+        </div>
         <div class="atmosphere-decorations">
             <!-- Decorations removed -->
         </div>
@@ -1334,9 +1355,9 @@
             <div class="modal-section-title">Kartenfarbe</div>
             <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 1.5rem;">
                 <div class="color-swatch card-swatch selected" data-color="#0f172a" onclick="setCardColor('#0f172a')" style="background: #0f172a;"></div>
-                <div class="color-swatch card-swatch" data-color="#032012" onclick="setCardColor('#032012')" style="background: #032012;"></div>
-                <div class="color-swatch card-swatch" data-color="#1e1b4b" onclick="setCardColor('#1e1b4b')" style="background: #1e1b4b;"></div>
-                <div class="color-swatch card-swatch" data-color="#000000" onclick="setCardColor('#000000')" style="background: #000000;"></div>
+                <div class="color-swatch card-swatch" data-color="#14b8a6" onclick="setCardColor('#14b8a6')" style="background: #14b8a6;"></div>
+                <div class="color-swatch card-swatch" data-color="#facc15" onclick="setCardColor('#facc15')" style="background: #facc15;"></div>
+                <div class="color-swatch card-swatch" data-color="#fb7185" onclick="setCardColor('#fb7185')" style="background: #fb7185;"></div>
                 <div class="color-swatch plus-swatch" id="plus-card" onclick="openExtraColors('card')" style="background: rgba(255, 255, 255, 0.1);">+</div>
             </div>
 
@@ -1344,9 +1365,9 @@
             <div class="modal-section-title">Hintergrundfarbe</div>
             <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 1.5rem;">
                 <div class="color-swatch bg-swatch selected" data-color="#0f172a" onclick="setBgColor('#0f172a')" style="background: #0f172a;"></div>
-                <div class="color-swatch bg-swatch" data-color="#032012" onclick="setBgColor('#032012')" style="background: #032012;"></div>
-                <div class="color-swatch bg-swatch" data-color="#1e1b4b" onclick="setBgColor('#1e1b4b')" style="background: #1e1b4b;"></div>
-                <div class="color-swatch bg-swatch" data-color="#000000" onclick="setBgColor('#000000')" style="background: #000000;"></div>
+                <div class="color-swatch bg-swatch" data-color="#14b8a6" onclick="setBgColor('#14b8a6')" style="background: #14b8a6;"></div>
+                <div class="color-swatch bg-swatch" data-color="#facc15" onclick="setBgColor('#facc15')" style="background: #facc15;"></div>
+                <div class="color-swatch bg-swatch" data-color="#fb7185" onclick="setBgColor('#fb7185')" style="background: #fb7185;"></div>
                 <div class="color-swatch plus-swatch" id="plus-bg" onclick="openExtraColors('bg')" style="background: rgba(255, 255, 255, 0.1);">+</div>
             </div>
 
@@ -1373,42 +1394,356 @@
             </div>
 
             <!-- Kartenrückseiten Design -->
-            <div class="modal-section-title" style="margin-top: 1.5rem;">Kartenrückseiten Design</div>
-            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 1.5rem;">
-                <div class="symbol-swatch" data-icon="none" onclick="setCardIcon('none')" title="Kein Design" style="color: rgb(114, 28, 36);">
-                    <span style="font-size: 1.2rem; font-weight: 800; color: rgba(255,255,255,0.4);">X</span>
-                </div>
-                <div class="symbol-swatch selected" data-icon="beer" onclick="setCardIcon('beer')" title="Bier" style="color: rgb(114, 28, 36);">
-                    <svg viewBox="0 0 50 80" xmlns="http://www.w3.org/2000/svg" style="width: 70%; height: 70%;">
-                        <path d="M15,15 L18,65 C18,70 21,72 25,72 C29,72 32,70 32,65 L35,15" fill="none" stroke="#fff" stroke-width="3"></path>
-                        <path d="M19,18 L21,64 C21,68 23,69 25,69 C27,69 29,68 29,64 L31,18 Z" fill="#facc15"></path>
-                        <path d="M17,15 C21,12 25,18 29,15 C33,12 35,18 35,15 C35,18 25,20 17,18 Z" fill="#fff"></path>
-                        <path d="M35,30 C42,30 42,45 34,50" fill="none" stroke="#fff" stroke-width="3"></path>
+            <div class="modal-section-title" style="margin-top: 1.5rem;">Karten-Motive</div>
+            <div id="symbolGrid" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 1.5rem;"><div class="symbol-swatch"><span style="font-size: 1rem; font-weight: 800; opacity: 0.4;">X</span></div><div class="symbol-swatch selected">
+                <div class="neon-beer-variant" style="width: 42px; height: 70px; filter: drop-shadow(0 0 0.5px #fff) drop-shadow(0 0 2px #eab308) drop-shadow(0 0 5px #eab308); display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 50 85" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <!-- Glass Body with flat bottom stand -->
+                        <path d="M14,12 L17,75 L33,75 L36,12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"></path>
+                        <!-- Stand Foot -->
+                        <path d="M15,75 L35,75" stroke="#fff" stroke-width="3" stroke-linecap="round"></path>
+                        <!-- Liquid -->
+                        <path d="M16,18 L18.5,73 L31.5,73 L34,18 Z" fill="#eab308"></path>
+                        <!-- SUPER FOAMY TOP (3 Bubbles) -->
+                        <path d="M11,18 C11,10 17,7 21,11 C24,7 32,7 35,11 C39,7 46,11 46,18 C46,24 30,26 11,23 Z" fill="#fff"></path>
                     </svg>
-                </div>
-                <!-- Cocktail Slot (Replacing Flamingo) -->
-                <div class="symbol-swatch" data-icon="cocktail" onclick="setCardIcon('cocktail')" title="Cocktail" style="color: #00f2ff;">
-                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" style="width: 75%; height: 75%; filter: drop-shadow(0 0 3px #00f2ff);">
-                        <path d="M30,35 L70,35 L50,68 Z" fill="#00f2ff" opacity="0.6" />
+                </div></div><div class="symbol-swatch">
+                <div class="neon-cocktail-variant" style="width: 60px; height: 70px; filter: none; display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <path d="M30,35 L70,35 L50,68 Z" fill="#ffffff" opacity="0.8"></path>
                         <g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M25,25 L75,25 L50,75 L50,105 M35,105 L65,105" />
+                            <path d="M25,25 L75,25 L50,75 L25,25 M50,75 L50,105 M35,105 L65,105"></path>
                         </g>
+                        <path d="M45,20 L55,45" stroke="#fff" stroke-width="1.2" stroke-linecap="round"></path>
+                        <circle cx="53" cy="38" r="4" fill="#00ff41" opacity="0.9"></circle>
                     </svg>
-                </div>
-                <!-- Whiskey Tumbler Slot -->
-                <div class="symbol-swatch" data-icon="whiskey" onclick="setCardIcon('whiskey')" title="Whiskey" style="color: #ffa500;">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 80%; height: 80%; filter: drop-shadow(0 0 3px #ffa500);">
-                        <path d="M20,15 L80,15 L72,90 L28,90 Z" fill="#ffa500" opacity="0.6" />
-                        <path d="M20,15 L80,15 L72,90 L28,90 Z" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round" />
-                        <rect x="35" y="50" width="18" height="18" fill="#fff" opacity="0.8" transform="rotate(15, 44, 59)" />
-                        <rect x="50" y="60" width="16" height="16" fill="#fff" opacity="0.6" transform="rotate(-10, 58, 68)" />
+                </div></div><div class="symbol-swatch">
+                <div class="neon-whiskey-variant" style="width: 60px; height: 60px; filter: none; display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <!-- Whiskey Liquid (Filled to ~2/3) -->
+                        <path d="M23,45 L77,45 L72,90 L28,90 Z" fill="#ffffff" opacity="0.6"></path>
+                        <!-- Glass Rim & Body -->
+                        <path d="M20,15 L80,15 L72,90 L28,90 Z" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round"></path>
+                        <!-- Ice Cubes -->
+                        <rect x="35" y="50" width="18" height="18" fill="#fff" opacity="0.8" transform="rotate(15, 44, 59)"></rect>
+                        <rect x="50" y="60" width="16" height="16" fill="#fff" opacity="0.6" transform="rotate(-10, 58, 68)"></rect>
                     </svg>
-                </div>
-                <div class="color-swatch plus-swatch" id="plus-motifs" onclick="openExtraMotifs()" title="Mehr Muster" style="background: rgba(255, 255, 255, 0.1);">+</div>
-            </div>
+                </div></div><div class="symbol-swatch">
+                <div class="neon-longdrink-variant" style="width: 48px; height: 72px; filter: none; display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <!-- Liquid (Filled to ~3/4) -->
+                        <path d="M26,35 L54,35 L52.5,103 L27.5,103 Z" fill="#ffffff" opacity="0.7"></path>
+                        <!-- Detailed Half Lemon Slice (Placed BEFORE outline to look "pushed on") -->
+                        <g transform="translate(25, 15) rotate(-35)">
+                            <!-- Outer Rind -->
+                            <path d="M-14,5 A14,14 0 0,1 14,5 Z" fill="#f59e0b" stroke="#fff" stroke-width="1.2"></path>
+                            <!-- Inner Fruit -->
+                            <path d="M-11,5 A11,11 0 0,1 11,5 Z" fill="#facc15"></path>
+                            <!-- Segment Lines -->
+                            <line x1="0" y1="5" x2="0" y2="-6" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="-8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                        </g>
+                        <!-- Glass Outline (Now overlaps the lemon) -->
+                        <path d="M25,15 L55,15 L53,105 L27,105 Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"></path>
+                        <!-- 3 Ice Cubes -->
+                        <rect x="30" y="75" width="14" height="14" fill="#fff" opacity="0.8" transform="rotate(10, 37, 82)"></rect>
+                        <rect x="42" y="60" width="12" height="12" fill="#fff" opacity="0.6" transform="rotate(-15, 48, 66)"></rect>
+                        <rect x="33" y="45" width="13" height="13" fill="#fff" opacity="0.7" transform="rotate(5, 39, 51)"></rect>
+                    </svg>
+                </div></div></div>
 
             <button class="home-btn" style="width: 100%; max-width: none; font-size: 1rem; padding: 1rem; margin-bottom: 1rem; border-width: 2px; border-color: #fff; border-radius: 12px; text-shadow: 0 0 4px #fff, 0 0 12px var(--secondary), 0 0 25px var(--secondary); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--secondary), inset 0 0 15px var(--secondary), 0 0 25px var(--secondary);" onclick="applyDesignChanges()">Änderungen übernehmen</button>
             <button class="home-btn" style="width: 100%; max-width: none; font-size: 1rem; padding: 1rem; border-width: 2px; border-color: #fff; border-radius: 12px; text-shadow: 0 0 4px #fff, 0 0 12px var(--danger), 0 0 25px var(--danger); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--danger), inset 0 0 15px var(--danger), 0 0 25px var(--danger);" onclick="generateFinalVersion()">Datei exportieren</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Design Color Selection Modal (NEW CENTRAL MODAL) -->
+    <div class="modal-overlay" id="motifColorModal" onclick="closeModal(event, 'motifColorModal')" style="z-index: 400;">
+        <div class="modal" onclick="event.stopPropagation()" style="max-width: 400px; width: 95%;">
+            <div class="modal-header">
+                <h3 class="modal-title" id="motifColorTitle">Longdrink</h3>
+                <button class="close-btn" onclick="closeModalDirect('motifColorModal')">✖</button>
+            </div>
+            <div class="modal-body" style="padding: 20px;">
+                <div id="motifColorGrid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; max-height: 60vh; overflow-y: auto; padding: 5px;"><div class="symbol-swatch" style="width: 100%; height: 100px; padding: 10px; display: flex; align-items: center; justify-content: center;">
+                <div class="neon-longdrink-variant" style="width: 35px; height: 50px; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px #ef4444) drop-shadow(0 0 15px #ef4444); display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <!-- Liquid (Filled to ~3/4) -->
+                        <path d="M26,35 L54,35 L52.5,103 L27.5,103 Z" fill="#ef4444" opacity="0.7"></path>
+                        <!-- Detailed Half Lemon Slice (Placed BEFORE outline to look "pushed on") -->
+                        <g transform="translate(25, 15) rotate(-35)">
+                            <!-- Outer Rind -->
+                            <path d="M-14,5 A14,14 0 0,1 14,5 Z" fill="#f59e0b" stroke="#fff" stroke-width="1.2"></path>
+                            <!-- Inner Fruit -->
+                            <path d="M-11,5 A11,11 0 0,1 11,5 Z" fill="#facc15"></path>
+                            <!-- Segment Lines -->
+                            <line x1="0" y1="5" x2="0" y2="-6" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="-8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                        </g>
+                        <!-- Glass Outline (Now overlaps the lemon) -->
+                        <path d="M25,15 L55,15 L53,105 L27,105 Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"></path>
+                        <!-- 3 Ice Cubes -->
+                        <rect x="30" y="75" width="14" height="14" fill="#fff" opacity="0.8" transform="rotate(10, 37, 82)"></rect>
+                        <rect x="42" y="60" width="12" height="12" fill="#fff" opacity="0.6" transform="rotate(-15, 48, 66)"></rect>
+                        <rect x="33" y="45" width="13" height="13" fill="#fff" opacity="0.7" transform="rotate(5, 39, 51)"></rect>
+                    </svg>
+                </div></div><div class="symbol-swatch" style="width: 100%; height: 100px; padding: 10px; display: flex; align-items: center; justify-content: center;">
+                <div class="neon-longdrink-variant" style="width: 35px; height: 50px; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px #3b82f6) drop-shadow(0 0 15px #3b82f6); display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <!-- Liquid (Filled to ~3/4) -->
+                        <path d="M26,35 L54,35 L52.5,103 L27.5,103 Z" fill="#3b82f6" opacity="0.7"></path>
+                        <!-- Detailed Half Lemon Slice (Placed BEFORE outline to look "pushed on") -->
+                        <g transform="translate(25, 15) rotate(-35)">
+                            <!-- Outer Rind -->
+                            <path d="M-14,5 A14,14 0 0,1 14,5 Z" fill="#f59e0b" stroke="#fff" stroke-width="1.2"></path>
+                            <!-- Inner Fruit -->
+                            <path d="M-11,5 A11,11 0 0,1 11,5 Z" fill="#facc15"></path>
+                            <!-- Segment Lines -->
+                            <line x1="0" y1="5" x2="0" y2="-6" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="-8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                        </g>
+                        <!-- Glass Outline (Now overlaps the lemon) -->
+                        <path d="M25,15 L55,15 L53,105 L27,105 Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"></path>
+                        <!-- 3 Ice Cubes -->
+                        <rect x="30" y="75" width="14" height="14" fill="#fff" opacity="0.8" transform="rotate(10, 37, 82)"></rect>
+                        <rect x="42" y="60" width="12" height="12" fill="#fff" opacity="0.6" transform="rotate(-15, 48, 66)"></rect>
+                        <rect x="33" y="45" width="13" height="13" fill="#fff" opacity="0.7" transform="rotate(5, 39, 51)"></rect>
+                    </svg>
+                </div></div><div class="symbol-swatch" style="width: 100%; height: 100px; padding: 10px; display: flex; align-items: center; justify-content: center;">
+                <div class="neon-longdrink-variant" style="width: 35px; height: 50px; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px #22c55e) drop-shadow(0 0 15px #22c55e); display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <!-- Liquid (Filled to ~3/4) -->
+                        <path d="M26,35 L54,35 L52.5,103 L27.5,103 Z" fill="#22c55e" opacity="0.7"></path>
+                        <!-- Detailed Half Lemon Slice (Placed BEFORE outline to look "pushed on") -->
+                        <g transform="translate(25, 15) rotate(-35)">
+                            <!-- Outer Rind -->
+                            <path d="M-14,5 A14,14 0 0,1 14,5 Z" fill="#f59e0b" stroke="#fff" stroke-width="1.2"></path>
+                            <!-- Inner Fruit -->
+                            <path d="M-11,5 A11,11 0 0,1 11,5 Z" fill="#facc15"></path>
+                            <!-- Segment Lines -->
+                            <line x1="0" y1="5" x2="0" y2="-6" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="-8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                        </g>
+                        <!-- Glass Outline (Now overlaps the lemon) -->
+                        <path d="M25,15 L55,15 L53,105 L27,105 Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"></path>
+                        <!-- 3 Ice Cubes -->
+                        <rect x="30" y="75" width="14" height="14" fill="#fff" opacity="0.8" transform="rotate(10, 37, 82)"></rect>
+                        <rect x="42" y="60" width="12" height="12" fill="#fff" opacity="0.6" transform="rotate(-15, 48, 66)"></rect>
+                        <rect x="33" y="45" width="13" height="13" fill="#fff" opacity="0.7" transform="rotate(5, 39, 51)"></rect>
+                    </svg>
+                </div></div><div class="symbol-swatch" style="width: 100%; height: 100px; padding: 10px; display: flex; align-items: center; justify-content: center;">
+                <div class="neon-longdrink-variant" style="width: 35px; height: 50px; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px #eab308) drop-shadow(0 0 15px #eab308); display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <!-- Liquid (Filled to ~3/4) -->
+                        <path d="M26,35 L54,35 L52.5,103 L27.5,103 Z" fill="#eab308" opacity="0.7"></path>
+                        <!-- Detailed Half Lemon Slice (Placed BEFORE outline to look "pushed on") -->
+                        <g transform="translate(25, 15) rotate(-35)">
+                            <!-- Outer Rind -->
+                            <path d="M-14,5 A14,14 0 0,1 14,5 Z" fill="#f59e0b" stroke="#fff" stroke-width="1.2"></path>
+                            <!-- Inner Fruit -->
+                            <path d="M-11,5 A11,11 0 0,1 11,5 Z" fill="#facc15"></path>
+                            <!-- Segment Lines -->
+                            <line x1="0" y1="5" x2="0" y2="-6" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="-8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                        </g>
+                        <!-- Glass Outline (Now overlaps the lemon) -->
+                        <path d="M25,15 L55,15 L53,105 L27,105 Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"></path>
+                        <!-- 3 Ice Cubes -->
+                        <rect x="30" y="75" width="14" height="14" fill="#fff" opacity="0.8" transform="rotate(10, 37, 82)"></rect>
+                        <rect x="42" y="60" width="12" height="12" fill="#fff" opacity="0.6" transform="rotate(-15, 48, 66)"></rect>
+                        <rect x="33" y="45" width="13" height="13" fill="#fff" opacity="0.7" transform="rotate(5, 39, 51)"></rect>
+                    </svg>
+                </div></div><div class="symbol-swatch" style="width: 100%; height: 100px; padding: 10px; display: flex; align-items: center; justify-content: center;">
+                <div class="neon-longdrink-variant" style="width: 35px; height: 50px; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px #f97316) drop-shadow(0 0 15px #f97316); display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <!-- Liquid (Filled to ~3/4) -->
+                        <path d="M26,35 L54,35 L52.5,103 L27.5,103 Z" fill="#f97316" opacity="0.7"></path>
+                        <!-- Detailed Half Lemon Slice (Placed BEFORE outline to look "pushed on") -->
+                        <g transform="translate(25, 15) rotate(-35)">
+                            <!-- Outer Rind -->
+                            <path d="M-14,5 A14,14 0 0,1 14,5 Z" fill="#f59e0b" stroke="#fff" stroke-width="1.2"></path>
+                            <!-- Inner Fruit -->
+                            <path d="M-11,5 A11,11 0 0,1 11,5 Z" fill="#facc15"></path>
+                            <!-- Segment Lines -->
+                            <line x1="0" y1="5" x2="0" y2="-6" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="-8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                        </g>
+                        <!-- Glass Outline (Now overlaps the lemon) -->
+                        <path d="M25,15 L55,15 L53,105 L27,105 Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"></path>
+                        <!-- 3 Ice Cubes -->
+                        <rect x="30" y="75" width="14" height="14" fill="#fff" opacity="0.8" transform="rotate(10, 37, 82)"></rect>
+                        <rect x="42" y="60" width="12" height="12" fill="#fff" opacity="0.6" transform="rotate(-15, 48, 66)"></rect>
+                        <rect x="33" y="45" width="13" height="13" fill="#fff" opacity="0.7" transform="rotate(5, 39, 51)"></rect>
+                    </svg>
+                </div></div><div class="symbol-swatch" style="width: 100%; height: 100px; padding: 10px; display: flex; align-items: center; justify-content: center;">
+                <div class="neon-longdrink-variant" style="width: 35px; height: 50px; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px #a855f7) drop-shadow(0 0 15px #a855f7); display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <!-- Liquid (Filled to ~3/4) -->
+                        <path d="M26,35 L54,35 L52.5,103 L27.5,103 Z" fill="#a855f7" opacity="0.7"></path>
+                        <!-- Detailed Half Lemon Slice (Placed BEFORE outline to look "pushed on") -->
+                        <g transform="translate(25, 15) rotate(-35)">
+                            <!-- Outer Rind -->
+                            <path d="M-14,5 A14,14 0 0,1 14,5 Z" fill="#f59e0b" stroke="#fff" stroke-width="1.2"></path>
+                            <!-- Inner Fruit -->
+                            <path d="M-11,5 A11,11 0 0,1 11,5 Z" fill="#facc15"></path>
+                            <!-- Segment Lines -->
+                            <line x1="0" y1="5" x2="0" y2="-6" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="-8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                        </g>
+                        <!-- Glass Outline (Now overlaps the lemon) -->
+                        <path d="M25,15 L55,15 L53,105 L27,105 Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"></path>
+                        <!-- 3 Ice Cubes -->
+                        <rect x="30" y="75" width="14" height="14" fill="#fff" opacity="0.8" transform="rotate(10, 37, 82)"></rect>
+                        <rect x="42" y="60" width="12" height="12" fill="#fff" opacity="0.6" transform="rotate(-15, 48, 66)"></rect>
+                        <rect x="33" y="45" width="13" height="13" fill="#fff" opacity="0.7" transform="rotate(5, 39, 51)"></rect>
+                    </svg>
+                </div></div><div class="symbol-swatch" style="width: 100%; height: 100px; padding: 10px; display: flex; align-items: center; justify-content: center;">
+                <div class="neon-longdrink-variant" style="width: 35px; height: 50px; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px #ec4899) drop-shadow(0 0 15px #ec4899); display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <!-- Liquid (Filled to ~3/4) -->
+                        <path d="M26,35 L54,35 L52.5,103 L27.5,103 Z" fill="#ec4899" opacity="0.7"></path>
+                        <!-- Detailed Half Lemon Slice (Placed BEFORE outline to look "pushed on") -->
+                        <g transform="translate(25, 15) rotate(-35)">
+                            <!-- Outer Rind -->
+                            <path d="M-14,5 A14,14 0 0,1 14,5 Z" fill="#f59e0b" stroke="#fff" stroke-width="1.2"></path>
+                            <!-- Inner Fruit -->
+                            <path d="M-11,5 A11,11 0 0,1 11,5 Z" fill="#facc15"></path>
+                            <!-- Segment Lines -->
+                            <line x1="0" y1="5" x2="0" y2="-6" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="-8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                        </g>
+                        <!-- Glass Outline (Now overlaps the lemon) -->
+                        <path d="M25,15 L55,15 L53,105 L27,105 Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"></path>
+                        <!-- 3 Ice Cubes -->
+                        <rect x="30" y="75" width="14" height="14" fill="#fff" opacity="0.8" transform="rotate(10, 37, 82)"></rect>
+                        <rect x="42" y="60" width="12" height="12" fill="#fff" opacity="0.6" transform="rotate(-15, 48, 66)"></rect>
+                        <rect x="33" y="45" width="13" height="13" fill="#fff" opacity="0.7" transform="rotate(5, 39, 51)"></rect>
+                    </svg>
+                </div></div><div class="symbol-swatch" style="width: 100%; height: 100px; padding: 10px; display: flex; align-items: center; justify-content: center;">
+                <div class="neon-longdrink-variant" style="width: 35px; height: 50px; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px #06b6d4) drop-shadow(0 0 15px #06b6d4); display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <!-- Liquid (Filled to ~3/4) -->
+                        <path d="M26,35 L54,35 L52.5,103 L27.5,103 Z" fill="#06b6d4" opacity="0.7"></path>
+                        <!-- Detailed Half Lemon Slice (Placed BEFORE outline to look "pushed on") -->
+                        <g transform="translate(25, 15) rotate(-35)">
+                            <!-- Outer Rind -->
+                            <path d="M-14,5 A14,14 0 0,1 14,5 Z" fill="#f59e0b" stroke="#fff" stroke-width="1.2"></path>
+                            <!-- Inner Fruit -->
+                            <path d="M-11,5 A11,11 0 0,1 11,5 Z" fill="#facc15"></path>
+                            <!-- Segment Lines -->
+                            <line x1="0" y1="5" x2="0" y2="-6" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="-8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                        </g>
+                        <!-- Glass Outline (Now overlaps the lemon) -->
+                        <path d="M25,15 L55,15 L53,105 L27,105 Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"></path>
+                        <!-- 3 Ice Cubes -->
+                        <rect x="30" y="75" width="14" height="14" fill="#fff" opacity="0.8" transform="rotate(10, 37, 82)"></rect>
+                        <rect x="42" y="60" width="12" height="12" fill="#fff" opacity="0.6" transform="rotate(-15, 48, 66)"></rect>
+                        <rect x="33" y="45" width="13" height="13" fill="#fff" opacity="0.7" transform="rotate(5, 39, 51)"></rect>
+                    </svg>
+                </div></div><div class="symbol-swatch" style="width: 100%; height: 100px; padding: 10px; display: flex; align-items: center; justify-content: center;">
+                <div class="neon-longdrink-variant" style="width: 35px; height: 50px; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px #1e293b) drop-shadow(0 0 15px #1e293b); display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <!-- Liquid (Filled to ~3/4) -->
+                        <path d="M26,35 L54,35 L52.5,103 L27.5,103 Z" fill="#1e293b" opacity="0.7"></path>
+                        <!-- Detailed Half Lemon Slice (Placed BEFORE outline to look "pushed on") -->
+                        <g transform="translate(25, 15) rotate(-35)">
+                            <!-- Outer Rind -->
+                            <path d="M-14,5 A14,14 0 0,1 14,5 Z" fill="#f59e0b" stroke="#fff" stroke-width="1.2"></path>
+                            <!-- Inner Fruit -->
+                            <path d="M-11,5 A11,11 0 0,1 11,5 Z" fill="#facc15"></path>
+                            <!-- Segment Lines -->
+                            <line x1="0" y1="5" x2="0" y2="-6" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="-8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                        </g>
+                        <!-- Glass Outline (Now overlaps the lemon) -->
+                        <path d="M25,15 L55,15 L53,105 L27,105 Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"></path>
+                        <!-- 3 Ice Cubes -->
+                        <rect x="30" y="75" width="14" height="14" fill="#fff" opacity="0.8" transform="rotate(10, 37, 82)"></rect>
+                        <rect x="42" y="60" width="12" height="12" fill="#fff" opacity="0.6" transform="rotate(-15, 48, 66)"></rect>
+                        <rect x="33" y="45" width="13" height="13" fill="#fff" opacity="0.7" transform="rotate(5, 39, 51)"></rect>
+                    </svg>
+                </div></div><div class="symbol-swatch" style="width: 100%; height: 100px; padding: 10px; display: flex; align-items: center; justify-content: center;">
+                <div class="neon-longdrink-variant" style="width: 35px; height: 50px; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px #ffffff) drop-shadow(0 0 15px #ffffff); display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <!-- Liquid (Filled to ~3/4) -->
+                        <path d="M26,35 L54,35 L52.5,103 L27.5,103 Z" fill="#ffffff" opacity="0.7"></path>
+                        <!-- Detailed Half Lemon Slice (Placed BEFORE outline to look "pushed on") -->
+                        <g transform="translate(25, 15) rotate(-35)">
+                            <!-- Outer Rind -->
+                            <path d="M-14,5 A14,14 0 0,1 14,5 Z" fill="#f59e0b" stroke="#fff" stroke-width="1.2"></path>
+                            <!-- Inner Fruit -->
+                            <path d="M-11,5 A11,11 0 0,1 11,5 Z" fill="#facc15"></path>
+                            <!-- Segment Lines -->
+                            <line x1="0" y1="5" x2="0" y2="-6" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="-8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                        </g>
+                        <!-- Glass Outline (Now overlaps the lemon) -->
+                        <path d="M25,15 L55,15 L53,105 L27,105 Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"></path>
+                        <!-- 3 Ice Cubes -->
+                        <rect x="30" y="75" width="14" height="14" fill="#fff" opacity="0.8" transform="rotate(10, 37, 82)"></rect>
+                        <rect x="42" y="60" width="12" height="12" fill="#fff" opacity="0.6" transform="rotate(-15, 48, 66)"></rect>
+                        <rect x="33" y="45" width="13" height="13" fill="#fff" opacity="0.7" transform="rotate(5, 39, 51)"></rect>
+                    </svg>
+                </div></div><div class="symbol-swatch" style="width: 100%; height: 100px; padding: 10px; display: flex; align-items: center; justify-content: center;">
+                <div class="neon-longdrink-variant" style="width: 35px; height: 50px; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px #6366f1) drop-shadow(0 0 15px #6366f1); display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <!-- Liquid (Filled to ~3/4) -->
+                        <path d="M26,35 L54,35 L52.5,103 L27.5,103 Z" fill="#6366f1" opacity="0.7"></path>
+                        <!-- Detailed Half Lemon Slice (Placed BEFORE outline to look "pushed on") -->
+                        <g transform="translate(25, 15) rotate(-35)">
+                            <!-- Outer Rind -->
+                            <path d="M-14,5 A14,14 0 0,1 14,5 Z" fill="#f59e0b" stroke="#fff" stroke-width="1.2"></path>
+                            <!-- Inner Fruit -->
+                            <path d="M-11,5 A11,11 0 0,1 11,5 Z" fill="#facc15"></path>
+                            <!-- Segment Lines -->
+                            <line x1="0" y1="5" x2="0" y2="-6" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="-8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                        </g>
+                        <!-- Glass Outline (Now overlaps the lemon) -->
+                        <path d="M25,15 L55,15 L53,105 L27,105 Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"></path>
+                        <!-- 3 Ice Cubes -->
+                        <rect x="30" y="75" width="14" height="14" fill="#fff" opacity="0.8" transform="rotate(10, 37, 82)"></rect>
+                        <rect x="42" y="60" width="12" height="12" fill="#fff" opacity="0.6" transform="rotate(-15, 48, 66)"></rect>
+                        <rect x="33" y="45" width="13" height="13" fill="#fff" opacity="0.7" transform="rotate(5, 39, 51)"></rect>
+                    </svg>
+                </div></div><div class="symbol-swatch" style="width: 100%; height: 100px; padding: 10px; display: flex; align-items: center; justify-content: center;">
+                <div class="neon-longdrink-variant" style="width: 35px; height: 50px; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px #10b981) drop-shadow(0 0 15px #10b981); display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <!-- Liquid (Filled to ~3/4) -->
+                        <path d="M26,35 L54,35 L52.5,103 L27.5,103 Z" fill="#10b981" opacity="0.7"></path>
+                        <!-- Detailed Half Lemon Slice (Placed BEFORE outline to look "pushed on") -->
+                        <g transform="translate(25, 15) rotate(-35)">
+                            <!-- Outer Rind -->
+                            <path d="M-14,5 A14,14 0 0,1 14,5 Z" fill="#f59e0b" stroke="#fff" stroke-width="1.2"></path>
+                            <!-- Inner Fruit -->
+                            <path d="M-11,5 A11,11 0 0,1 11,5 Z" fill="#facc15"></path>
+                            <!-- Segment Lines -->
+                            <line x1="0" y1="5" x2="0" y2="-6" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="-8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                            <line x1="0" y1="5" x2="8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8"></line>
+                        </g>
+                        <!-- Glass Outline (Now overlaps the lemon) -->
+                        <path d="M25,15 L55,15 L53,105 L27,105 Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"></path>
+                        <!-- 3 Ice Cubes -->
+                        <rect x="30" y="75" width="14" height="14" fill="#fff" opacity="0.8" transform="rotate(10, 37, 82)"></rect>
+                        <rect x="42" y="60" width="12" height="12" fill="#fff" opacity="0.6" transform="rotate(-15, 48, 66)"></rect>
+                        <rect x="33" y="45" width="13" height="13" fill="#fff" opacity="0.7" transform="rotate(5, 39, 51)"></rect>
+                    </svg>
+                </div></div></div>
             </div>
         </div>
     </div>
@@ -1417,12 +1752,10 @@
     <div class="modal-overlay" id="extraColorsModal" onclick="closeModal(event, 'extraColorsModal')">
         <div class="modal" onclick="event.stopPropagation()" style="max-width: 450px; width: 95%;">
             <div class="modal-header">
-                <h3 class="modal-title" id="extraColorsTitle">Weitere Farben</h3>
+                <h3 class="modal-title" id="extraColorsTitle">Buttonfarben</h3>
                 <button class="close-btn" onclick="closeModalDirect('extraColorsModal')">✖</button>
             </div>
-            <div id="extraColorsGrid" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 5px;">
-                <!-- Dynamically filled -->
-            </div>
+            <div id="extraColorsGrid" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding: 5px;"><div class="color-swatch" style="background: rgb(220, 38, 38);"></div><div class="color-swatch" style="background: rgb(37, 99, 235);"></div><div class="color-swatch" style="background: rgb(22, 163, 74);"></div><div class="color-swatch" style="background: rgb(147, 51, 234);"></div><div class="color-swatch" style="background: rgb(234, 88, 12);"></div><div class="color-swatch" style="background: rgb(219, 39, 119);"></div><div class="color-swatch" style="background: rgb(8, 145, 178);"></div><div class="color-swatch" style="background: rgb(101, 163, 13);"></div><div class="color-swatch" style="background: rgb(79, 70, 229);"></div><div class="color-swatch" style="background: rgb(124, 45, 18);"></div><div class="color-swatch" style="background: rgb(15, 118, 110);"></div><div class="color-swatch" style="background: rgb(190, 24, 93);"></div><div class="color-swatch" style="background: rgb(51, 65, 85);"></div><div class="color-swatch" style="background: rgb(30, 41, 55);"></div><div class="color-swatch" style="background: rgb(185, 28, 28);"></div><div class="color-swatch" style="background: rgb(29, 78, 216);"></div><div class="color-swatch" style="background: rgb(4, 120, 87);"></div><div class="color-swatch" style="background: rgb(126, 34, 206);"></div><div class="color-swatch" style="background: rgb(194, 65, 12);"></div><div class="color-swatch" style="background: rgb(0, 0, 0);"></div></div>
         </div>
     </div>
 
@@ -1445,14 +1778,11 @@
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
             </button>
             <div style="display: flex; align-items: center;">
-                <!-- FIX: Vollbild-Modus hinzufügen Button -->
-                <button class="icon-btn fullscreen-btn" id="fullscreenBtn" onclick="toggleFullscreen()" title="Vollbild" style="margin-right: 0.5rem; display: inline-flex;">
-                    <span id="fsIcon">⛶</span>
-                </button>
-                <button class="icon-btn" id="playerEditBtn" onclick="openPlayerSetupFromGame()" aria-label="Spieler verwalten" style="display: none; margin-right: 0.5rem;" title="Spieler verwalten">
+                
+                <button class="icon-btn" id="playerEditBtn" onclick="openPlayerSetupFromGame()" aria-label="Spieler verwalten" style="display: inline-flex; margin-right: 0.5rem;" title="Spieler verwalten">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 </button>
-                <button class="icon-btn" id="trinkspielSettingsBtn" onclick="openTrinkspielSettings()" aria-label="Spiel-Einstellungen" style="display: none; margin-right: 0.5rem;" title="Spiel-Einstellungen">
+                <button class="icon-btn" id="trinkspielSettingsBtn" onclick="openTrinkspielSettings()" aria-label="Spiel-Einstellungen" style="display: inline-flex; margin-right: 0.5rem;" title="Spiel-Einstellungen">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
                 </button>
                 <button class="icon-btn" onclick="openManageModal()" aria-label="Karten verwalten" style="display: inline-flex;">
@@ -1462,19 +1792,22 @@
         </header>
 
         <main>
-            <div id="fragenCounter" style="display: block; color: white; font-weight: 800; font-size: 1.2rem; margin-bottom: 1.5rem; text-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px; background: rgba(0, 0, 0, 0.4); padding: 0.5rem 1rem; border-radius: 20px;">0 von 100 Karten</div>
-            <div id="currentPlayerDisplay" style="display: none; color: white; font-weight: 800; font-size: 1.8rem; margin-bottom: 1rem; text-shadow: rgba(0, 0, 0, 0.8) 0px 4px 8px; letter-spacing: 1px; text-transform: uppercase;">Spieler 1</div>
+            <div id="fragenCounter" style="display: block; color: white; font-weight: 800; font-size: 1.2rem; margin-bottom: 1.5rem; text-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px; background: rgba(0, 0, 0, 0.4); padding: 0.5rem 1rem; border-radius: 20px;">0 von 60 Karten</div>
+            <div id="currentPlayerDisplay" style="display: block; color: white; font-weight: 800; font-size: 1.8rem; margin-bottom: 1rem; text-shadow: rgba(0, 0, 0, 0.8) 0px 4px 8px; letter-spacing: 1px; text-transform: uppercase;">Spieler 1</div>
             <div class="card-container" id="mainCard" onclick="handleCardTap()">
                 <div class="card-face card-front">
-                    <h2 id="cardFrontText" style="display: none;">Wer würde eher ...</h2>
+                    <h2 id="cardFrontText" style="display: none;">Trinkspiel</h2>
                     <div id="cardFrontIconContainer" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
-                <div class="neon-beer" style="width: 150px; height: 240px; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 10px #ffffff) drop-shadow(0 0 25px #ffffff);">
-                    <svg viewBox="0 0 50 80" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
-                        <path d="M14,10 L14,18 C14,45 36,45 36,18 L36,10" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"></path>
-                        <path d="M16,15 L17,67 C17,71 21,72 25,72 C29,72 33,71 33,67 L36,15 Z" fill="#facc15" opacity="0.9"></path>
-                        <path d="M11,10 C16,6 20,15 25,10 C30,6 35,15 40,10 C40,15 30,18 11,15 Z" fill="#fff"></path>
-                        <path d="M38,30 C46,30 46,50 36,55" fill="none" stroke="#ffffff" stroke-width="2.2"></path>
-                        <path d="M18,20 L19,60" stroke="#fff" stroke-width="1" opacity="0.3" stroke-linecap="round"></path>
+                <div class="neon-beer-variant" style="width: 200px; height: 320px; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 8px #eab308) drop-shadow(0 0 15px #eab308); display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 50 85" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <!-- Glass Body with flat bottom stand -->
+                        <path d="M14,12 L17,75 L33,75 L36,12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"></path>
+                        <!-- Stand Foot -->
+                        <path d="M15,75 L35,75" stroke="#fff" stroke-width="3" stroke-linecap="round"></path>
+                        <!-- Liquid -->
+                        <path d="M16,18 L18.5,73 L31.5,73 L34,18 Z" fill="#eab308"></path>
+                        <!-- SUPER FOAMY TOP (3 Bubbles) -->
+                        <path d="M11,18 C11,10 17,7 21,11 C24,7 32,7 35,11 C39,7 46,11 46,18 C46,24 30,26 11,23 Z" fill="#fff"></path>
                     </svg>
                 </div></div>
                 </div>
@@ -1498,10 +1831,7 @@
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                 </button>
                 <div style="display: flex; gap: 0.5rem; align-items: center;">
-                    <!-- FIX: Vollbild-Modus hinzufügen Button -->
-                    <button class="icon-btn fullscreen-btn" id="busFullscreenBtn" onclick="toggleFullscreen()" title="Vollbild">
-                        <span class="fsIconClass">⛶</span>
-                    </button>
+                    
                     <button class="icon-btn" onclick="openPlayerSetupFromGame()" aria-label="Spieler">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                     </button>
@@ -1530,7 +1860,7 @@
             <div class="modal-header" style="padding: 1.5rem 1.5rem 0.5rem 1.5rem;">
                 <h3 class="modal-title">Spieler hinzufügen</h3>
                 <div style="display: flex; gap: 0.5rem; align-items: center;">
-                    <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; display: none;" id="deleteAllPlayersBtn" onclick="promptDeleteAllPlayers()">Alle entfernen</button>
+                    <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; display: block;" id="deleteAllPlayersBtn" onclick="promptDeleteAllPlayers()">Alle entfernen</button>
                     <button class="close-btn" onclick="closeModalDirect('playerSetupModal')">✖</button>
                 </div>
             </div>
@@ -1539,8 +1869,21 @@
                 <input type="text" id="playerNameInput" placeholder="Name..." autocomplete="off" onkeydown="if(event.key === 'Enter') addPlayer()">
                 <button class="btn btn-primary" style="flex: 0 0 auto; padding: 0.75rem;" onclick="addPlayer()">Hinzufügen</button>
             </div>
-            <div class="card-list" id="playerList" style="max-height: 200px; margin-bottom: 1.5rem;"><div class="empty-state" style="padding: 1rem;">Keine Spieler hinzugefügt.</div></div>
-            <button class="btn btn-secondary" id="playerSetupActionBtn" style="width: 100%;" onclick="startTrinkspielWithPlayers()">Speichern &amp; Schließen</button>
+            <div class="card-list" id="playerList" style="max-height: 200px; margin-bottom: 1.5rem;"><div class="player-list-item">
+                    <span style="font-weight: 600; font-size: 1.1rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; margin-right: 0.5rem;">Spieler 1</span>
+                    <div style="display: flex; gap: 6px; margin-right: 0.8rem;">
+                        <button class="btn" style="padding: 0; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; border-radius: 10px;" onclick="movePlayerUp(0)" disabled="">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+                        </button>
+                        <button class="btn" style="padding: 0; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; border-radius: 10px;" onclick="movePlayerDown(0)" disabled="">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                        </button>
+                    </div>
+                    <button class="btn btn-danger" style="flex: 0 0 36px; padding: 0; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; border-radius: 10px;" onclick="removePlayer(0)" aria-label="Spieler entfernen">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </button>
+                </div></div>
+            <button class="btn btn-secondary" id="playerSetupActionBtn" style="width: 100%;" onclick="startTrinkspielWithPlayers()">Spiel starten</button>
             </div>
         </div>
     </div>
@@ -1583,13 +1926,13 @@
                 <button class="close-btn" onclick="closeModalDirect('manageModal')">✖</button>
             </div>
             <div class="tabs" style="padding: 0 1.5rem; margin-bottom: 1rem;">
-                <div class="tab" id="tabSets" onclick="switchTab('sets')">Sets</div>
-                <div class="tab active" id="tabStandard" onclick="switchTab('standard')">Standard</div>
-                <div class="tab" id="tabDeath" onclick="switchTab('death')" style="display: none;">Todesrunden</div>
+                <div class="tab active" id="tabSets" onclick="switchTab('sets')">Sets</div>
+                <div class="tab" id="tabStandard" onclick="switchTab('standard')">Standard</div>
+                <div class="tab" id="tabDeath" onclick="switchTab('death')" style="display: block;">Todesrunden</div>
             </div>
             <div class="modal-body" style="padding-top: 0;">
 
-            <div id="standardTabContent" style="display: block;">
+            <div id="standardTabContent" style="display: none;">
                 <div style="display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1rem; padding: 0 0.5rem;">
                     <div class="search-bar" style="width: 100%; margin: 0; padding: 0;">
                         <input type="text" id="searchInput" placeholder="Karte suchen..." oninput="filterCards()" autocomplete="off" style="width: 100%; box-sizing: border-box;">
@@ -2709,7 +3052,7 @@
                 </div></div>
         </div>
 
-            <div id="setsTabContent" style="display: none;">
+            <div id="setsTabContent" style="display: block;">
                 <div style="padding: 0 0.5rem; margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.8rem;">
                     <div class="search-bar" style="width: 100%; margin: 0; padding: 0;">
                         <input type="text" id="searchSetsInput" placeholder="Sets suchen..." oninput="filterSets()" autocomplete="off" style="width: 100%; box-sizing: border-box;">
@@ -2717,43 +3060,30 @@
                     <button class="btn" style="width: 100%; padding: 0.8rem;" onclick="openImportModal()">Import</button>
                     <button class="btn" style="width: 100%; padding: 0.8rem; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;" onclick="createNewSet()">+</button>
                 </div>
-                <div class="card-list" id="setsTabList"><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('set_u18')">
-                        <h4 style="margin-bottom: 0.5rem;">Ü 18 <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">(26 Karten)</span></h4>
+                <div class="card-list" id="setsTabList"><div class="manager-card inactive">
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('set_1778062244891')">
+                        <h4 style="margin-bottom: 0.5rem;">1 Mai <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">(25 Karten)</span></h4>
                         <div style="display: flex; gap: 0.5rem;" onclick="event.stopPropagation()">
-                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="renameSet('set_u18')">Umbenennen</button>
-                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="exportSet('set_u18')">Export</button>
-                            <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="promptDeleteSet('set_u18')">Löschen</button>
+                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="renameSet('set_1778062244891')">Umbenennen</button>
+                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="exportSet('set_1778062244891')">Export</button>
+                            <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="promptDeleteSet('set_1778062244891')">Löschen</button>
                         </div>
                     </div>
                     <label class="toggle-switch" onclick="event.stopPropagation()">
-                        <input type="checkbox" checked="" onchange="toggleSet('set_u18', this.checked)">
+                        <input type="checkbox" onchange="toggleSet('set_1778062244891', this.checked)">
                         <span class="slider"></span>
                     </label>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('set_peinlich')">
-                        <h4 style="margin-bottom: 0.5rem;">Peinlich <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">(44 Karten)</span></h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('set_1778108614404')">
+                        <h4 style="margin-bottom: 0.5rem;">Bar <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">(60 Karten)</span></h4>
                         <div style="display: flex; gap: 0.5rem;" onclick="event.stopPropagation()">
-                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="renameSet('set_peinlich')">Umbenennen</button>
-                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="exportSet('set_peinlich')">Export</button>
-                            <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="promptDeleteSet('set_peinlich')">Löschen</button>
+                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="renameSet('set_1778108614404')">Umbenennen</button>
+                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="exportSet('set_1778108614404')">Export</button>
+                            <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="promptDeleteSet('set_1778108614404')">Löschen</button>
                         </div>
                     </div>
                     <label class="toggle-switch" onclick="event.stopPropagation()">
-                        <input type="checkbox" checked="" onchange="toggleSet('set_peinlich', this.checked)">
-                        <span class="slider"></span>
-                    </label>
-                </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('set_lustig')">
-                        <h4 style="margin-bottom: 0.5rem;">Lustig <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">(30 Karten)</span></h4>
-                        <div style="display: flex; gap: 0.5rem;" onclick="event.stopPropagation()">
-                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="renameSet('set_lustig')">Umbenennen</button>
-                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="exportSet('set_lustig')">Export</button>
-                            <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem; min-width:auto;" onclick="promptDeleteSet('set_lustig')">Löschen</button>
-                        </div>
-                    </div>
-                    <label class="toggle-switch" onclick="event.stopPropagation()">
-                        <input type="checkbox" checked="" onchange="toggleSet('set_lustig', this.checked)">
+                        <input type="checkbox" checked="" onchange="toggleSet('set_1778108614404', this.checked)">
                         <span class="slider"></span>
                     </label>
                 </div></div>
@@ -2836,43 +3166,30 @@
                     <button class="btn" style="color: var(--text-color);" onclick="openImportModal()">Importieren</button>
                     <button class="btn" style="flex: 0 0 50px; padding: 0; font-size: 1.5rem; display: flex; justify-content: center; align-items: center;" onclick="document.getElementById('setsInfoModal').classList.add('active')">ℹ</button>
                 </div>
-            <div class="card-list" id="setsList"><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('set_u18')">
-                        <h4 style="margin-bottom: 0.5rem;">Ü 18 <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">(26 Karten)</span></h4>
+            <div class="card-list" id="setsList"><div class="manager-card inactive">
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('set_1778062244891')">
+                        <h4 style="margin-bottom: 0.5rem;">1 Mai <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">(25 Karten)</span></h4>
                         <div style="display: flex; gap: 0.5rem;" onclick="event.stopPropagation()">
-                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="renameSet('set_u18')">Umbenennen</button>
-                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="exportSet('set_u18')">Export</button>
-                            <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="promptDeleteSet('set_u18')">Löschen</button>
+                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="renameSet('set_1778062244891')">Umbenennen</button>
+                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="exportSet('set_1778062244891')">Export</button>
+                            <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="promptDeleteSet('set_1778062244891')">Löschen</button>
                         </div>
                     </div>
                     <label class="toggle-switch" onclick="event.stopPropagation()">
-                        <input type="checkbox" checked="" onchange="toggleSet('set_u18', this.checked)">
+                        <input type="checkbox" onchange="toggleSet('set_1778062244891', this.checked)">
                         <span class="slider"></span>
                     </label>
                 </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('set_peinlich')">
-                        <h4 style="margin-bottom: 0.5rem;">Peinlich <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">(44 Karten)</span></h4>
+                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('set_1778108614404')">
+                        <h4 style="margin-bottom: 0.5rem;">Bar <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">(60 Karten)</span></h4>
                         <div style="display: flex; gap: 0.5rem;" onclick="event.stopPropagation()">
-                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="renameSet('set_peinlich')">Umbenennen</button>
-                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="exportSet('set_peinlich')">Export</button>
-                            <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="promptDeleteSet('set_peinlich')">Löschen</button>
+                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="renameSet('set_1778108614404')">Umbenennen</button>
+                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="exportSet('set_1778108614404')">Export</button>
+                            <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="promptDeleteSet('set_1778108614404')">Löschen</button>
                         </div>
                     </div>
                     <label class="toggle-switch" onclick="event.stopPropagation()">
-                        <input type="checkbox" checked="" onchange="toggleSet('set_peinlich', this.checked)">
-                        <span class="slider"></span>
-                    </label>
-                </div><div class="manager-card ">
-                    <div style="padding-right: 0.5rem; flex: 1; cursor: pointer;" onclick="openSetDetails('set_lustig')">
-                        <h4 style="margin-bottom: 0.5rem;">Lustig <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 400;">(30 Karten)</span></h4>
-                        <div style="display: flex; gap: 0.5rem;" onclick="event.stopPropagation()">
-                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="renameSet('set_lustig')">Umbenennen</button>
-                            <button class="btn" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="exportSet('set_lustig')">Export</button>
-                            <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;" onclick="promptDeleteSet('set_lustig')">Löschen</button>
-                        </div>
-                    </div>
-                    <label class="toggle-switch" onclick="event.stopPropagation()">
-                        <input type="checkbox" checked="" onchange="toggleSet('set_lustig', this.checked)">
+                        <input type="checkbox" checked="" onchange="toggleSet('set_1778108614404', this.checked)">
                         <span class="slider"></span>
                     </label>
                 </div></div>
@@ -3266,9 +3583,9 @@
                 <div class="status-indicator" id="reshuffleOffIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: white; box-shadow: white 0px 0px 10px;"></div>
             </div>
 
-            <div class="home-btn" id="todesmodusBtn" onclick="toggleTodesmodus()" style="width: 100%; max-width: none; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgb(255, 255, 255); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--secondary), inset 0 0 15px var(--secondary), 0 0 30px var(--secondary); text-shadow: 0 0 5px #fff, 0 0 12px var(--secondary); opacity: 1;">
+            <div class="home-btn" id="todesmodusBtn" onclick="toggleTodesmodus()" style="width: 100%; max-width: none; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; border-width: 2px; border-color: rgb(255, 255, 255); box-shadow: 0 0 5px #fff, inset 0 0 5px #fff, 0 0 15px var(--danger), inset 0 0 15px var(--danger), 0 0 30px var(--danger); text-shadow: 0 0 5px #fff, 0 0 12px var(--danger); opacity: 1;">
                 <span style="font-size: 1.1rem; font-weight: 800; letter-spacing: 1px;">Todesmodus</span>
-                <div class="status-indicator" id="todesmodusIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: white; box-shadow: white 0px 0px 10px;"></div>
+                <div class="status-indicator" id="todesmodusIndicator" style="width: 12px; height: 12px; border-radius: 50%; background: white; box-shadow: 0 0 10px white, 0 0 20px var(--danger);"></div>
             </div>
         </div>
     </div>
@@ -3472,22 +3789,22 @@
         };
 
         /* FIX: Vollbild-Modus Logik */
-        function toggleFullscreen() {
+                function toggleFullscreen() {
             const doc = document.documentElement;
-            const fsIcons = document.querySelectorAll('.fsIconClass, #fsIcon');
+            const fsIcons = document.querySelectorAll('.fsIconClass');
             if (!document.fullscreenElement && !document.webkitFullscreenElement) {
                 if (doc.requestFullscreen) doc.requestFullscreen();
                 else if (doc.webkitRequestFullscreen) doc.webkitRequestFullscreen();
-                fsIcons.forEach(icon => icon.innerText = '✕');
+                fsIcons.forEach(i => i.innerText = '⛶');
             } else {
                 if (document.exitFullscreen) document.exitFullscreen();
                 else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-                fsIcons.forEach(icon => icon.innerText = '⛶');
+                fsIcons.forEach(i => i.innerText = '⛶');
             }
         }
 
         // BUILD_ID_MARKER
-        const BUILD_ID = "build_1778224738241";
+        const BUILD_ID = "build_1778240769480";
 
         // TRINKSPIEL_SETS_START
         const hardcodedTrinkspielSets = [
@@ -5461,7 +5778,7 @@
                     <div style="font-size:0.6rem;color:var(--text-muted);font-weight:800;">Karte ${nextN}</div>
                     <div id="nextCardFlip" style="width:110px;height:155px;perspective:1000px;">
                         <div id="nextCardInner" style="width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.55s ease;">
-                            <div class="bus-card hidden" style="position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;">${getCardIconHTML(true)}</div>
+                            <div class="bus-card hidden" style="position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;">${getCardIconHTML('medium')}</div>
                             <div id="nextCardFace" style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);border-radius:12px;"></div>
                         </div>
                     </div>
@@ -5485,7 +5802,7 @@
                     <div style="font-size:0.7rem;opacity:0;">Placeholder</div>
                     <div id="nextCardFlip" style="width:120px;height:170px;perspective:1000px;">
                         <div id="nextCardInner" style="width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.55s ease;">
-                            <div class="bus-card hidden" style="position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;">${getCardIconHTML(true)}</div>
+                            <div class="bus-card hidden" style="position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;">${getCardIconHTML('medium')}</div>
                             <div id="nextCardFace" style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);border-radius:12px;"></div>
                         </div>
                     </div>
@@ -5760,7 +6077,7 @@
                             onclick="revealPyramidCard(${idx})"
                             style="width:${cardW}px;height:${cardH}px;cursor:${isNext ? 'pointer' : 'default'};
                                    border-radius:10px;">
-                            ${revealed ? renderCardSmall(card) : `<div class="bus-card hidden" style="width:${cardW}px;height:${cardH}px;">${getCardIconHTML(true)}</div>`}
+                            ${revealed ? renderCardSmall(card) : `<div class="bus-card hidden" style="width:${cardW}px;height:${cardH}px;">${getCardIconHTML('tiny')}</div>`}
                         </div>`;
                 }
                 pyramidHTML += '</div>';
@@ -6662,6 +6979,7 @@
         // --- Design Logic ---
         function openDesignModal() {
             document.getElementById('designModal').classList.add('active');
+            renderCardIcons();
         }
 
         let tempDesign = {
@@ -6722,247 +7040,195 @@
             } : null;
         }
 
-        let currentCardIcon = safeStorage.getItem('trinkspiel_card_icon_v2') || 'beer';
+        let currentCardIcon = safeStorage.getItem('trinkspiel_card_icon_v2') || 'beer_default';
 
+        // Zentrales Farbsystem (10 Farben)
+        const motifColors = [
+            { id: 'red', name: 'Rot', hex: '#ef4444' },
+            { id: 'blue', name: 'Blau', hex: '#3b82f6' },
+            { id: 'green', name: 'Grün', hex: '#22c55e' },
+            { id: 'yellow', name: 'Gelb', hex: '#eab308' },
+            { id: 'orange', name: 'Orange', hex: '#f97316' },
+            { id: 'purple', name: 'Lila', hex: '#a855f7' },
+            { id: 'pink', name: 'Pink', hex: '#ec4899' },
+            { id: 'turquoise', name: 'Türkis', hex: '#06b6d4' },
+            { id: 'black', name: 'Schwarz', hex: '#1e293b' },
+            { id: 'white', name: 'Weiß', hex: '#ffffff' },
+            { id: 'indigo', name: 'Indigo', hex: '#6366f1' },
+            { id: 'emerald', name: 'Smaragd', hex: '#10b981' }
+        ];
 
-        const extraMotifsData = {
-            'cocktail_red': { type: 'icon', isHighFidelity: true, name: 'Cocktail Rot', color: '#ff0033' },
-            'cocktail_green': { type: 'icon', isHighFidelity: true, name: 'Cocktail Grün', color: '#39FF14' },
-            'cocktail_yellow': { type: 'icon', isHighFidelity: true, name: 'Cocktail Gelb', color: '#fde047' },
-            'cocktail_pink': { type: 'icon', isHighFidelity: true, name: 'Cocktail Pink', color: '#ff007f' },
-            'cocktail_purple': { type: 'icon', isHighFidelity: true, name: 'Cocktail Lila', color: '#bf00ff' },
-            'cocktail_orange': { type: 'icon', isHighFidelity: true, name: 'Cocktail Orange', color: '#ff8c00' },
-            'cocktail_blue': { type: 'icon', isHighFidelity: true, name: 'Cocktail Blau', color: '#2563eb' },
-            'cocktail_mint': { type: 'icon', isHighFidelity: true, name: 'Cocktail Mint', color: '#2dd4bf' }
+        // Basis-Motive (Formen)
+        const motifRegistry = {
+            'beer': { name: 'Bierglas' },
+            'cocktail': { name: 'Cocktailglas' },
+            'whiskey': { name: 'Whiskeyglas' },
+            'longdrink': { name: 'Longdrink' }
         };
 
-        const patternRegistry = {
-            // Keep empty or for internal standard patterns only
-        };
-
-        // Fallback for removed icons (moved after declarations)
-        if (currentCardIcon !== 'none' && currentCardIcon !== 'beer' && !patternRegistry[currentCardIcon] && !extraMotifsData[currentCardIcon]) {
-            currentCardIcon = 'beer';
-        }
-
-        function openExtraMotifs() {
-            const grid = document.getElementById('extraMotifsGrid');
+        function openMotifColorModal(baseId) {
+            const modal = document.getElementById('motifColorModal');
+            const grid = document.getElementById('motifColorGrid');
+            const title = document.getElementById('motifColorTitle');
+            const motif = motifRegistry[baseId];
+            
+            title.innerText = motif.name;
             grid.innerHTML = '';
             
-            const neonColor = getComputedStyle(document.documentElement).getPropertyValue('--card-neon-color').trim() || '#facc15';
-            
-            Object.entries(extraMotifsData).forEach(([key, data]) => {
+            const current = resolveMotif(currentCardIcon);
+
+            motifColors.forEach(color => {
                 const swatch = document.createElement('div');
-                swatch.className = 'symbol-swatch';
-                if (currentCardIcon === key) swatch.classList.add('selected');
+                swatch.className = 'symbol-swatch'; // Use symbol-swatch style for icons
+                swatch.style.width = '100%';
+                swatch.style.height = '100px';
+                swatch.style.padding = '10px';
+                swatch.style.display = 'flex';
+                swatch.style.alignItems = 'center';
+                swatch.style.justifyContent = 'center';
+                
+                if (current.base === baseId && color.hex.toLowerCase() === current.color.toLowerCase()) {
+                    swatch.classList.add('selected');
+                }
+                
+                // Render the colored icon directly as the selection option
+                // We use isSmall=true for the grid but maybe with adjusted shadows
+                swatch.innerHTML = getHighFidelitySVG(baseId, color.hex, true);
+                
                 swatch.onclick = () => {
-                    setCardIcon(key);
-                    closeModalDirect('extraMotifsModal');
+                    setCardIcon(`${baseId}_${color.id}`);
+                    closeModalDirect('motifColorModal');
                 };
                 
-                if (data.type === 'pattern') {
-                    const uniqueId = 'swatchPattern_' + key;
-                    // Standard preview scale for swatches
-                    const pW = data.w * 0.4;
-                    const pH = data.h * 0.4;
-                    swatch.innerHTML = `
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%; filter: drop-shadow(0 0 2px #fff) drop-shadow(0 0 5px ${neonColor});">
-                            <defs>
-                                <pattern id="${uniqueId}" x="0" y="0" width="${pW}" height="${pH}" patternUnits="userSpaceOnUse">
-                                    <g transform="scale(0.4)">
-                                        <path d="${data.path}" fill="none" stroke="#fff" stroke-width="5"/>
-                                    </g>
-                                </pattern>
-                            </defs>
-                            <rect width="100%" height="100%" fill="url(#${uniqueId})" />
-                        </svg>`;
-                } else if (data.isHighFidelity) {
-                    // Render high-fidelity preview
-                    swatch.innerHTML = getHighFidelitySVG(key, true);
-                } else {
-                    swatch.innerHTML = `
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 70%; height: 70%; filter: drop-shadow(0 0 3px ${neonColor});">
-                            <path d="${data.path}" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>`;
-                }
                 grid.appendChild(swatch);
             });
-            
-            document.getElementById('extraMotifsModal').classList.add('active');
+
+            modal.classList.add('active');
         }
 
-        function getCardIconHTML(isSmall = false) {
-            const neonColor = getComputedStyle(document.documentElement).getPropertyValue('--card-neon-color').trim() || '#facc15';
-            const shadowBase = isSmall ? '1px' : '2px';
-            const shadowMid = isSmall ? '4px' : '10px';
-            const shadowLarge = isSmall ? '10px' : '25px';
-            const getNeonFilter = (color) => `drop-shadow(0 0 ${shadowBase} #fff) drop-shadow(0 0 ${shadowMid} ${color}) drop-shadow(0 0 ${shadowLarge} ${color})`;
+        // Helper zum Auflösen von Motif-Strings (z.B. "beer_yellow")
+        function resolveMotif(motifStr) {
+            if (!motifStr || motifStr === 'none') return { base: 'none', color: '#ffffff' };
+            const parts = motifStr.split('_');
+            const base = parts[0];
+            const colorId = parts[1] || 'white';
+            
+            // Sonderfall: Wenn es eine direkte Hex-Farbe ist (Migration)
+            if (colorId.startsWith('#')) return { base, color: colorId };
+            
+            const colorObj = motifColors.find(c => c.id === colorId) || { hex: '#ffffff' };
+            return { base, color: colorObj.hex, colorId: colorId };
+        }
+        function getHighFidelitySVG(baseId, color, size = 'large') {
+            const isTiny = size === 'tiny';
+            const isSmall = size === 'small';
+            const isMedium = size === 'medium';
+            const isLarge = size === 'large';
 
-            // Check for patterns (Standard or Extra)
-            const patternDef = patternRegistry[currentCardIcon] || (extraMotifsData[currentCardIcon] && extraMotifsData[currentCardIcon].type === 'pattern' ? extraMotifsData[currentCardIcon] : null);
-
-            if (patternDef) {
-                const uniqueId = 'pattern_' + Math.random().toString(36).substr(2, 9);
-                const maskId = 'mask_' + Math.random().toString(36).substr(2, 9);
-                
-                // Minimal 3-unit margin for a clean look
-                const margin = isSmall ? 2 : 3;
-                const tileSize = isSmall ? 10 : 18;
-                
-                // Centering offset
-                const offsetX = (100 - margin * 2) % tileSize / 2;
-                const offsetY = (150 - margin * 2) % tileSize / 2;
-
-                return `
-                <svg width="100%" height="100%" viewBox="0 0 100 150" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="display: block; filter: ${getNeonFilter(neonColor)};">
-                    <defs>
-                        <mask id="${maskId}">
-                            <rect x="${margin}" y="${margin}" width="${100 - margin*2}" height="${150 - margin*2}" rx="5" fill="white" />
-                        </mask>
-                        <pattern id="${uniqueId}" x="${margin + offsetX}" y="${margin + offsetY}" width="${tileSize}" height="${tileSize}" patternUnits="userSpaceOnUse">
-                            <g transform="scale(${tileSize / patternDef.w})">
-                                <path d="${patternDef.path}" fill="none" stroke="#fff" stroke-width="${1.2 / (tileSize / patternDef.w)}" stroke-linecap="round" stroke-linejoin="round"/>
-                            </g>
-                        </pattern>
-                    </defs>
-                    <rect x="${margin}" y="${margin}" width="${100 - margin*2}" height="${150 - margin*2}" rx="5" fill="url(#${uniqueId})" mask="url(#${maskId})" opacity="0.65" />
-                </svg>`;
+            const shadowBase = (isTiny || isSmall) ? '0.5px' : '2px';
+            const shadowMid = (isTiny || isSmall) ? '2px' : '8px';
+            const shadowLarge = (isTiny || isSmall) ? '5px' : '15px';
+            const getNeonFilter = (col) => `drop-shadow(0 0 ${shadowBase} #fff) drop-shadow(0 0 ${shadowMid} ${col}) drop-shadow(0 0 ${shadowLarge} ${col})`;
+            
+            let mW = '50px';
+            let mH = '50px';
+            
+            if (isLarge) {
+                if (baseId === 'beer') { mW = '200px'; mH = '320px'; }
+                else if (baseId === 'cocktail') { mW = '260px'; mH = '310px'; }
+                else if (baseId === 'whiskey') { mW = '280px'; mH = '280px'; }
+                else if (baseId === 'longdrink') { mW = '220px'; mH = '330px'; }
+            } else if (isMedium) {
+                if (baseId === 'beer') { mW = '80px'; mH = '130px'; }
+                else if (baseId === 'cocktail') { mW = '105px'; mH = '130px'; }
+                else if (baseId === 'whiskey') { mW = '110px'; mH = '110px'; }
+                else if (baseId === 'longdrink') { mW = '85px'; mH = '130px'; }
+            } else if (isSmall) {
+                if (baseId === 'beer') { mW = '42px'; mH = '70px'; }
+                else if (baseId === 'cocktail') { mW = '60px'; mH = '70px'; }
+                else if (baseId === 'whiskey') { mW = '60px'; mH = '60px'; }
+                else if (baseId === 'longdrink') { mW = '48px'; mH = '72px'; }
+            } else { // tiny
+                if (baseId === 'beer') { mW = '30px'; mH = '50px'; }
+                else if (baseId === 'cocktail') { mW = '40px'; mH = '50px'; }
+                else if (baseId === 'whiskey') { mW = '45px'; mH = '45px'; }
+                else if (baseId === 'longdrink') { mW = '35px'; mH = '50px'; }
             }
 
-            if (currentCardIcon === 'none') return '';
-            
-            const iconColor = '#ffffff';
-            const beerW = isSmall ? '35px' : '150px';
-            const beerH = isSmall ? '55px' : '240px';
+            const filter = ((isTiny || isSmall) && color.toLowerCase() === '#ffffff') ? 'none' : getNeonFilter(color);
 
-            if (currentCardIcon === 'beer') {
+            if (baseId === 'beer') {
                 return `
-                <div class="neon-beer" style="width: ${beerW}; height: ${beerH}; filter: ${getNeonFilter('#ffffff')};">
-                    <svg viewBox="0 0 50 80" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
-                        <path d="M14,10 L14,18 C14,45 36,45 36,18 L36,10" fill="none" stroke="${iconColor}" stroke-width="2.2" stroke-linecap="round" />
-                        <path d="M16,15 L17,67 C17,71 21,72 25,72 C29,72 33,71 33,67 L36,15 Z" fill="#facc15" opacity="0.9" />
-                        <path d="M11,10 C16,6 20,15 25,10 C30,6 35,15 40,10 C40,15 30,18 11,15 Z" fill="#fff" />
-                        <path d="M38,30 C46,30 46,50 36,55" fill="none" stroke="${iconColor}" stroke-width="2.2" />
-                        <path d="M18,20 L19,60" stroke="#fff" stroke-width="1" opacity="0.3" stroke-linecap="round" />
+                <div class="neon-beer-variant" style="width: ${mW}; height: ${mH}; filter: ${filter}; display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 50 85" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <!-- Glass Body with flat bottom stand -->
+                        <path d="M14,12 L17,75 L33,75 L36,12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"></path>
+                        <!-- Stand Foot -->
+                        <path d="M15,75 L35,75" stroke="#fff" stroke-width="3" stroke-linecap="round"></path>
+                        <!-- Liquid -->
+                        <path d="M16,18 L18.5,73 L31.5,73 L34,18 Z" fill="${color}"></path>
+                        <!-- SUPER FOAMY TOP (3 Bubbles) -->
+                        <path d="M11,18 C11,10 17,7 21,11 C24,7 32,7 35,11 C39,7 46,11 46,18 C46,24 30,26 11,23 Z" fill="#fff"></path>
                     </svg>
                 </div>`;
             }
 
-            if (currentCardIcon === 'cocktail') {
-                const cW = isSmall ? '50px' : '200px';
-                const cH = isSmall ? '70px' : '280px';
-                const cyanColor = '#00f2ff';
-
+            if (baseId === 'cocktail') {
                 return `
-                <div class="neon-cocktail" style="width: ${cW}; height: ${cH}; filter: ${getNeonFilter(cyanColor)}; display: flex; align-items: center; justify-content: center;">
-                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;" preserveAspectRatio="xMidYMid meet">
-                        <!-- Liquid (Cyan Glow) -->
-                        <path d="M30,35 L70,35 L50,68 Z" fill="${cyanColor}" opacity="0.8" />
-                        
-                        <!-- Outer Glass Tube (White) -->
-                        <g fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M25,25 L75,25 L50,75 L50,105 M35,105 L65,105" />
+                <div class="neon-cocktail-variant" style="width: ${mW}; height: ${mH}; filter: ${filter}; display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <path d="M30,35 L70,35 L50,68 Z" fill="${color}" opacity="0.8" />
+                        <g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M25,25 L75,25 L50,75 L25,25 M50,75 L50,105 M35,105 L65,105" />
                         </g>
-
-                        <!-- Olive & Stick Detail -->
                         <path d="M45,20 L55,45" stroke="#fff" stroke-width="1.2" stroke-linecap="round" />
                         <circle cx="53" cy="38" r="4" fill="#00ff41" opacity="0.9" />
-                        
-                        <!-- Inner Shine Detail -->
-                        <path d="M35,35 L40,35" stroke="#fff" stroke-width="1" opacity="0.4" />
-                    </svg>
-                </div>`;
-            }
- 
-            if (currentCardIcon === 'whiskey') {
-                const wW = isSmall ? '60px' : '220px';
-                const wH = isSmall ? '60px' : '220px';
-                const amberColor = '#ffa500';
-
-                return `
-                <div class="neon-whiskey" style="width: ${wW}; height: ${wH}; filter: ${getNeonFilter(amberColor)}; display: flex; align-items: center; justify-content: center;">
-                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;" preserveAspectRatio="xMidYMid meet">
-                        <!-- Whiskey Liquid (Amber) -->
-                        <path d="M24,40 L76,40 L72,87 L28,87 Z" fill="${amberColor}" opacity="0.8" />
-                        
-                        <!-- Ice Cubes (White Glow) -->
-                        <rect x="32" y="52" width="22" height="22" fill="#fff" opacity="0.9" transform="rotate(12, 43, 63)" />
-                        <rect x="50" y="60" width="20" height="20" fill="#fff" opacity="0.7" transform="rotate(-15, 60, 70)" />
-                        
-                        <!-- Glass Rim & Body (White Neon) -->
-                        <path d="M20,15 L80,15 L72,90 L28,90 Z" fill="none" stroke="#fff" stroke-width="2.5" stroke-linejoin="round" />
-                        
-                        <!-- Reflections on Glass -->
-                        <path d="M25,25 L27,70" stroke="#fff" stroke-width="1.2" opacity="0.3" stroke-linecap="round" />
                     </svg>
                 </div>`;
             }
 
-            // High Fidelity Extra Motifs
-            if (extraMotifsData[currentCardIcon] && extraMotifsData[currentCardIcon].isHighFidelity) {
-                return getHighFidelitySVG(currentCardIcon, isSmall);
-            }
-
-            // Fallback: If it's a motif in extraMotifsData (Simple Path)
-            const extraMotif = extraMotifsData[currentCardIcon];
-            if (extraMotif && extraMotif.type !== 'pattern') {
-                const mW = isSmall ? '50px' : '200px';
-                const mH = isSmall ? '50px' : '200px';
+            if (baseId === 'whiskey') {
                 return `
-                <div class="neon-custom" style="width: ${mW}; height: ${mH}; filter: ${getNeonFilter(neonColor)}; color: #fff; display: flex; align-items: center; justify-content: center;">
+                <div class="neon-whiskey-variant" style="width: ${mW}; height: ${mH}; filter: ${filter}; display: flex; align-items: center; justify-content: center;">
                     <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
-                        <path d="${extraMotif.path}" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                        <!-- Whiskey Liquid (Filled to ~2/3) -->
+                        <path d="M23,45 L77,45 L72,90 L28,90 Z" fill="${color}" opacity="0.6" />
+                        <!-- Glass Rim & Body -->
+                        <path d="M20,15 L80,15 L72,90 L28,90 Z" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round" />
+                        <!-- Ice Cubes -->
+                        <rect x="35" y="50" width="18" height="18" fill="#fff" opacity="0.8" transform="rotate(15, 44, 59)" />
+                        <rect x="50" y="60" width="16" height="16" fill="#fff" opacity="0.6" transform="rotate(-10, 58, 68)" />
                     </svg>
                 </div>`;
             }
-            return '';
-        }
-
-        // Shared High Fidelity Renderer
-        function getHighFidelitySVG(id, isSmall = false) {
-            const neonColor = getComputedStyle(document.documentElement).getPropertyValue('--card-neon-color').trim() || '#facc15';
-            const shadowBase = isSmall ? '1px' : '2px';
-            const shadowMid = isSmall ? '4px' : '10px';
-            const shadowLarge = isSmall ? '10px' : '25px';
-            const getNeonFilter = (color) => `drop-shadow(0 0 ${shadowBase} #fff) drop-shadow(0 0 ${shadowMid} ${color}) drop-shadow(0 0 ${shadowLarge} ${color})`;
             
-            const mW = isSmall ? '50px' : '200px';
-            const mH = isSmall ? '50px' : '200px';
-
-            if (id.startsWith('cocktail_')) {
-                const colorMap = {
-                    'cocktail_red': '#ff0033',
-                    'cocktail_green': '#39FF14',
-                    'cocktail_yellow': '#fde047',
-                    'cocktail_pink': '#ff007f',
-                    'cocktail_purple': '#bf00ff',
-                    'cocktail_orange': '#ff8c00',
-                    'cocktail_blue': '#2563eb',
-                    'cocktail_mint': '#2dd4bf'
-                };
-                const drinkColor = colorMap[id] || '#00f2ff';
-                
+            if (baseId === 'longdrink') {
                 return `
-                <div class="neon-cocktail-variant" style="width: ${mW}; height: ${mH}; filter: ${getNeonFilter(drinkColor)}; display: flex; align-items: center; justify-content: center;">
-                    <svg viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;" preserveAspectRatio="xMidYMid meet">
-                        <!-- Liquid (Color Glow) -->
-                        <path d="M30,35 L70,35 L50,68 Z" fill="${drinkColor}" opacity="0.8" />
-                        
-                        <!-- Outer Glass Tube (White) -->
-                        <g fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M25,25 L75,25 L50,75 L50,105 M35,105 L65,105" />
+                <div class="neon-longdrink-variant" style="width: ${mW}; height: ${mH}; filter: ${filter}; display: flex; align-items: center; justify-content: center;">
+                    <svg viewBox="0 0 80 120" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
+                        <!-- Liquid (Filled to ~3/4) -->
+                        <path d="M26,35 L54,35 L52.5,103 L27.5,103 Z" fill="${color}" opacity="0.7" />
+                        <!-- Detailed Half Lemon Slice (Placed BEFORE outline to look "pushed on") -->
+                        <g transform="translate(25, 15) rotate(-35)">
+                            <!-- Outer Rind -->
+                            <path d="M-14,5 A14,14 0 0,1 14,5 Z" fill="#f59e0b" stroke="#fff" stroke-width="1.2" />
+                            <!-- Inner Fruit -->
+                            <path d="M-11,5 A11,11 0 0,1 11,5 Z" fill="#facc15" />
+                            <!-- Segment Lines -->
+                            <line x1="0" y1="5" x2="0" y2="-6" stroke="#fff" stroke-width="0.8" opacity="0.8" />
+                            <line x1="0" y1="5" x2="-8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8" />
+                            <line x1="0" y1="5" x2="8" y2="-2.5" stroke="#fff" stroke-width="0.8" opacity="0.8" />
                         </g>
-
-                        <!-- Olive & Stick Detail -->
-                        <path d="M45,20 L55,45" stroke="#fff" stroke-width="1.2" stroke-linecap="round" />
-                        <circle cx="53" cy="38" r="4" fill="#00ff41" opacity="0.9" />
-                        
-                        <!-- Inner Shine Detail -->
-                        <path d="M35,35 L40,35" stroke="#fff" stroke-width="1" opacity="0.4" />
+                        <!-- Glass Outline (Now overlaps the lemon) -->
+                        <path d="M25,15 L55,15 L53,105 L27,105 Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round" />
+                        <!-- 3 Ice Cubes -->
+                        <rect x="30" y="75" width="14" height="14" fill="#fff" opacity="0.8" transform="rotate(10, 37, 82)" />
+                        <rect x="42" y="60" width="12" height="12" fill="#fff" opacity="0.6" transform="rotate(-15, 48, 66)" />
+                        <rect x="33" y="45" width="13" height="13" fill="#fff" opacity="0.7" transform="rotate(5, 39, 51)" />
                     </svg>
                 </div>`;
             }
-            
+
             return '';
         }
 
@@ -6970,82 +7236,57 @@
             currentCardIcon = icon;
             tempDesign.icon = icon;
             
-            const neonColor = getComputedStyle(document.documentElement).getPropertyValue('--card-neon-color').trim() || '#facc15';
-            const plusBtn = document.getElementById('plus-motifs');
-            
-            let found = false;
-            // Update selection in modal
-            document.querySelectorAll('.symbol-swatch').forEach(el => {
-                if (el.getAttribute('data-icon') === icon) {
-                    el.classList.add('selected');
-                    found = true;
-                } else {
-                    el.classList.remove('selected');
-                }
-            });
-
-            if (plusBtn) {
-                if (!found && extraMotifsData[icon]) {
-                    const data = extraMotifsData[icon];
-                    plusBtn.classList.add('selected');
-                    
-                    if (data.isHighFidelity) {
-                        // Use the high fidelity renderer for the plus button preview
-                        plusBtn.innerHTML = `
-                            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 4px;">
-                                ${getHighFidelitySVG(icon, true)}
-                            </div>`;
-                        // Adjust the inner SVG style for the small tile
-                        const innerSVG = plusBtn.querySelector('svg');
-                        if (innerSVG) {
-                            innerSVG.style.width = '100%';
-                            innerSVG.style.height = '100%';
-                        }
-                    } else if (data.type === 'pattern') {
-                        const uniqueId = 'plusPattern_' + icon;
-                        const tileSize = 20;
-                        plusBtn.innerHTML = `
-                            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 6px;">
-                                <div style="width: 100%; height: 100%; border-radius: 4px; overflow: hidden; opacity: 0.85;">
-                                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%;">
-                                        <defs>
-                                            <pattern id="${uniqueId}" x="0" y="0" width="${tileSize}" height="${tileSize}" patternUnits="userSpaceOnUse">
-                                                <g transform="scale(${tileSize / data.w})">
-                                                    <path d="${data.path}" fill="none" stroke="#fff" stroke-width="${1.5 / (tileSize / data.w)}" stroke-linecap="round" stroke-linejoin="round"/>
-                                                </g>
-                                            </pattern>
-                                        </defs>
-                                        <rect width="100%" height="100%" fill="url(#${uniqueId})" />
-                                    </svg>
-                                </div>
-                            </div>`;
-                    } else {
-                        plusBtn.innerHTML = `
-                            <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 4px;">
-                                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 75%; height: 75%;">
-                                    <path d="${data.path}" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>`;
-                    }
-                } else {
-                    plusBtn.classList.remove('selected');
-                    plusBtn.innerText = '+';
-                }
-            }
-            
-            const frontText = document.getElementById('cardFrontText');
-            if (frontText) frontText.style.display = 'none';
-            
+            // UI im Design Modal aktualisieren
             renderCardIcons();
-        }
-
-        function renderCardIcons() {
+            
+            // Vorschau in der aktuellen Spielkarte aktualisieren
             const container = document.getElementById('cardFrontIconContainer');
             if (container) container.innerHTML = getCardIconHTML(false);
             
-            // Also update any other hidden cards (like in Busfahrer) - these should be small
+            // Busfahrer-Karten und Vorschaubilder aktualisieren
             document.querySelectorAll('.bus-card.hidden').forEach(el => {
-                el.innerHTML = getCardIconHTML(true);
+                // Determine size based on context (hacky but works for the update loop)
+                const isPyramid = el.closest('.pyramid-grid');
+                el.innerHTML = getCardIconHTML(isPyramid ? 'tiny' : 'medium');
+            });
+        }
+
+        function getCardIconHTML(size = 'large') {
+            // Backward compatibility: true -> small, false -> large
+            let actualSize = size;
+            if (size === true) actualSize = 'small';
+            if (size === false) actualSize = 'large';
+            
+            const resolved = resolveMotif(currentCardIcon);
+            if (resolved.base === 'none') return '';
+            return getHighFidelitySVG(resolved.base, resolved.color, actualSize);
+        }
+
+        function renderCardIcons() {
+            const grid = document.getElementById('symbolGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            const resolved = resolveMotif(currentCardIcon);
+
+            // 1. "Kein Motiv" Option
+            const noneSwatch = document.createElement('div');
+            noneSwatch.className = 'symbol-swatch' + (resolved.base === 'none' ? ' selected' : '');
+            noneSwatch.innerHTML = '<span style="font-size: 1rem; font-weight: 800; opacity: 0.4;">X</span>';
+            noneSwatch.onclick = () => setCardIcon('none');
+            grid.appendChild(noneSwatch);
+
+            // 2. Basis-Motive aus dem Registry
+            Object.entries(motifRegistry).forEach(([id, data]) => {
+                const swatch = document.createElement('div');
+                swatch.className = 'symbol-swatch' + (resolved.base === id ? ' selected' : '');
+                
+                // FIX: Wenn ausgewählt -> farbig, sonst neutral weiß
+                const displayColor = (resolved.base === id) ? resolved.color : '#ffffff';
+                swatch.innerHTML = getHighFidelitySVG(id, displayColor, 'small');
+                
+                swatch.onclick = () => openMotifColorModal(id);
+                grid.appendChild(swatch);
             });
         }
 
@@ -7075,8 +7316,8 @@
         }
 
         const extraColorsData = {
-            card: ['#020617', '#052e16', '#1e1b4b', '#18181b', '#0c0a09', '#1a2e05', '#2e1065', '#450a0a', '#164e63', '#064e3b', '#27272a', '#000000', '#111827', '#171717', '#1c1917', '#1e1b4b', '#030712', '#082f49', '#14532d', '#3f2b96'],
-            bg: ['#020617', '#052e16', '#1e1b4b', '#18181b', '#0c0a09', '#1a2e05', '#2e1065', '#450a0a', '#164e63', '#064e3b', '#27272a', '#000000', '#111827', '#171717', '#1c1917', '#1e1b4b', '#030712', '#082f49', '#14532d', '#3f2b96'],
+            card: ['#a78bfa', '#451a03', '#6ee7b7', '#6366f1', '#84cc16', '#f97316', '#ec4899', '#38bdf8', '#8b5cf6', '#10b981', '#4a0404', '#000000', '#111827', '#171717', '#1c1917', '#1e1b4b', '#030712', '#082f49', '#14532d', '#3f2b96'],
+            bg: ['#a78bfa', '#451a03', '#6ee7b7', '#6366f1', '#84cc16', '#f97316', '#ec4899', '#38bdf8', '#8b5cf6', '#10b981', '#4a0404', '#000000', '#111827', '#171717', '#1c1917', '#1e1b4b', '#030712', '#082f49', '#14532d', '#3f2b96'],
             btn: ['#dc2626', '#2563eb', '#16a34a', '#9333ea', '#ea580c', '#db2777', '#0891b2', '#65a30d', '#4f46e5', '#7c2d12', '#0f766e', '#be185d', '#334155', '#1e2937', '#b91c1c', '#1d4ed8', '#047857', '#7e22ce', '#c2410c', '#000000'],
             neon: ['#dc2626', '#2563eb', '#16a34a', '#9333ea', '#ea580c', '#db2777', '#0891b2', '#65a30d', '#4f46e5', '#7c2d12', '#0f766e', '#be185d', '#334155', '#1e2937', '#b91c1c', '#1d4ed8', '#047857', '#7e22ce', '#c2410c', '#000000']
         };
@@ -7167,6 +7408,7 @@
         init();
 
     </script>
+
 
 
 
